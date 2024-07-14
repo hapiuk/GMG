@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const signupForm = document.getElementById('signup-form');
     const signupMessage = document.getElementById('signup-message');
 
+    // Scroll to a specific section
     const scrollToSection = (sectionIndex) => {
         const targetScroll = sections[sectionIndex].offsetTop;
         window.scrollTo({
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // Toggle navbar visibility based on scroll position
     const toggleNavbar = () => {
         const welcomeBottom = welcomeSection.getBoundingClientRect().bottom;
         if (welcomeBottom <= 0) {
@@ -23,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Handle wheel events for smooth scrolling between sections
     const handleWheelEvent = (event) => {
         event.preventDefault();
         const delta = event.deltaY;
@@ -38,67 +41,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('scroll', toggleNavbar);
 
-    const scrollToAboutButton = document.getElementById('scroll-to-about');
-    if (scrollToAboutButton) {
-        scrollToAboutButton.addEventListener('click', () => {
-            currentSection = 1;
-            scrollToSection(currentSection);
-        });
-    }
+    // Initialize the carousel
+    $('#carouselFestivalFever').carousel({
+        interval: 15000 // Set the interval to 15 seconds
+    });
 
-    if (signupForm) {
-        signupForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-            const email = document.getElementById('email').value;
-            signupMessage.textContent = `Thank you for signing up, ${email}!`;
-            signupForm.reset();
-        });
-    }
+    // Event listeners for the previous and next buttons
+    $('.carousel-control-prev').click(function() {
+        $('#carouselFestivalFever').carousel('prev');
+    });
 
-    let currentImageIndex = 0;
-    const gamesSection = document.getElementById('games-section');
-    const gameTitleImage = document.getElementById('game-title-image');
-    const gameDescription = document.getElementById('game-description').querySelector('p');
-    const gameLink = document.getElementById('steam-link');
-
-    const updateGallery = () => {
-        const currentGame = galleryImages[currentImageIndex];
-        console.log(`Updating gallery to image index ${currentImageIndex}:`, currentGame);
-
-        // Fade out elements before updating
-        gameTitleImage.style.opacity = 0;
-        gameDescription.style.opacity = 0;
-
-        setTimeout(() => {
-            // Directly set the background image for the games section
-            gamesSection.style.backgroundImage = `url(${currentGame.image})`;
-            console.log(`Background image src: ${currentGame.image}`);
-
-            // Update game title image directly
-            gameTitleImage.src = currentGame.titleImage;
-            console.log(`Title image src: ${gameTitleImage.src}`);
-
-            // Update description and link
-            gameDescription.textContent = currentGame.description;
-            gameLink.href = currentGame.link;
-
-            // Fade in elements after updating
-            setTimeout(() => {
-                gameTitleImage.style.opacity = 1;
-                gameDescription.style.opacity = 1;
-            }, 100); // Small delay to ensure the fade-in happens
-        }, 1000); // Match the timeout duration with CSS transition duration
-    };
-
-    // Set the initial background image and description
-    updateGallery();
-
-    // Auto-change gallery image every 5 seconds
-    setInterval(() => {
-        currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
-        console.log(`Auto-change. New image index: ${currentImageIndex}`);
-        updateGallery();
-    }, 5000);
+    $('.carousel-control-next').click(function() {
+        $('#carouselFestivalFever').carousel('next');
+    });
 
     // Touch event handlers for mobile devices
     let touchStartY = 0;

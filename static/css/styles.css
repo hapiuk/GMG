@@ -2,7 +2,7 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Verdana', Arial, monospace;
     background: #121212;
     color: #f0f0f0;
     overflow-x: hidden;
@@ -89,7 +89,6 @@ nav {
 .about-section {
     background: #121212;
     padding: 50px 20px;
-    text-align: left;
     width: 100%;
     margin: 0 auto;
 }
@@ -105,6 +104,7 @@ nav {
     line-height: 1.6;
     margin-bottom: 20px;
     padding-top: 1%;
+    text-align: justify;
 }
 
 .about-content {
@@ -114,7 +114,10 @@ nav {
 
 .about-image {
     flex: 0 0 auto; /* Prevent image from growing */
-    margin-right: 20px; /* Adjust margin as needed */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
 }
 
 .about-text {
@@ -137,14 +140,11 @@ nav {
     background-repeat: no-repeat;
     min-height: 100vh;
     overflow: hidden;
-    transition: background-image 1s ease-in-out; /* Add transition for background image */
 }
 
 .games-title img {
     max-width: 200px;
     margin-bottom: 0.5%;
-    opacity: 1; /* Ensure it starts visible */
-    transition: opacity 1s ease-in-out; /* Add transition for opacity */
 }
 
 .game-description {
@@ -154,8 +154,6 @@ nav {
     background: rgba(0, 0, 0, 0.6);
     padding: 20px;
     border-radius: 10px;
-    opacity: 1; /* Ensure it starts visible */
-    transition: opacity 1s ease-in-out; /* Add transition for opacity */
 }
 
 .wishlist-button .button {
@@ -213,69 +211,6 @@ nav {
     50% { opacity: 1; }
 }
 
-.contact-section {
-    background: #1a1a1a;
-    padding: 50px 20px;
-    text-align: center;
-    width: 100%;
-}
-
-.contact-title {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-    color: #f0f0f0;
-}
-
-.signup-form {
-    background: #121212;
-    padding: 20px;
-    border-radius: 10px;
-    display: inline-block;
-    width: 100%;
-}
-
-.signup-form form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-
-.signup-form label {
-    font-size: 1.2em;
-    color: #f0f0f0;
-    margin-bottom: 10px;
-}
-
-.signup-form input[type="email"] {
-    padding: 10px;
-    font-size: 1em;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 100%;
-}
-
-.signup-form button {
-    padding: 10px 20px;
-    font-size: 1em;
-    background: #ff4c4c;
-    color: #f0f0f0;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.signup-form button:hover {
-    background: #ff1a1a;
-}
-
-#signup-message {
-    font-size: 1.2em;
-    color: #ff4c4c;
-    margin-top: 20px;
-}
 
 /* Modal styles */
 .modal-content {
@@ -334,8 +269,157 @@ nav {
     background-color: rgba(0, 0, 0, 0.8) !important;
 }
 
+.d-custom  {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 3%;
+    border-radius: 10px;
+}
+
+/* Ensure carousel images are centered and cover the container */
+.carousel-item {
+    z-index: -200;
+}
+.carousel-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto; /* Center horizontally */
+}
+
+.carousel-caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: auto;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.carousel-caption .caption-content {
+    background-color: rgba(37, 37, 37, 0.952));
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+
+
+.carousel-caption img.HeaderImg {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    pointer-events: auto;
+    padding-bottom: 10%;
+}
+
+.carousel-caption h5,
+.carousel-caption p {
+    transition: opacity 0.3s ease;
+    padding-bottom: 5%;
+    text-align: justify;
+}
+
+.carousel-caption h5{
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.carousel-caption p{
+    font-size: 0.75em;
+}
+.carousel-caption .caption-content h5,
+.carousel-caption .caption-content p {
+    
+    color: #fff;
+}
+
+.floating-widget {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #1b2838;
+    opacity: 0.8;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.floating-widget img {
+    height: 50px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.steam-wishlist-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #1b2838;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    transition: background-color 0.3s;
+    z-index: 1111;
+}
+
+.steam-wishlist-button:hover {
+    background-color: #4c6b0f; /* Steam green color on hover */
+    color: white;
+    text-decoration: none;
+}
+
+.steam-wishlist-button i {
+    margin-right: 8px;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 7.5%;
+    background-color: rgba(0,0,0,0.0);
+    border: none;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0,0,0,0.0);
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+}
+
+/* Specific styles for HeaderImg class */
+.HeaderImg {
+    width: auto;
+    height: 80px; /* Default height */
+    max-width: 100%;
+    margin: 0 auto;
+}
+
 /* Media Queries for Mobile Devices */
 @media (max-width: 768px) {
+    .steam-wishlist-button {
+        background-color: #4c6b0f;
+        color: white;
+        text-decoration: none;
+    }
+
+    .social-bar {
+        margin-bottom: 5%;
+    }
+
+    .carousel-caption img {
+        width: 100vw;
+    }
+
     .section {
         height: 100vh;
         padding: 0;
@@ -345,16 +429,30 @@ nav {
         width: 90%;
     }
 
-    .about-image {
-        display: none;
-    }
     .navbar {
         flex-direction: column;
         align-items: flex-start;
         padding: 10px;
     }
 
-  
+    .navbar img {
+        width: 10%;
+    }
+
+    .floating-widget {
+        background: rgba(0, 0, 0, 0.0);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.0);
+        margin-bottom: 5%;
+    }
+
+    .floating-widget img {
+        display: none;
+    }
+
+    .floating-widget a {
+        margin: 0 auto;
+        font-size: 0.7em;
+    }
 
     .navbar a {
         font-size: 1em;
@@ -377,8 +475,16 @@ nav {
         font-size: 1.2em;
     }
 
-    .about-section p {
-        font-size: 0.75em;
+    .about-text {
+        font-size: 0.5em;
+        width: 100%;
+    }
+
+    .about-image {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
     }
 
     .games-section {
@@ -415,25 +521,18 @@ nav {
         font-size: 1em;
     }
 
-    .signup-form {
-        padding: 10px;
-    }
-
-    .signup-form label {
-        font-size: 0.75em;
-    }
-
-    .signup-form input[type="email"] {
-        font-size: 0.75em;
-        padding: 5px;
-    }
-
-    .signup-form button {
-        font-size: 0.75em;
-        padding: 5px 10px;
-    }
-
     .scroll-text {
         font-size: 0.75em;
+    }
+
+    .carousel-item img,
+    .carousel-item video {
+        min-height: 100vh;
+        object-fit: cover;
+    }
+
+    .HeaderImg {
+        width: 20%;
+        height: auto;
     }
 }
