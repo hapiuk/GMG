@@ -3,8 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('.section');
     const navbar = document.getElementById('navbar');
     const welcomeSection = document.getElementById('welcome-section');
-    const signupForm = document.getElementById('signup-form');
-    const signupMessage = document.getElementById('signup-message');
 
     // Scroll to a specific section
     const scrollToSection = (sectionIndex) => {
@@ -41,20 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('scroll', toggleNavbar);
 
-    // Initialize the carousel
-    $('#carouselFestivalFever').carousel({
-        interval: 15000 // Set the interval to 15 seconds
-    });
-
-    // Event listeners for the previous and next buttons
-    $('.carousel-control-prev').click(function() {
-        $('#carouselFestivalFever').carousel('prev');
-    });
-
-    $('.carousel-control-next').click(function() {
-        $('#carouselFestivalFever').carousel('next');
-    });
-
     // Touch event handlers for mobile devices
     let touchStartY = 0;
     let touchEndY = 0;
@@ -77,28 +61,39 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Sound toggle function
-    function toggleMute(videoId) {
-        const video = document.getElementById(videoId);
-        const button = video.nextElementSibling.querySelector('.sound-toggle-btn');
-
-        console.log(`Toggling sound for: ${videoId}`);  // Debug: Check which video ID is being passed
-        console.log(`Video muted state before toggle: ${video.muted}`);  // Debug: Check the mute state before toggle
-
-        if (video.muted) {
-            video.muted = false;
-            button.textContent = '🔊';  // Change button icon to 'unmute'
-            console.log('Video unmuted');  // Debug: Confirm video is unmuted
-        } else {
-            video.muted = true;
-            button.textContent = '🔇';  // Change button icon to 'mute'
-            console.log('Video muted');  // Debug: Confirm video is muted
-        }
-
-        console.log(`Video muted state after toggle: ${video.muted}`);  // Debug: Check the mute state after toggle
-    }
-
     document.addEventListener('touchstart', handleTouchStart, { passive: true });
     document.addEventListener('touchmove', handleTouchMove, { passive: true });
     document.addEventListener('touchend', handleTouchEnd);
+
+    // Sound toggle function
+    function toggleMute(videoId) {
+        const video = document.getElementById(videoId);
+
+        if (!video) {
+            console.error(`No video element found with ID: ${videoId}`);
+            return;
+        }
+
+        const button = document.querySelector('.sound-toggle-btn');
+
+        if (video.muted) {
+            video.muted = false;
+            button.textContent = '🔊';
+        } else {
+            video.muted = true;
+            button.textContent = '🔇';
+        }
+    }
+
+    // Ensure the sound toggle button works
+    document.querySelector('.sound-toggle-btn').addEventListener('click', function() {
+        toggleMute('trailer-video');
+    });
+
+    // Video playback ended event listener
+    const videoElement = document.getElementById('trailer-video');
+    videoElement.addEventListener('ended', function() {
+        console.log('Video playback ended.');
+        document.getElementById('speech-container').style.display = 'flex'; // Show the speech bubble
+    });
 });

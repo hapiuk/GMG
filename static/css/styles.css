@@ -87,149 +87,6 @@ nav {
     animation: fadeIn 3s forwards;
 }
 
-.about-section {
-    background: #121212;
-    padding: 50px 20px;
-    width: 100%;
-    margin: 0 auto;
-}
-
-.about-section h2 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.about-section p {
-    font-size: 1.2em;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    padding-top: 1%;
-    text-align: justify;
-}
-
-.about-content {
-    display: flex;
-    flex-wrap: wrap; /* Allow wrapping for mobile devices */
-}
-
-.about-image {
-    flex: 0 0 auto; /* Prevent image from growing */
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-}
-
-.about-text {
-    flex: 1; /* Allow text to grow and fill remaining space */
-}
-
-/* Ensure the image doesn't exceed a certain height */
-.about-image img {
-    max-height: 300px; /* Adjust max-height as needed */
-}
-
-.games-section {
-    position: relative;
-    padding: 50px 20px;
-    text-align: left;
-    width: 100%;
-    margin: 0 auto;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    min-height: 100vh;
-    overflow: hidden;
-}
-
-.games-title img {
-    max-width: 200px;
-    margin-bottom: 0.5%;
-}
-
-.game-description {
-    margin-bottom: 20px;
-    font-size: 1.2em;
-    line-height: 1.6;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 20px;
-    border-radius: 10px;
-}
-
-.carousel, .carousel-item, .carousel-inner, .carousel-item video, .carousel-item img {
-    height: 100vh;
-    width: 100%;
-    object-fit: cover;
-}
-
-.carousel-caption {
-    position: absolute;
-    bottom: 20%;
-    left: 10%;
-    right: 10%;
-    color: #f0f0f0;
-    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
-}
-
-.HeaderImg {
-    max-width: 150px;
-    display: block;
-    margin: 0 auto 20px;
-}
-
-.sound-toggle-btn {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    background: rgba(0, 0, 0, 0.7);
-    color: #fff;
-    border: none;
-    padding: 10px;
-    font-size: 20px;
-    cursor: pointer;
-    border-radius: 50%;
-}
-
-.sound-toggle-btn:hover {
-    background: rgba(0, 0, 0, 0.9);
-}
-
-.wishlist-button .button {
-    display: inline-block;
-    background-color: #3d3d3d;
-    color: #fff;
-    padding: 10px 20px;
-    text-decoration: none;
-    font-size: 1.2em;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.wishlist-button .button:hover {
-    background-color: #e03b3b;
-}
-
-.social-bar {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    padding: 10px;
-    transition: background-color 0.3s ease, opacity 0.3s ease;
-    text-align: center;
-}
-
-.social-bar a {
-    color: grey;
-    margin-right: 10px;
-    font-size: 24px;
-    text-align: center;
-}
-
-.social-bar a:hover {
-    color: white;
-}
-
 .scroll-text {
     bottom: 20px;
     margin: 10% auto;
@@ -250,132 +107,169 @@ nav {
     50% { opacity: 1; }
 }
 
-
-/* Modal styles */
-.modal-content {
-    background-color: #1a1a1a;
-    color: #f0f0f0;
-    padding: 20px;
-    border-radius: 10px;
-}
-
-.modal-header {
-    border-bottom: 1px solid #333;
-    padding-bottom: 10px;
-}
-
-.modal-body {
-    padding: 20px 0;
-}
-
-.modal-footer {
-    border-top: 1px solid #333;
-    padding-top: 10px;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-control {
-    background-color: #333;
-    color: #f0f0f0;
-    border: 1px solid #555;
-}
-
-.form-control:focus {
-    border-color: #ff4c4c;
-    box-shadow: none;
-}
-
-.form-check-label {
-    margin-left: 10px;
-    color: #f0f0f0;
-}
-
-.btn-primary {
-    background-color: #ff4c4c;
-    border-color: #ff4c4c;
-    transition: background-color 0.3s, border-color 0.3s;
-}
-
-.btn-primary:hover {
-    background-color: #ff1a1a;
-    border-color: #ff1a1a;
-}
-
-.modal-backdrop {
-    background-color: rgba(0, 0, 0, 0.8) !important;
-}
-
-.d-custom  {
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 3%;
-    border-radius: 10px;
-}
-
-/* Ensure carousel images are centered and cover the container */
-.carousel-item {
-    z-index: -200;
-}
-.carousel-item img {
+/* Game Section 1 */
+.gamesection1 {
+    position: relative;
     width: 100%;
-    height: auto;
-    object-fit: cover;
-    display: block;
-    margin: 0 auto; /* Center horizontally */
+    height: 100vh;
+    overflow: hidden;
 }
 
-.carousel-caption {
+.trailer-video {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    width: auto;
-    pointer-events: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    color: #f0f0f0;
 }
 
-.carousel-caption .caption-content {
-    background-color: rgba(37, 37, 37, 0.952));
-    padding: 10px;
-    border-radius: 5px;
-    transition: all 0.3s ease;
+.game-logo {
+    width: 50%;
+    max-width: 400px;
+    margin-bottom: 20px;
 }
 
-
-
-.carousel-caption img.HeaderImg {
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    pointer-events: auto;
-    padding-bottom: 10%;
+.game-summary {
+    text-align: center;
 }
 
-.carousel-caption h5,
-.carousel-caption p {
-    transition: opacity 0.3s ease;
-    padding-bottom: 5%;
-    text-align: justify;
+.game-summary h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
 }
 
-.carousel-caption h5{
-    font-weight: bold;
-    font-size: 1em;
+.game-summary p {
+    font-size: 1.2em;
 }
 
-.carousel-caption p{
-    font-size: 0.75em;
-}
-.carousel-caption .caption-content h5,
-.carousel-caption .caption-content p {
-    
+.sound-toggle-btn {
+    position: absolute;
+    top: 10%;  /* Move to the top */
+    right: 5%;  /* Align to the right */
+    background: rgba(0, 0, 0, 0.7);
     color: #fff;
+    border: none;
+    padding: 35px;  /* Increase the padding for a larger button */
+    font-size: 24px;  /* Increase the font size */
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 1000; /* Ensure it's above other elements */
 }
 
+.sound-toggle-btn:hover {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+/* Speech Bubble Container */
+.speech-container {
+    display: flex;
+    position: absolute;
+    bottom: 70px; /* Positioned above the social bar */
+    right: 20px; /* Position container on the right side */
+    align-items: flex-start;  /* Align items to the top */
+    z-index: 2000;
+    background-color: transparent; /* Make background invisible */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: none; /* Remove shadow */
+}
+
+/* Image on the left */
+.speech-image {
+    width: 10%;  /* Larger size */
+    height: auto;
+    margin-left: 20px; /* Adjust margin to the left to create space between the image and bubble */
+    border-radius: 10px;
+}
+
+/* Speech bubble text */
+.speech-bubble {
+    background-color: rgba(34, 34, 34, 0.85); /* Darker, slightly opaque background */
+    padding: 30px 35px;  /* Increased padding for height */
+    border-radius: 15px;
+    position: relative;
+    font-size: 16px;
+    color: #f0f0f0; /* Lighter text for contrast */
+    max-width: 300px;
+    animation: bobble 2s ease-in-out infinite; /* Bobble animation */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
+    border: 2px solid #444; /* Darker border for a metal look */
+    overflow: hidden; /* Ensure the smoky effect is contained */
+}
+
+/* Smoky effect using a pseudo-element */
+.speech-bubble:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://www.transparenttextures.com/patterns/smoke.png'); /* Smoky texture */
+    opacity: 0.15; /* Slightly stronger overlay */
+    pointer-events: none; /* Ensure it doesn't interfere with interactions */
+}
+
+/* Speech bubble arrow */
+.speech-bubble:after {
+    content: '';
+    position: absolute;
+    top: 50%; /* Center the arrow vertically */
+    right: -20px; /* Position the arrow on the right side */
+    margin-top: -10px; /* Adjust the arrow's vertical position */
+    border-width: 10px; /* Size of the arrow */
+    border-style: solid;
+    border-color: transparent rgba(34, 34, 34, 0.85) transparent transparent; /* Arrow color matches the bubble */
+    transform: translateY(-50%); /* Center the arrow vertically */
+}
+
+/* Enhanced Bobble animation */
+@keyframes bobble {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px); /* Increase movement distance */
+    }
+}
+
+/* Social Bar */
+.social-bar {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+    text-align: center;
+}
+
+.social-bar a {
+    color: grey;
+    margin-right: 10px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.social-bar a:hover {
+    color: white;
+}
+
+/* Floating Widget */
 .floating-widget {
     position: fixed;
     bottom: 20px;
@@ -418,160 +312,4 @@ nav {
 
 .steam-wishlist-button i {
     margin-right: 8px;
-}
-
-.carousel-control-prev,
-.carousel-control-next {
-    width: 7.5%;
-    background-color: rgba(0,0,0,0.0);
-    border: none;
-}
-
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-    background-color: rgba(0,0,0,0.0);
-    border-radius: 50%;
-    height: 30px;
-    width: 30px;
-}
-
-/* Specific styles for HeaderImg class */
-.HeaderImg {
-    width: auto;
-    height: 80px; /* Default height */
-    max-width: 100%;
-    margin: 0 auto;
-}
-
-/* Media Queries for Mobile Devices */
-@media (max-width: 768px) {
-    .steam-wishlist-button {
-        background-color: #4c6b0f;
-        color: white;
-        text-decoration: none;
-    }
-
-    .social-bar {
-        margin-bottom: 5%;
-    }
-
-    .carousel-caption img {
-        width: 100vw;
-    }
-
-    .section {
-        height: 100vh;
-        padding: 0;
-    }
-
-    .container {
-        width: 90%;
-    }
-
-    .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 10px;
-    }
-
-    .navbar img {
-        width: 10%;
-    }
-
-    .floating-widget {
-        background: rgba(0, 0, 0, 0.0);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.0);
-        margin-bottom: 5%;
-    }
-
-    .floating-widget img {
-        display: none;
-    }
-
-    .floating-widget a {
-        margin: 0 auto;
-        font-size: 0.7em;
-    }
-
-    .navbar a {
-        font-size: 1em;
-        margin: 5px 0;
-    }
-
-    .welcome-section {
-        padding: 20px;
-    }
-
-    .welcome-section img {
-        width: 100%;
-    }
-
-    .about-section {
-        padding: 20px;
-    }
-
-    .about-section h2 {
-        font-size: 1.2em;
-    }
-
-    .about-text {
-        font-size: 0.5em;
-        width: 100%;
-    }
-
-    .about-image {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 100%;
-    }
-
-    .games-section {
-        padding: 20px;
-    }
-
-    .games-title {
-        font-size: 1em;
-    }
-
-    .game-description {
-        font-size: 0.75em;
-        padding: 10px;
-    }
-
-    .wishlist-button .button {
-        font-size: 1em;
-        padding: 5px 10px;
-    }
-
-    .contact-section {
-        padding: 20px;
-    }
-
-    .contact-section h2 {
-        font-size: 1.2em;
-    }
-
-    .contact-section p {
-        font-size: 0.75em;
-    }
-
-    .contact-title {
-        font-size: 1em;
-    }
-
-    .scroll-text {
-        font-size: 0.75em;
-    }
-
-    .carousel-item img,
-    .carousel-item video {
-        min-height: 100vh;
-        object-fit: cover;
-    }
-
-    .HeaderImg {
-        width: 20%;
-        height: auto;
-    }
 }

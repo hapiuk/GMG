@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grave Mistake Games</title>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='media/images/favicon.ico') }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="shortcut icon" href="/static/media/images/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
+
     <!-- Navbar -->
     <div class="navbar" id="navbar">
         <nav>
@@ -24,7 +24,7 @@
                 alt="Grave Mistake Games">
             <div class="nav-right">
                 <a href="#about-section">About Us</a> |
-                <a href="#games-section">Festival Fever</a> |
+                <a href="#gamesection1">Festival Fever</a> |
                 <a href="#contact-section">News</a>
             </div>
         </nav>
@@ -33,98 +33,38 @@
     <!-- Welcome Section -->
     <div class="section welcome-section" id="welcome-section">
         <div class="container">
-            <img src="{{ url_for('static', filename='media/images/banner.jpg') }}" id="welcome-banner" alt="Grave Mistake Games">
-            <div class="scroll-text" id="scroll-to-about">Scroll to continue..</div>
+            <img src="/static/media/images/banner.jpg" id="welcome-banner" alt="Grave Mistake Games">
+            <div class="scroll-text" id="scroll-to-about">Scroll to continue...</div>
         </div>
     </div>
 
-    <!-- About Section -->
-    <section class="section about-section" id="about-section">
-        <div class="container">
-            <div class="about-title">
-                
+    <!-- Game Section 1 -->
+    <section class="section gamesection1" id="gamesection1">
+        <video class="trailer-video" autoplay muted id="trailer-video">
+            <source src="{{ url_for('static', filename='media/videos/FestivalFeverTrailer.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="overlay">
+            <!--<img src="{{ url_for('static', filename='media/images/festivalfeverwhite.png') }}" class="game-logo" alt="Festival Fever Logo">-->
+            <div class="game-summary">
+                <h2></h2>
+                <p></p>
             </div>
-            <div class="about-content">
-                <div class="about-image">
-                    <img src="{{ url_for('static', filename='media/images/side_by_side_white_v2.png') }}" alt="About Image">
-                </div>
-                <div class="about-text">
-                    <p>
-                        Grave Mistake Games is an independent video game development studio founded in 2021.
-                        We are dedicated to crafting engaging and fun strategy and management experiences,
-                        with a particular emphasis on non-violent play. Our mission is to create immersive worlds
-                        that challenge players to think critically and creatively, fostering a gaming environment
-                        that is both stimulating and accessible to all.
-                    </p>
-                </div>
+        </div>
+        <button class="sound-toggle-btn" onclick="toggleMute('trailer-video')">🔇</button>
+    
+        <!-- Speech Bubble Div -->
+        <div class="speech-container" id="speech-container">
+            <img src="{{ url_for('static', filename='media/images/thejgraves_Roadie_fullrender_NOBG.png') }}" class="speech-image" alt="Person">
+            <div class="speech-bubble">
+                <p>What are you waiting for?</p>
+                <a href="https://store.steampowered.com/app/1849940/Festival_Fever/" class="steam-wishlist-button" target="_blank">
+                    <i class="fab fa-steam"></i> Wishlist now!
+                </a>
             </div>
         </div>
     </section>
-
-    <!-- Game Section -->
-    <section class="section games-section" id="games-section">
-        <div id="carouselFestivalFever" class="carousel slide" data-ride="carousel" data-interval="8000">
-            <ol class="carousel-indicators">
-                <li data-target="#carouselFestivalFever" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselFestivalFever" data-slide-to="1"></li>
-                <li data-target="#carouselFestivalFever" data-slide-to="2"></li>
-                <li data-target="#carouselFestivalFever" data-slide-to="3"></li>
-            </ol>
-            <div class="carousel-inner">
-                <!-- First Slide -->
-                <div class="carousel-item active">
-                    <video class="d-block w-100" autoplay loop muted id="video1">
-                        <source src="{{ url_for('static', filename='media/videos/FestivalFeverTrailer.mp4') }}" type="video/mp4">
-                    </video>
-                    <div class="carousel-caption">
-                        <h5>Festival Fever Trailer</h5>
-                        <p>Catch a glimpse of the excitement in Festival Fever.</p>
-                        <!-- Mute/Unmute Button -->
-                        <button class="sound-toggle-btn" onclick="toggleMute('video1')">🔇</button>
-                    </div>
-                </div>
-                <!-- Second Slide -->
-                <div class="carousel-item">
-                    <video class="d-block w-100" autoplay loop muted id="video2">
-                        <source src="{{ url_for('static', filename='media/videos/bowlingball.mp4') }}" type="video/mp4">
-                    </video>
-                    <div class="carousel-caption">
-                        <img class="HeaderImg" src="{{ url_for('static', filename='media/images/desgn.png') }}" alt="Design Image">
-                        <h5>Design Your Festival</h5>
-                        <p>From stages to food trucks, create your dream festival.</p>
-                    </div>
-                </div>
-                <!-- Third Slide -->
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="{{ url_for('static', filename='media/images/screenshot3.jpg') }}" alt="Image3">
-                    <div class="carousel-caption">
-                        <img class="HeaderImg" src="{{ url_for('static', filename='media/images/create.png') }}" alt="Design Image">
-                        <h5>Curate an Epic Lineup</h5>
-                        <p>Hire bands and balance the egos of rock legends.</p>
-                    </div>
-                </div>
-                <!-- Fourth Slide -->
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="{{ url_for('static', filename='media/images/screenshot1.jpg') }}" alt="Image4">
-                    <div class="carousel-caption">
-                        <img class="HeaderImg" src="{{ url_for('static', filename='media/images/golive.png') }}" alt="Design Image">
-                        <h5>Let the Festival Begin</h5>
-                        <p>Keep your punters happy to grow your reputation.</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Controls -->
-            <a class="carousel-control-prev" href="#carouselFestivalFever" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselFestivalFever" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </section>
-
+       
 
     <!-- Contact Section -->
     <section class="section contact-section" id="contact-section">
@@ -140,7 +80,7 @@
 
     <!-- Floating Widget -->
     <div class="floating-widget">
-        <img src="{{ url_for('static', filename='media/images/festivalfeverwhite.png') }}" alt="Game Logo">
+        <img src="/static/media/images/festivalfeverwhite.png" alt="Game Logo">
         <a href="https://store.steampowered.com/app/1849940/Festival_Fever/" class="steam-wishlist-button" target="_blank">
             <i class="fab fa-steam"></i> Wishlist Festival Fever!
         </a>
@@ -154,21 +94,9 @@
     </footer>
 
     <!-- Scripts -->
-    <script type="text/javascript">
-        // Toggle video sound
-        document.addEventListener('DOMContentLoaded', function() {
-            const videos = document.querySelectorAll('video');
-
-            videos.forEach(video => {
-                video.addEventListener('click', () => {
-                    video.muted = !video.muted;
-                });
-            });
-        });
-    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <script src="/static/js/scripts.js"></script>
 </body>
 </html>
