@@ -295,7 +295,7 @@ nav {
     padding: 10px 20px;
     font-size: 16px;
     color: #fff;
-    background-color: #1b2838;
+    background-color: #4c6b0f;
     border: none;
     border-radius: 5px;
     text-decoration: none;
@@ -305,7 +305,7 @@ nav {
 }
 
 .steam-wishlist-button:hover {
-    background-color: #4c6b0f; /* Steam green color on hover */
+    background-color: #00adee ; /* Steam green color on hover */
     color: white;
     text-decoration: none;
 }
