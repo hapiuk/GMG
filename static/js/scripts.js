@@ -77,6 +77,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Sound toggle function
+    function toggleMute(videoId) {
+        const video = document.getElementById(videoId);
+        const button = video.nextElementSibling.querySelector('.sound-toggle-btn');
+
+        console.log(`Toggling sound for: ${videoId}`);  // Debug: Check which video ID is being passed
+        console.log(`Video muted state before toggle: ${video.muted}`);  // Debug: Check the mute state before toggle
+
+        if (video.muted) {
+            video.muted = false;
+            button.textContent = '🔊';  // Change button icon to 'unmute'
+            console.log('Video unmuted');  // Debug: Confirm video is unmuted
+        } else {
+            video.muted = true;
+            button.textContent = '🔇';  // Change button icon to 'mute'
+            console.log('Video muted');  // Debug: Confirm video is muted
+        }
+
+        console.log(`Video muted state after toggle: ${video.muted}`);  // Debug: Check the mute state after toggle
+    }
+
     document.addEventListener('touchstart', handleTouchStart, { passive: true });
     document.addEventListener('touchmove', handleTouchMove, { passive: true });
     document.addEventListener('touchend', handleTouchEnd);
