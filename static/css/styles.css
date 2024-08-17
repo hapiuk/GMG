@@ -248,6 +248,66 @@ nav {
     }
 }
 
+/* General Styles for Game Sections */
+.gamesection2, .gamesection3, .gamesection4 {
+    background-color: #1a1a1a; /* Maintain the dark theme */
+    color: #f0f0f0; /* Light text color */
+    padding: 50px 0;
+}
+
+.game-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Align items to the top */
+    flex-wrap: wrap;
+}
+
+/* Info and Speech Bubble */
+.game-info-side {
+    flex: 1;
+    max-width: 45%;
+    padding: 20px;
+    display: flex;
+    align-items: flex-start; /* Align speech bubble next to the image */
+}
+
+.talking-guy {
+    width: 40%;
+    height: auto;
+    margin-right: 20px;
+    margin-top: 20px; /* Lowers the guy's image */
+}
+
+.speech-bubble {
+    background-color: rgba(34, 34, 34, 0.85);
+    padding: 20px;
+    border-radius: 15px;
+    font-size: 1em; /* Slightly smaller text */
+    color: #f0f0f0;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+    max-width: 80%; /* Wider speech bubble */
+}
+
+/* Gallery Section */
+.game-gallery-side {
+    flex: 1;
+    max-width: 45%;
+    padding: 20px;
+}
+
+.game-header-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+
+/* Flip Layout for Sections */
+.gamesection3 .game-content {
+    flex-direction: row-reverse;
+}
+
 /* About Section */
 .about-section {
     display: flex;
