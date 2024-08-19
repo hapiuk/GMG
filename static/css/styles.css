@@ -428,3 +428,128 @@ nav {
 .steam-wishlist-button i {
     margin-right: 8px;
 }
+
+/* News Section */
+.news-section {
+    padding: 50px 0;
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+}
+
+.news-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2em;
+    color: #ffffff;
+}
+
+#news-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.news-post {
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.news-post h3 {
+    margin-top: 0;
+    font-size: 1.5em;
+    color: #ffffff;
+}
+
+.news-post p {
+    font-size: 1.1em;
+    color: #cccccc;
+}
+
+.news-post a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #00adee;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.news-post a:hover {
+    text-decoration: underline;
+}
+
+/* Contact Section */
+.contact-section {
+    padding: 50px 0;
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+}
+
+.contact-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2em;
+    color: #ffffff;
+}
+
+#contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.1em;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background-color: #2a2a2a;
+    color: #ffffff;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #00adee;
+}
+
+.btn-primary {
+    background-color: #00adee;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: #0078a0;
+}
+
+
+/* flash messages */
+
+.flash-messages {
+    width: 80%;
+    margin: 20px auto;
+}
+
+.alert {
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.alert-success {
+    background-color: #4CAF50;
+}
+
+.alert-error {
+    background-color: #f44336;
+}
