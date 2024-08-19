@@ -1,0 +1,70 @@
+<ABOUT US>
+
+Grave Mistake Games is an independent video game development studio founded in 2021. We are dedicated to crafting engaging and fun strategy and management experiences, with a particular emphasis on non-violent play.
+
+Our mission is to create immersive worlds that challenge players to think critically and creatively, fostering a gaming environment that is both stimulating and accessible to all.
+
+
+<GAME SECTION 1>
+
+(Game trailer, full screen muted autoplay)
+
+<Game SECTION 2 - Header image and text on left, gallery on the right>
+
+DESIGN AND BUILD (desgn.png)
+
+Festival Fever is a game about putting on the best and biggest music festival. Design and build your festival from the ground up. Create stages, food stalls, and entertainment areas to cater to your punters' needs.
+
+Images for gallery:
+
+screenshot1.png
+screenshot2.png
+screenshot3.png
+
+<Game SECTION 3 Header image and text on right, gallery on the left>
+
+CREATE THE LINEUP (CREATE.png)
+
+Curate an epic lineup by hiring bands from various genres. Balance the egos of rock legends with the demands of up-and-coming artists. Match the right acts to your audience’s preferences to keep the crowd energized and engaged throughout the festival.
+
+Images for gallery:
+
+screenshot4.png
+screenshot5.png
+screenshot6.png
+
+<Game SECTION 4>
+
+GO LIVE (golive.png)
+
+Once you think you’re ready, start letting the punters in and get that first band on stage! But make sure you pay attention to your festival goers' feedback and needs. Keep them satisfied with a variety of food options, clean facilities, and plenty of entertainment. Happy punters mean more ticket sales and a growing reputation.
+
+Image:
+
+thejgraves_Roadie_fullrender_NOBG.png
+
+<NEW SECTION>
+
+Test Post Contents:
+
+Festival Fever is now live on Steam!
+
+We're thrilled to announce that Festival Fever, the ultimate music festival management game, is now available on Steam! Dive into the chaos and creativity of organising your own festival. From booking bands to managing crowds, every decision is in your hands. Start building your festival empire today!
+
+Check it out on Steam and start your festival Journey
+
+(STEAM WISHLIST BUTTON)
+
+<CONTACT US>
+
+Contact page to be used as a Band contanct point innitially, will be later used for generic contant. Email will be hidden, we can either have this sent to emails directly, or built into the "portal" where news and posts will be made. (The portal will also contain very basic stats to begin e.g How many times Wishlist buttons were clicked etc, this will help improve the website moving on and give you figures about traffic flowing from the site to different locations)
+
+
+<Portal - This is to be added AFTER the main site, the idea is to allow you to get up and running and pull traffic. We can make updates but will cross that bridge when needed>
+
+ - Make posts to news (Seperate from social media at Jay's request, can be added later if needed)
+ - Contant requests
+ - Basic stat tracking (Button Clicks, natural traffic, directed traffic, etc) If there is anything else you would like, let me know and I will let you know if im able to do this within a reasonable amount of time.
+ - Asset storage (Non-Sensitive to begin)
+ - Update text for sections (Will add character limits to prevent breaking the site)
+ - Gallery Management

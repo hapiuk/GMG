@@ -50,14 +50,7 @@
                 </div>
                 <div class="about-text">
                     <p>
-                        Grave Mistake Games is an independent video game development studio founded in 2021.
-                        We are dedicated to crafting engaging and fun strategy and management experiences,
-                        with a particular emphasis on non-violent play.
-                    </p>
-                    <p>
-                        Our mission is to create immersive worlds that challenge players to think critically 
-                        and creatively, fostering a gaming environment
-                        that is both stimulating and accessible to all.
+                        Grave Mistake Games is an independent video game development studio founded in 2021. We are dedicated to crafting engaging and fun strategy and management experiences, with a particular emphasis on non-violent play. Our mission is to create immersive worlds that challenge players to think critically and creatively, fostering a gaming environment that is both stimulating and accessible to all.
                     </p>
                 </div>
             </div>
@@ -78,17 +71,6 @@
             </div>
         </div>
         <button class="sound-toggle-btn" onclick="toggleMute('trailer-video')">🔇</button>
-    
-        <!-- Speech Bubble Div -->
-        <div class="speech-container" id="speech-container">
-            <img src="{{ url_for('static', filename='media/images/thejgraves_Roadie_fullrender_NOBG.png') }}" class="speech-image" alt="Person">
-            <div class="speech-bubble">
-                <p>What are you waiting for?</p>
-                <a href="https://store.steampowered.com/app/1849940/Festival_Fever/" class="steam-wishlist-button" target="_blank">
-                    <i class="fab fa-steam"></i> Wishlist now!
-                </a>
-            </div>
-        </div>
     </section>
 
 <!-- Game Section 2 -->
@@ -96,36 +78,42 @@
     <div class="container">
         <div class="game-content">
             <div class="game-info-side">
-                <img src="{{ url_for('static', filename='media/images/thejgraves_Roadie_fullrender_NOBG.png') }}" alt="Talking Guy" class="talking-guy">
-                <div class="speech-bubble">
+                <img src="{{ url_for('static', filename='media/images/desgn.png') }}" alt="Design and Build" class="game-header-image">
+                <div class="game-text">
                     <p>
                         Festival Fever is a game about putting on the best and biggest music festival. Design and build your festival from the ground up. Create stages, food stalls, and entertainment areas to cater to your punters' needs.
                     </p>
                 </div>
             </div>
             <div class="game-gallery-side">
-                <img src="{{ url_for('static', filename='media/images/desgn.png') }}" alt="Game 1 Header" class="game-header-image">
-                <img src="{{ url_for('static', filename='media/images/screenshot1.jpg') }}" class="game-header-image">
+                <p>
+                    <img src="{{ url_for('static', filename='media/images/screenshot1.jpg') }}">
+                    <img src="{{ url_for('static', filename='media/images/screenshot2.jpg') }}">
+                    <img src="{{ url_for('static', filename='media/images/screenshot3.jpg') }}">
+                </p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Game Section 3 (Flipped Layout) -->
+<!-- Game Section 3 -->
 <section class="section gamesection3" id="gamesection3">
     <div class="container">
         <div class="game-content">
             <div class="game-info-side">
-                <img src="{{ url_for('static', filename='media/images/thejgraves_Roadie_fullrender_NOBG.png') }}" alt="Talking Guy" class="talking-guy">
-                <div class="speech-bubble">
+                <img src="{{ url_for('static', filename='media/images/CREATE.png') }}" alt="Create the Lineup" class="game-header-image">
+                <div class="game-text">
                     <p>
                         Curate an epic lineup by hiring bands from various genres. Balance the egos of rock legends with the demands of up-and-coming artists. Match the right acts to your audience’s preferences to keep the crowd energized and engaged throughout the festival.
                     </p>
                 </div>
             </div>
             <div class="game-gallery-side">
-                <img src="{{ url_for('static', filename='media/images/CREATE.png') }}" alt="Game 2 Header" class="game-header-image">
-                <img src="{{ url_for('static', filename='media/images/screenshot4.jpg') }}" alt="Screenshot 1" class="game-header-image">
+                <p>
+                    <img src="{{ url_for('static', filename='media/images/screenshot4.jpg') }}">
+                    <img src="{{ url_for('static', filename='media/images/screenshot5.jpg') }}">
+                    <img src="{{ url_for('static', filename='media/images/screenshot6.jpg') }}">
+                </p>
             </div>
         </div>
     </div>
@@ -136,16 +124,15 @@
     <div class="container">
         <div class="game-content">
             <div class="game-info-side">
-                <img src="{{ url_for('static', filename='media/images/thejgraves_Roadie_fullrender_NOBG.png') }}" alt="Talking Guy" class="talking-guy">
-                <div class="speech-bubble">
-                    <p>
-                        Once you think you’re ready, start letting the punters in and get that first band on stage! But make sure you pay attention to your festival goers' feedback and needs. Keep them satisfied with a variety of food options, clean facilities, and plenty of entertainment. Happy punters mean more ticket sales and a growing reputation.
-                    </p>
+                <img src="{{ url_for('static', filename='media/images/golive.png') }}" alt="Go Live" class="game-header-image">
+                <div class="speech-container">
+                    <img src="{{ url_for('static', filename='media/images/thejgraves_Roadie_fullrender_NOBG.png') }}" alt="Jgraves" class="speech-image">
+                    <div class="speech-bubble">
+                        <p>
+                            Once you think you’re ready, start letting the punters in and get that first band on stage! But make sure you pay attention to your festival goers' feedback and needs. Keep them satisfied with a variety of food options, clean facilities, and plenty of entertainment. Happy punters mean more ticket sales and a growing reputation.
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <div class="game-gallery-side">
-                <img src="{{ url_for('static', filename='media/images/GOLIVE.png') }}" alt="Game 3 Header" class="game-header-image">
-                <img src="{{ url_for('static', filename='media/images/festivalfeverwhite.png') }}" alt="Screenshot 3" class="game-header-image">
             </div>
         </div>
     </div>

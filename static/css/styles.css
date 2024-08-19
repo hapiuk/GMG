@@ -12,6 +12,75 @@ p {
     font-size: 1em;
 }
 
+.game-gallery-side p {
+  height: 200px;
+  width: 500px;
+  margin: 100px auto;
+  position: relative;
+  font-size: 1em;
+}
+
+p img {
+  height: 100px;
+  position: absolute;
+  left: 0;
+  offset-path: path('m 0 50 q 50-30 100-30 t 100 30 100 0 100-30 100 30');
+  box-shadow: 1px 1px 3px #0008;
+  transition: transform .4s ease-out, offset-path .4s cubic-bezier(.77,-1.17,.75,.84),box-shadow .3s, z-index .3s;
+  z-index: 0;
+}
+
+p img:hover {
+  transform: scale(3);
+  /* on hover, the path gets a bit shorter & flattened & shifted to left/bottom a bit for nicer movement */
+  offset-path: path('m 5 65 q 45-0 90-0 t 90 0 90 0 90-0 90 0');
+  box-shadow: 3px 4px 10px #0006;
+  z-index: 999;
+}
+
+/* 3 images */
+p img:nth-last-child(3):first-child {
+  offset-distance: 17%;
+}
+p img:nth-last-child(2):nth-child(2) {
+  offset-distance: 49%;
+}
+p img:last-child:nth-child(3) {
+  offset-distance: 81%;
+}
+
+/* 4 images */
+p img:nth-last-child(4):first-child {
+  offset-distance: 10%;
+}
+p img:nth-last-child(3):nth-child(2) {
+  offset-distance: 35%;
+}
+p img:nth-last-child(2):nth-child(3) {
+  offset-distance: 65%;
+}
+p img:last-child:nth-child(4) {
+  offset-distance: 90%;
+}
+
+/* 5 images */
+p img:nth-last-child(5):first-child {
+  offset-distance: 0%;
+}
+p img:nth-last-child(4):nth-child(2) {
+  offset-distance: 25%;
+}
+p img:nth-last-child(3):nth-child(3) {
+  offset-distance: 51%;
+}
+p img:nth-last-child(2):nth-child(4) {
+  offset-distance: 75%;
+}
+p img:last-child:nth-child(5) {
+  offset-distance: 100%;
+}
+
+
 html {
     scroll-snap-type: y mandatory;
     overflow-y: scroll;
@@ -175,68 +244,50 @@ nav {
     background: rgba(0, 0, 0, 0.9);
 }
 
-/* Speech Bubble Container */
+.gamesection4 .game-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Align content vertically */
+}
+
 .speech-container {
     display: flex;
-    position: absolute;
-    bottom: 70px; /* Positioned above the social bar */
-    right: 20px; /* Position container on the right side */
-    align-items: flex-start;  /* Align items to the top */
-    z-index: 2000;
-    background-color: transparent; /* Make background invisible */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: none; /* Remove shadow */
+    align-items: center; /* Align image and speech bubble vertically */
+    justify-content: center; /* Center the content horizontally */
 }
 
-/* Image on the left */
 .speech-image {
-    width: 10%;  /* Larger size */
+    width: 30%; /* Adjust width to fit better within the layout */
     height: auto;
-    margin-left: 20px; /* Adjust margin to the left to create space between the image and bubble */
-    border-radius: 10px;
+    margin-right: 20px; /* Space between image and speech bubble */
 }
 
-/* Speech bubble text */
 .speech-bubble {
-    background-color: rgba(34, 34, 34, 0.85); /* Darker, slightly opaque background */
-    padding: 30px 35px;  /* Increased padding for height */
+    background-color: rgba(34, 34, 34, 0.85);
+    padding: 2.5%;
     border-radius: 15px;
+    font-size: 1em;
+    color: #f0f0f0;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
     position: relative;
-    font-size: 16px;
-    color: #f0f0f0; /* Lighter text for contrast */
-    max-width: 300px;
-    animation: bobble 2s ease-in-out infinite; /* Bobble animation */
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
-    border: 2px solid #444; /* Darker border for a metal look */
-    overflow: hidden; /* Ensure the smoky effect is contained */
+    display: inline-block;
+    margin-bottom: 15%;
+    max-width: 50%;
 }
 
-/* Smoky effect using a pseudo-element */
-.speech-bubble:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('https://www.transparenttextures.com/patterns/smoke.png'); /* Smoky texture */
-    opacity: 0.15; /* Slightly stronger overlay */
-    pointer-events: none; /* Ensure it doesn't interfere with interactions */
-}
-
-/* Speech bubble arrow */
 .speech-bubble:after {
     content: '';
     position: absolute;
-    top: 50%; /* Center the arrow vertically */
-    right: -20px; /* Position the arrow on the right side */
-    margin-top: -10px; /* Adjust the arrow's vertical position */
-    border-width: 10px; /* Size of the arrow */
+    top: 50%;
+    left: -20px;
+    margin-top: -5%;
+    border-width: 10px;
     border-style: solid;
-    border-color: transparent rgba(34, 34, 34, 0.85) transparent transparent; /* Arrow color matches the bubble */
-    transform: translateY(-50%); /* Center the arrow vertically */
+    border-color: transparent rgba(34, 34, 34, 0.85) transparent transparent;
+    transform: translateY(-50%);
 }
+
 
 /* Enhanced Bobble animation */
 @keyframes bobble {
@@ -248,65 +299,7 @@ nav {
     }
 }
 
-/* General Styles for Game Sections */
-.gamesection2, .gamesection3, .gamesection4 {
-    background-color: #1a1a1a; /* Maintain the dark theme */
-    color: #f0f0f0; /* Light text color */
-    padding: 50px 0;
-}
 
-.game-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start; /* Align items to the top */
-    flex-wrap: wrap;
-}
-
-/* Info and Speech Bubble */
-.game-info-side {
-    flex: 1;
-    max-width: 45%;
-    padding: 20px;
-    display: flex;
-    align-items: flex-start; /* Align speech bubble next to the image */
-}
-
-.talking-guy {
-    width: 40%;
-    height: auto;
-    margin-right: 20px;
-    margin-top: 20px; /* Lowers the guy's image */
-}
-
-.speech-bubble {
-    background-color: rgba(34, 34, 34, 0.85);
-    padding: 20px;
-    border-radius: 15px;
-    font-size: 1em; /* Slightly smaller text */
-    color: #f0f0f0;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
-    max-width: 80%; /* Wider speech bubble */
-}
-
-/* Gallery Section */
-.game-gallery-side {
-    flex: 1;
-    max-width: 45%;
-    padding: 20px;
-}
-
-.game-header-image {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    margin-bottom: 15px;
-}
-
-
-/* Flip Layout for Sections */
-.gamesection3 .game-content {
-    flex-direction: row-reverse;
-}
 
 /* About Section */
 .about-section {
