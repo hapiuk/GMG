@@ -150,29 +150,27 @@
         </div>
     </section>
 
-<!-- News Section -->
-<section class="section news-section" id="news-section">
-    <div class="container">
-        <div id="news-container">
-            <!-- Placeholder for news posts -->
-            <div class="news-post">
-                <h3>Festival Fever is Now Live on Steam!</h3>
-                <p>We're thrilled to announce that Festival Fever, the ultimate music festival management game, is now available to wishlist on Steam! Dive into the chaos and creativity of organising your own festival. From booking bands to managing the crowd, every decision is in your hands. Start building your festival empire today! Check it out on Steam and start your festival journey! (THIS CONTENT IS CURRENTLY HARDCODED)
-                </p>
-                <a href="https://store.steampowered.com/app/1849940/Festival_Fever/" class="steam-wishlist-button" target="_blank">
-                    <i class="fab fa-steam"></i> Wishlist Festival Fever!
-                </a>
+    <!-- News Section -->
+    <section class="section news-section" id="news-section">
+        <div class="container">
+            <h2>News</h2>
+            <div id="news-container">
+                {% for post in posts %}
+                <div class="news-post mb-4">
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.content }}</p>
+                </div>
+                {% endfor %}
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
 <!-- Contact Section -->
 <section class="section contact-section" id="contact-section">
     <div class="container">
         <h2>Contact Us</h2>
-        <form id="contact-form" method="POST" action="{{ url_for('send_email') }}">
+        <form id="contact-form" method="POST" action="">
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>

@@ -39,7 +39,7 @@ GO LIVE (golive.png)
 
 Once you think you’re ready, start letting the punters in and get that first band on stage! But make sure you pay attention to your festival goers' feedback and needs. Keep them satisfied with a variety of food options, clean facilities, and plenty of entertainment. Happy punters mean more ticket sales and a growing reputation.
 
-Image:
+(This will be the image of Jgraves and a speech bubble, this will be headered with golive.png and the text will be located in a speech bubble.)
 
 thejgraves_Roadie_fullrender_NOBG.png
 
@@ -68,3 +68,5 @@ Contact page to be used as a Band contanct point innitially, will be later used 
  - Asset storage (Non-Sensitive to begin)
  - Update text for sections (Will add character limits to prevent breaking the site)
  - Gallery Management
+
+
