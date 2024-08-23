@@ -39,7 +39,7 @@ def create_default_user():
     if User.query.count() == 0:
         default_user = User(
             username='admin',
-            password=generate_password_hash('GoblinsAreReal123!'),  # Default password
+            password=generate_password_hash('GoblinsAreReal123!', method='pbkdf2:sha256'),  # Default password
             email='aaron.gomm@outlook.com',
             contact_number='07360079461',
             position='IT Systems and Website',
