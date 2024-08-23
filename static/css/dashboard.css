@@ -1,0 +1,223 @@
+/* General Dashboard Styles */
+body {
+    background: #121212;
+    color: #f0f0f0;
+    font-family: 'Verdana', Arial, monospace;
+    margin: 0;
+    padding: 0;
+    padding-top: 70px; /* Ensure content isn't hidden behind the navbar */
+}
+
+/* Navbar Styles */
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: #1a1a1a;
+    padding: 10px 20px;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.navbar a {
+    color: grey;
+    margin: 0 10px;
+    font-size: 1.2em;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.navbar a:hover {
+    color: white;
+}
+
+/* Logo styling */
+.navbar img {
+    max-height: 50px; /* Adjust logo size as needed */
+    flex-shrink: 0; /* Prevent the logo from shrinking */
+}
+
+/* Align the links to the right */
+.nav-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-grow: 1;
+}
+
+.nav-right a {
+    color: grey;
+    margin-left: 20px; /* Add space between links */
+    font-size: 1.2em;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-right a:hover {
+    color: white;
+}
+
+/* Dashboard Button Styles */
+.dashboard-button {
+    height: 150px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    transition: transform 0.2s;
+    text-align: center;
+    background-color: #2a2a2a;
+    color: #ffffff;
+    border: 1px solid #444;
+}
+
+.dashboard-button:hover {
+    transform: scale(1.05);
+}
+
+/* Larger buttons with icons */
+.dashboard-button i {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.dashboard-button span {
+    display: block;
+    font-size: 1rem;
+}
+
+/* Custom Modal and Form Styles */
+.modal-content {
+    background-color: #1a1a1a; /* Dark background for the modal */
+    color: #f0f0f0; /* Light text color */
+    border-radius: 10px;
+    border: 1px solid #333; /* Optional: Add a subtle border */
+}
+
+.modal-content .form-control {
+    background-color: #2a2a2a; /* Dark background for input fields */
+    border: 1px solid #444; /* Subtle border to define the input area */
+    color: #f0f0f0; /* Light text color */
+}
+
+.modal-content .form-control:focus {
+    border-color: #00adee; /* Highlight border on focus */
+    background-color: #2a2a2a; /* Maintain dark background on focus */
+    color: #ffffff;
+    outline: none;
+}
+
+.modal-content .form-group label {
+    color: #cccccc; /* Slightly lighter color for labels */
+}
+
+.modal-footer {
+    border-top: 1px solid #333;
+    padding: 15px;
+    background-color: #1a1a1a; /* Match footer background with modal */
+}
+
+.modal-footer .btn {
+    background-color: #00adee;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.1em;
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+.modal-footer .btn-secondary {
+    background-color: #333; /* Darker color for secondary buttons */
+    color: #ffffff;
+}
+
+.modal-footer .btn-secondary:hover {
+    background-color: #444;
+}
+
+.modal-footer .btn-primary:hover {
+    background-color: #0078a0;
+}
+
+/* Post List Styling */
+.list-group-item.bg-dark {
+    background-color: #2a2a2a !important; /* Dark background for posts */
+    border: 1px solid #333;
+    color: #f0f0f0;
+    padding: 15px; /* Add padding to avoid content touching the borders */
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.list-group-item.bg-dark h5 {
+    color: #ffffff;
+    margin-bottom: 10px; /* Ensure spacing between title and content */
+}
+
+.list-group-item.bg-dark p {
+    color: #cccccc;
+    margin-bottom: 10px; /* Ensure spacing between paragraphs */
+}
+
+.list-group-item .btn {
+    margin-right: 10px; /* Add some spacing between buttons */
+}
+
+/* Media Preview */
+.media-preview {
+    max-width: 100%;
+    margin-top: 10px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.media-preview:hover {
+    transform: scale(1.2);
+}
+
+.post-navigation {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.post-navigation a {
+    margin: 0 10px;
+}
+
+.media-content {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px; /* Optional: Adds spacing between media items */
+}
+
+.media-content img,
+.media-content video {
+    max-width: 33%;
+    flex: 1 1 33%; /* Allows items to be flexible but keeps them within the 33% width */
+    height: auto;
+    object-fit: cover; /* Ensures that videos maintain aspect ratio */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Adds a subtle shadow */
+    transition: transform 0.3s ease-in-out;
+}
+
+.media-content img:hover,
+.media-content video:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}

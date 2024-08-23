@@ -96,4 +96,53 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Video playback ended.');
         document.getElementById('speech-container').style.display = 'flex'; // Show the speech bubble
     });
+
+    // Post navigation functionality
+    let currentPostIndex = 0;
+    const posts = JSON.parse('{{ posts|tojson }}'); // Pass the posts data to JavaScript
+
+    function navigatePost(direction) {
+        currentPostIndex += direction;
+
+        // Update the post content
+        document.getElementById('post-title').textContent = posts[currentPostIndex].title;
+        document.getElementById('post-content').textContent = posts[currentPostIndex].content;
+
+        // Update media content
+        const mediaContainer = document.querySelector('.media-content');
+        mediaContainer.innerHTML = ''; // Clear existing media
+
+        posts[currentPostIndex].media.forEach(media => {
+            if (media.media_type === 'image') {
+                const img = document.createElement('img');
+                img.src = `/uploads/${media.media_url.split('/').pop()}`;
+                img.className = 'post-image img-thumbnail';
+                img.alt = 'Post Image';
+                mediaContainer.appendChild(img);
+            } else if (media.media_type === 'video') {
+                const video = document.createElement('video');
+                video.controls = true;
+                const source = document.createElement('source');
+                source.src = `/uploads/${media.media_url.split('/').pop()}`;
+                source.type = 'video/mp4';
+                video.appendChild(source);
+                video.className = 'post-video';
+                mediaContainer.appendChild(video);
+            }
+        });
+
+        // Disable or enable buttons based on the current post index
+        document.getElementById('prev-post').disabled = currentPostIndex === 0;
+        document.getElementById('next-post').disabled = currentPostIndex === posts.length - 1;
+    }
+
+    // Initialize post navigation buttons
+    document.getElementById('prev-post').addEventListener('click', () => navigatePost(-1));
+    document.getElementById('next-post').addEventListener('click', () => navigatePost(1));
+
+    // Initial button state
+    document.getElementById('prev-post').disabled = true;
+    if (posts.length <= 1) {
+        document.getElementById('next-post').disabled = true;
+    }
 });

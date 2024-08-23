@@ -11,19 +11,6 @@
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
-<!-- Error Messages -->
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    <div class="flash-messages">
-      {% for category, message in messages %}
-        <div class="alert alert-{{ category }}">
-          {{ message }}
-        </div>
-      {% endfor %}
-    </div>
-  {% endif %}
-{% endwith %}
-    
     <!-- Navbar -->
     <div class="navbar" id="navbar">
         <nav>
@@ -85,108 +72,126 @@
         <button class="sound-toggle-btn" onclick="toggleMute('trailer-video')">🔇</button>
     </section>
 
-    <!-- Game Section 2 -->
-    <section class="section gamesection2" id="gamesection2">
-        <div class="container">
-            <div class="game-content">
-                <div class="game-info-side">
-                    <img src="{{ url_for('static', filename='media/images/desgn.png') }}" alt="Design and Build" class="game-header-image">
-                    <div class="game-text">
-                        <p>
-                            Festival Fever is a game about putting on the best and biggest music festival. Design and build your festival from the ground up. Create stages, food stalls, and entertainment areas to cater to your punters' needs.
-                        </p>
-                    </div>
-                </div>
-                <div class="game-gallery-side">
+<!-- Game Section 2 -->
+<section class="section gamesection2" id="gamesection2">
+    <div class="container">
+        <div class="game-content">
+            <div class="game-info-side">
+                <img src="{{ url_for('static', filename='media/images/desgn.png') }}" alt="Design and Build" class="game-header-image">
+                <div class="game-text">
                     <p>
-                        <img src="{{ url_for('static', filename='media/images/Stage.jpeg') }}">
-                        <img src="{{ url_for('static', filename='media/images/tents2.gif') }}">
-                        <img src="{{ url_for('static', filename='media/images/frontday.jpeg') }}">
+                        Festival Fever is a game about putting on the best and biggest music festival. Design and build your festival from the ground up. Create stages, food stalls, and entertainment areas to cater to your punters' needs.
                     </p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Game Section 3 -->
-    <section class="section gamesection3" id="gamesection3">
-        <div class="container">
-            <div class="game-content">
-                <div class="game-info-side">
-                    <img src="{{ url_for('static', filename='media/images/CREATE.png') }}" alt="Create the Lineup" class="game-header-image">
-                    <div class="game-text">
-                        <p>
-                            Curate an epic lineup by hiring bands from various genres. Balance the egos of rock legends with the demands of up-and-coming artists. Match the right acts to your audience’s preferences to keep the crowd energized and engaged throughout the festival.
-                        </p>
-                    </div>
+            <div class="game-gallery-side">
+                <div class="gallery">
+                    <img src="{{ url_for('static', filename='media/images/Stage.jpeg') }}" alt="Stage Image">
+                    <img src="{{ url_for('static', filename='media/images/tents2.gif') }}" alt="Tents Image">
+                    <img src="{{ url_for('static', filename='media/images/frontday.jpeg') }}" alt="Front Day Image">
                 </div>
-                <div class="game-gallery-side">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Game Section 3 -->
+<section class="section gamesection3" id="gamesection3">
+    <div class="container">
+        <div class="game-content">
+            <div class="game-info-side">
+                <img src="{{ url_for('static', filename='media/images/CREATE.png') }}" alt="Create the Lineup" class="game-header-image">
+                <div class="game-text">
                     <p>
-                        <img src="{{ url_for('static', filename='media/images/screenshot4.jpg') }}">
-                        <img src="{{ url_for('static', filename='media/images/screenshot3.jpg') }}">
-                        <img src="{{ url_for('static', filename='media/images/screenshot2.jpg') }}">
+                        Curate an epic lineup by hiring bands from various genres. Balance the egos of rock legends with the demands of up-and-coming artists. Match the right acts to your audience’s preferences to keep the crowd energized and engaged throughout the festival.
                     </p>
                 </div>
             </div>
+            <div class="game-gallery-side">
+                <div class="gallery">
+                    <img src="{{ url_for('static', filename='media/images/screenshot4.jpg') }}" alt="Screenshot 4">
+                    <img src="{{ url_for('static', filename='media/images/screenshot3.jpg') }}" alt="Screenshot 3">
+                    <img src="{{ url_for('static', filename='media/images/screenshot2.jpg') }}" alt="Screenshot 2">
+                </div>
+            </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Game Section 4 -->
-    <section class="section gamesection4" id="gamesection4">
-        <div class="container">
-            <div class="game-content">
-                <div class="game-info-side">
-                    <img src="{{ url_for('static', filename='media/images/golive.png') }}" alt="Go Live" class="game-header-image">
-                    <div class="speech-container">
-                        <img src="{{ url_for('static', filename='media/images/thejgraves_Roadie_fullrender_NOBG.png') }}" alt="Jgraves" class="speech-image">
-                        <div class="speech-bubble">
-                            <p>
-                                Once you think you’re ready, start letting the punters in and get that first band on stage! But make sure you pay attention to your festival goers' feedback and needs. Keep them satisfied with a variety of food options, clean facilities, and plenty of entertainment. Happy punters mean more ticket sales and a growing reputation.
-                            </p>
-                        </div>
+<!-- Game Section 4 -->
+<section class="section gamesection4" id="gamesection4">
+    <div class="container">
+        <div class="game-content">
+            <div class="game-info-side">
+                <img src="{{ url_for('static', filename='media/images/golive.png') }}" alt="Go Live" class="game-header-image">
+                <div class="speech-container">
+                    <img src="{{ url_for('static', filename='media/images/thejgraves_Roadie_fullrender_NOBG.png') }}" alt="Jgraves" class="speech-image">
+                    <div class="speech-bubble">
+                        <p>
+                            Once you think you’re ready, start letting the punters in and get that first band on stage! But make sure you pay attention to your festival goers' feedback and needs. Keep them satisfied with a variety of food options, clean facilities, and plenty of entertainment. Happy punters mean more ticket sales and a growing reputation.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- News Section -->
     <section class="section news-section" id="news-section">
         <div class="container">
-            <h2>News</h2>
-            <div id="news-container">
-                {% for post in posts %}
-                <div class="news-post mb-4">
-                    <h3>{{ post.title }}</h3>
-                    <p>{{ post.content }}</p>
-                </div>
-                {% endfor %}
+            <div id="post-container">
+                {% if posts %}
+                    <div class="news-post">
+                        <h3 id="post-title">{{ posts[0].title }}</h3>
+                        <p><small>By {{ posts[0].author }} on {{ posts[0].date_posted }}</small></p>
+                        <p id="post-content">{{ posts[0].content }}</p>
+                        <div class="media-content">
+                            {% for media in posts[0].media %}
+                                {% if media.media_type == 'image' %}
+                                    <img src="{{ url_for('uploaded_file', filename=media.media_url.split('/')[-1]) }}" class="post-image img-thumbnail" alt="Post Image">
+                                {% elif media.media_type == 'video' %}
+                                    <video controls class="post-video">
+                                        <source src="{{ url_for('uploaded_file', filename=media.media_url.split('/')[-1]) }}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <p>No posts available.</p>
+                {% endif %}
             </div>
-        </div>
+
+            <div class="post-navigation">
+                <button id="prev-post" class="nav-btn" onclick="navigatePost(-1)" disabled>Previous</button>
+                <button id="next-post" class="nav-btn" onclick="navigatePost(1)">Next</button>
+            </div>
+        </div>        
     </section>
 
-
-<!-- Contact Section -->
-<section class="section contact-section" id="contact-section">
-    <div class="container">
-        <h2>Contact Us</h2>
-        <form id="contact-form" method="POST" action="">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" required>
-            </div>
-            <div class="form-group">
-                <label for="message">Message</label>
-                <textarea class="form-control" id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Send Message</button>
-        </form>
-    </div>
-</section>
+    <!-- Contact Section -->
+    <section class="section contact-section" id="contact-section">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <form id="contact-form" method="POST" action="">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea class="form-control" id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+        </div>
+    </section>
 
     <!-- Social Bar -->
     <div class="social-bar">
@@ -211,6 +216,61 @@
     </footer>
 
     <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let currentPostIndex = 0;
+            const posts = JSON.parse('{{ posts | tojson | safe }}'); // Ensure posts data is correctly passed as JSON
+
+            function navigatePost(direction) {
+                currentPostIndex += direction;
+
+                if (currentPostIndex < 0 || currentPostIndex >= posts.length) {
+                    return; // Do nothing if out of bounds
+                }
+
+                // Update the post content
+                document.getElementById('post-title').textContent = posts[currentPostIndex].title;
+                document.getElementById('post-content').textContent = posts[currentPostIndex].content;
+
+                // Update media content
+                const mediaContainer = document.querySelector('.media-content');
+                mediaContainer.innerHTML = ''; // Clear existing media
+
+                posts[currentPostIndex].media.forEach(media => {
+                    if (media.media_type === 'image') {
+                        const img = document.createElement('img');
+                        img.src = `/uploads/${media.media_url.split('/').pop()}`;
+                        img.className = 'post-image img-thumbnail';
+                        img.alt = 'Post Image';
+                        mediaContainer.appendChild(img);
+                    } else if (media.media_type === 'video') {
+                        const video = document.createElement('video');
+                        video.controls = true;
+                        const source = document.createElement('source');
+                        source.src = `/uploads/${media.media_url.split('/').pop()}`;
+                        source.type = 'video/mp4';
+                        video.appendChild(source);
+                        video.className = 'post-video';
+                        mediaContainer.appendChild(video);
+                    }
+                });
+
+                // Disable or enable buttons based on the current post index
+                document.getElementById('prev-post').disabled = currentPostIndex === 0;
+                document.getElementById('next-post').disabled = currentPostIndex === posts.length - 1;
+            }
+
+            // Initialize post navigation buttons
+            document.getElementById('prev-post').addEventListener('click', () => navigatePost(-1));
+            document.getElementById('next-post').addEventListener('click', () => navigatePost(1));
+
+            // Initial button state
+            document.getElementById('prev-post').disabled = true;
+            if (posts.length <= 1) {
+                document.getElementById('next-post').disabled = true;
+            }
+        });
+    </script>       
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
