@@ -8,6 +8,18 @@
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
+    <!-- Error Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
     <div class="container">
         <h2>Dashboard</h2>
         <p>Welcome, {{ session['user'] }}!</p>
@@ -47,7 +59,12 @@
                     </div>
                     <button type="button" class="btn btn-warning edit-btn">Edit</button>
                     <button type="submit" class="btn btn-primary update-btn" style="display:none;">Update</button>
-                    <a href="{{ url_for('delete_post', post_id=post.id) }}" class="btn btn-danger">Delete</a>
+                </form>
+
+                <!-- Delete Form -->
+                <form method="POST" action="{{ url_for('delete_post', post_id=post.id) }}" style="display:inline;">
+                    {{ form.hidden_tag() }} <!-- CSRF token -->
+                    <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
             </div>
             {% endfor %}
