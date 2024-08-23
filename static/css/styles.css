@@ -22,7 +22,8 @@ p {
 
 
 p img {
-  height: 100px;
+  height: 180px;
+  margin: 25px;
   position: absolute;
   left: 0;
   offset-path: path('m 0 50 q 50-30 100-30 t 100 30 100 0 100-30 100 30');
@@ -41,13 +42,13 @@ p img:hover {
 
 /* 3 images */
 p img:nth-last-child(3):first-child {
-  offset-distance: 17%;
+  offset-distance: 8%;
 }
 p img:nth-last-child(2):nth-child(2) {
   offset-distance: 49%;
 }
 p img:last-child:nth-child(3) {
-  offset-distance: 81%;
+  offset-distance: 91%;
 }
 
 /* 4 images */
@@ -103,6 +104,7 @@ html {
 
 #navbar.show-navbar {
     display: flex !important; /* Ensure the navbar is displayed */
+    z-index: 10000;
 }
 
 .container {
@@ -178,6 +180,11 @@ nav {
 }
 
 /* Game Section 1 */
+
+.game-content{
+    font-size: 1.25em;
+    margin: 5% auto;
+}
 .gamesection1 {
     position: relative;
     width: 100%;
@@ -229,8 +236,8 @@ nav {
 
 .sound-toggle-btn {
     position: absolute;
-    top: 10%;  /* Move to the top */
-    right: 5%;  /* Align to the right */
+    top: 12.5%;  /* Move to the top */
+    right: 2.5%;  /* Align to the right */
     background: rgba(0, 0, 0, 0.7);
     color: #fff;
     border: none;
