@@ -89,59 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleMute('trailer-video');
     });
 
-    // Post navigation functionality
-    let currentPostIndex = 0;
-    const postsData = typeof posts !== 'undefined' ? posts : []; // Check if posts is defined
-
-    function navigatePost(direction) {
-        currentPostIndex += direction;
-
-        if (currentPostIndex < 0 || currentPostIndex >= postsData.length) {
-            return; // Do nothing if out of bounds
-        }
-
-        // Update the post content
-        document.getElementById('post-title').textContent = postsData[currentPostIndex].title;
-        document.getElementById('post-content').textContent = postsData[currentPostIndex].content;
-
-        // Update media content
-        const mediaContainer = document.querySelector('.media-content');
-        mediaContainer.innerHTML = ''; // Clear existing media
-
-        postsData[currentPostIndex].media.forEach(media => {
-            if (media.media_type === 'image') {
-                const img = document.createElement('img');
-                img.src = `/uploads/${media.media_url.split('/').pop()}`;
-                img.className = 'post-image img-thumbnail';
-                img.alt = 'Post Image';
-                mediaContainer.appendChild(img);
-            } else if (media.media_type === 'video') {
-                const video = document.createElement('video');
-                video.controls = true;
-                const source = document.createElement('source');
-                source.src = `/uploads/${media.media_url.split('/').pop()}`;
-                source.type = 'video/mp4';
-                video.appendChild(source);
-                video.className = 'post-video';
-                mediaContainer.appendChild(video);
-            }
-        });
-
-        // Disable or enable buttons based on the current post index
-        document.getElementById('prev-post').disabled = currentPostIndex === 0;
-        document.getElementById('next-post').disabled = currentPostIndex === postsData.length - 1;
-    }
-
-    // Initialize post navigation buttons
-    document.getElementById('prev-post').addEventListener('click', () => navigatePost(-1));
-    document.getElementById('next-post').addEventListener('click', () => navigatePost(1));
-
-    // Initial button state
-    document.getElementById('prev-post').disabled = true;
-    if (postsData.length <= 1) {
-        document.getElementById('next-post').disabled = true;
-    }
-
     // Form submission handling with AJAX
     const contactForm = document.getElementById('contact-form');
     contactForm.addEventListener('submit', function(event) {
@@ -165,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => {
             console.log("Received response:");
             console.log(response);
-            return response.json();
+            return response.json(); // Expecting a JSON response
         })
         .then(data => {
             console.log("Parsed JSON data:");
@@ -182,28 +129,102 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Display flash messages
+
+    // Post navigation functionality
+    let currentPostIndex = 0;
+    const postsData = typeof posts !== 'undefined' ? posts : []; // Ensure posts are available
+
+    console.log('Initial postsData:', postsData); // Log the initial posts data
+    console.log('Initial currentPostIndex:', currentPostIndex); // Log the initial post index
+
+    function navigatePost(direction) {
+        console.log('navigatePost called with direction:', direction); // Log when navigatePost is called
+
+        currentPostIndex += direction;
+        console.log('Updated currentPostIndex:', currentPostIndex); // Log the updated post index
+
+        // Check bounds and update post index
+        if (currentPostIndex < 0) {
+            console.log('currentPostIndex is less than 0, resetting to 0');
+            currentPostIndex = 0;
+        } else if (currentPostIndex >= postsData.length) {
+            console.log('currentPostIndex is greater than or equal to postsData.length, resetting to last post');
+            currentPostIndex = postsData.length - 1;
+        }
+
+        // Log the post data being used
+        console.log('Displaying post:', postsData[currentPostIndex]);
+
+        // Update the post content
+        document.getElementById('post-title').textContent = postsData[currentPostIndex].title;
+        document.getElementById('post-content').textContent = postsData[currentPostIndex].content;
+
+        // Update media content
+        const mediaContainer = document.querySelector('.media-content');
+        mediaContainer.innerHTML = ''; // Clear existing media
+
+        postsData[currentPostIndex].media.forEach(media => {
+            console.log('Adding media:', media); // Log each media being added
+            if (media.media_type === 'image') {
+                const img = document.createElement('img');
+                img.src = `/uploads/${media.media_url.split('/').pop()}`;
+                img.className = 'post-image img-thumbnail';
+                img.alt = 'Post Image';
+                mediaContainer.appendChild(img);
+            } else if (media.media_type === 'video') {
+                const video = document.createElement('video');
+                video.controls = true;
+                const source = document.createElement('source');
+                source.src = `/uploads/${media.media_url.split('/').pop()}`;
+                source.type = 'video/mp4';
+                video.appendChild(source);
+                video.className = 'post-video';
+                mediaContainer.appendChild(video);
+            }
+        });
+
+        // Disable or enable buttons based on the current post index
+        document.getElementById('prev-post').disabled = currentPostIndex === 0;
+        document.getElementById('next-post').disabled = currentPostIndex === postsData.length - 1;
+
+        console.log('prev-post disabled:', document.getElementById('prev-post').disabled);
+        console.log('next-post disabled:', document.getElementById('next-post').disabled);
+    }
+
+    // Initialize post navigation buttons
+    document.getElementById('prev-post').addEventListener('click', () => {
+        console.log('Prev button clicked');
+        navigatePost(-1);
+    });
+    document.getElementById('next-post').addEventListener('click', () => {
+        console.log('Next button clicked');
+        navigatePost(1);
+    });
+
+    // Initial button state setup
+    document.getElementById('prev-post').disabled = true;
+    document.getElementById('next-post').disabled = postsData.length <= 1;
+
+    console.log('Initial prev-post disabled:', document.getElementById('prev-post').disabled);
+    console.log('Initial next-post disabled:', document.getElementById('next-post').disabled);
+
+
+    // Initial flash message state setup
     function displayFlashMessage(message, category) {
-        const alertBox = document.createElement('div');
-        alertBox.className = `alert alert-${category} alert-dismissible fade show`;
-        alertBox.role = 'alert';
-        alertBox.innerHTML = `
-            ${message}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        `;
-        document.getElementById('flash-message-container').appendChild(alertBox);
-
-        setTimeout(() => {
-            $(alertBox).alert('close');
-        }, 5000); // Auto close after 5 seconds
-    }
-
-    // Check if there's a flash message in the session
-    const flashMessage = "{{ get_flashed_messages(with_categories=true) }}";
-    if (flashMessage) {
-        const [category, message] = flashMessage.split('|');
-        displayFlashMessage(message, category);
-    }
+        const flashContainer = document.getElementById('flash-messages');
+        
+        if (!flashContainer) {
+            console.error('Flash messages container not found.');
+            return;
+        }
+    
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert alert-${category}`;
+        alertDiv.role = 'alert';
+        alertDiv.textContent = message;
+        flashContainer.appendChild(alertDiv);
+        
+        console.log('Flash message added:', message, category);
+    }    
+    
 });

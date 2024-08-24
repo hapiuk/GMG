@@ -620,8 +620,7 @@ nav {
     z-index: -1;
 }
 
-.contact-box {
-    max-width: 800px;
+.contact-form-container {
     width: 100%;
     background-color: rgba(26, 26, 26, 0.6); /* Slightly transparent background */
     padding: 40px;
@@ -629,40 +628,41 @@ nav {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     color: #f0f0f0;
     margin: 0 auto;
+    text-align: center; /* Center align text inside the container */
 }
 
-.contact-box h2 {
-    text-align: center;
-    margin-bottom: 20px;
+.contact-form-container h2 {
     font-size: 2.5em;
+    margin-bottom: 20px;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
 
 .contact-description {
-    text-align: center;
     font-size: 1.2em;
     margin-bottom: 30px;
+    color: #f0f0f0;
 }
 
+/* Form Styling */
 .form-group {
     margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+    position: relative;
 }
 
 .form-control {
     width: 100%;
-    padding: 10px;
-    font-size: 1.1em;
+    padding: 15px;
+    font-size: 1em;
     border-radius: 5px;
     border: 1px solid #333;
     background-color: #2a2a2a;
     color: #ffffff;
+}
+
+.form-control::placeholder {
+    color: #bfbfbf;
+    font-size: 0.9em;
 }
 
 .form-control:focus {
@@ -670,32 +670,34 @@ nav {
     border-color: #00adee;
 }
 
+/* Button Styling */
 .btn-primary {
     background-color: #00adee;
     border: none;
-    padding: 10px 20px;
+    padding: 15px;
     font-size: 1.2em;
     border-radius: 5px;
     cursor: pointer;
     color: #ffffff;
+    width: 100%; /* Full width button */
 }
 
 .btn-primary:hover {
     background-color: #0078a0;
 }
 
-/* Mobile Responsiveness */
+/* Responsive Design */
 @media (max-width: 768px) {
-    .contact-box h2 {
+    .contact-form-container {
+        padding: 20px;
+    }
+
+    .contact-form-container h2 {
         font-size: 2em;
     }
 
     .contact-description {
         font-size: 1em;
-    }
-
-    .contact-box {
-        padding: 20px;
     }
 
     .btn-primary {
@@ -776,4 +778,20 @@ nav {
 
 .btn-close-white {
     filter: invert(1); /* Ensure the close button is visible on dark backgrounds */
+}
+
+/* Optional: Customize flash message styling */
+#flash-messages .alert {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#flash-messages .alert-success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+#flash-messages .alert-danger {
+    background-color: #dc3545;
+    color: #fff;
 }

@@ -166,47 +166,53 @@
             </div>
 
             <div class="post-navigation">
-                <button id="prev-post" class="nav-btn" onclick="navigatePost(-1)" disabled>Previous</button>
-                <button id="next-post" class="nav-btn" onclick="navigatePost(1)">Next</button>
+                <button id="prev-post" class="nav-btn">Previous</button>
+                <button id="next-post" class="nav-btn">Next</button>
             </div>
         </div>        
     </section>
 
-    <!-- Contact Section -->
-    <section class="section contact-section" id="contact-section">
-        <div class="container">
+<!-- Contact Section -->
+<section class="section contact-section" id="contact-section">
+    <div class="container">
+        <!-- Styled Contact Form Container -->
+        <div class="contact-form-container">
             <h2>Bands! We Need You!</h2>
+            <p class="contact-description">
+                Are you ready to rock? We’re looking to feature awesome bands like yours in our upcoming game, Festival Fever! 
+                Fill out the form below and let’s make some noise together!
+            </p>
+            <!-- Flash messages container -->
+            <div id="flash-messages"></div>
             <form id="contact-form" method="POST" action="{{ url_for('index') }}">
                 {{ form.hidden_tag() }}
                 <div class="form-group">
-                    <label for="band_name">Band Name</label>
-                    {{ form.band_name(class="form-control") }}
+                    {{ form.band_name(class="form-control", placeholder="Band Name") }}
                 </div>
                 <div class="form-group">
-                    <label for="band_contact">Band Contact</label>
-                    {{ form.band_contact(class="form-control") }}
+                    {{ form.band_contact(class="form-control", placeholder="Band Contact") }}
                 </div>
                 <div class="form-group">
-                    <label for="email">Email address</label>
-                    {{ form.email(class="form-control") }}
+                    {{ form.email(class="form-control", placeholder="Email Address") }}
                 </div>
                 <div class="form-group">
-                    <label for="band_social">Band Social(s)</label>
-                    {{ form.band_social(class="form-control") }}
+                    {{ form.band_social(class="form-control", placeholder="Band Social(s)") }}
                 </div>
                 <div class="form-group">
-                    <label for="message">Message</label>
-                    {{ form.message(class="form-control") }}
+                    {{ form.message(class="form-control", placeholder="Message") }}
                 </div>
                 <div class="form-group">
-                    <label for="captcha_question">{{ form.captcha_question }}</label>
-                    <div>{{ form.user_captcha_response(class="form-control") }}</div>
+                    {{ form.user_captcha_response(class="form-control", placeholder=form.captcha_question) }}
                     {{ form.captcha_answer(class="form-control", type="hidden") }}  <!-- Hidden field for CAPTCHA answer -->
                 </div>                
-                <button type="submit" class="btn btn-primary">Send Message</button>
-            </form>                                    
+                <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+            </form>
         </div>
-    </section>
+    </div>
+</section>
+
+
+
 
     <!-- Social Bar -->
     <div class="social-bar">
@@ -231,9 +237,14 @@
     </footer>
 
     <!-- Scripts -->
+    <script>
+        /* eslint-disable */
+        const posts = {{ posts | tojson }};
+        /* eslint-enable */
+    </script>   
+    <script src="/static/js/scripts.js"></script> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-    <script src="/static/js/scripts.js"></script>
 </body>
 </html>

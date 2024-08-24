@@ -125,7 +125,7 @@ def index():
         # Validate CAPTCHA
         if form.user_captcha_response.data != form.captcha_answer.data:
             flash('CAPTCHA validation failed. Please try again.', 'danger')
-            return redirect(url_for('index', _anchor='contact-section'))
+            return jsonify({'success': False, 'message': 'CAPTCHA validation failed. Please try again.'})
 
         # Proceed with form processing
         band_name = form.band_name.data
@@ -148,13 +148,12 @@ def index():
         """
         try:
             mail.send(msg)
-            flash('Message sent successfully!', 'success')
+            return jsonify({'success': True, 'message': 'Message sent successfully!'})
         except Exception as e:
             print(e)
-            flash('Error sending message. Please try again later.', 'danger')
-        
-        return redirect(url_for('index', _anchor='contact-section'))
+            return jsonify({'success': False, 'message': 'Error sending message. Please try again later.'})
 
+    # Render the page with the form
     posts = Post.query.order_by(Post.date_posted.desc()).all()
     posts_data = [
         {
