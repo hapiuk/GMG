@@ -179,4 +179,28 @@ $(document).ready(function () {
         }
         return color;
     }
+
+    // Bind delete button events
+    $('.delete-post').on('click', function (e) {
+        e.preventDefault();
+        const postId = $(this).data('post-id');
+        const confirmation = confirm("Are you sure you want to delete this post?");
+        if (confirmation) {
+            $.ajax({
+                url: `/delete_post/${postId}`,
+                type: 'POST',
+                data: {
+                    csrf_token: $('input[name="csrf_token"]').val()
+                },
+                success: function (response) {
+                    alert("Post deleted successfully.");
+                    location.reload();  // Refresh the page to reflect changes
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error deleting post:", status, error);
+                    alert("Failed to delete post.");
+                }
+            });
+        }
+    });
 });

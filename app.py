@@ -3,10 +3,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SubmitField, HiddenField
-from wtforms.validators import DataRequired, Email
 from flask_mail import Mail, Message
 from flask_wtf.csrf import CSRFProtect
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user, UserMixin
+from wtforms import StringField, TextAreaField, SubmitField, HiddenField, PasswordField
+from wtforms.validators import DataRequired, Email
 import requests
 from datetime import datetime
 import os
@@ -22,7 +23,7 @@ db_path = os.path.join(app.root_path, 'static', 'site.db')
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Initialize Flask-Mail (dummy config, will be overridden by DB settings)
+# Initialize Flask-Mail
 app.config['MAIL_SERVER'] = 'smtp.office365.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
@@ -40,18 +41,51 @@ app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static', 'uploads')
 db = SQLAlchemy(app)
 csrf = CSRFProtect(app)
 
+# Initialize Flask-Login
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'  # Redirect to login if unauthorized
+login_manager.login_message = "Please log in to access this page."
+login_manager.login_message_category = "warning"
+
 # Flag to ensure tables are created only once
 tables_created = False
 
+# Initialize Flask-Login
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
 # Models
-class User(db.Model):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), nullable=False, unique=True)
-    password = db.Column(db.String(150), nullable=False)
+    password_hash = db.Column(db.String(150), nullable=False)  # Updated to password_hash
     email = db.Column(db.String(150), nullable=False, unique=True)
     contact_number = db.Column(db.String(20))
     position = db.Column(db.String(100))
     location = db.Column(db.String(100))
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    @property
+    def is_active(self):
+        return True
+
+    @property
+    def is_authenticated(self):
+        return True
+
+    @property
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return str(self.id)
 
 class Media(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -119,7 +153,7 @@ class WishlistClick(db.Model):
 # Forms
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
-    password = StringField('Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
 
 class PostForm(FlaskForm):
@@ -159,8 +193,8 @@ def create_default_user():
     if User.query.count() == 0:
         default_user = User(
             username='admin',
-            password=generate_password_hash('GoblinsAreReal123!', method='pbkdf2:sha256'),
-            email='aaron.gomm@outlook.com',
+            password_hash=generate_password_hash('GoblinsAreReal123!', method='pbkdf2:sha256'),
+            email='admin@example.com',
             contact_number='07360079461',
             position='IT Systems and Website',
             location='Tamworth'
@@ -202,13 +236,19 @@ def serialize_post(post):
         'media': [{'media_type': media.media_type, 'media_url': media.media_url} for media in post.media]
     }
 
+# Before request to ensure default user is created
 @app.before_request
 def before_request():
     global tables_created
     if not tables_created:
-        db.create_all()  # Create any missing tables based on the current models
+        db.create_all()
+        create_default_user()
         tables_created = True
     get_email_settings()
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 # Application Routes
 @app.route('/', methods=['GET', 'POST'])
@@ -285,38 +325,39 @@ def index():
                            game_section_4=game_section_4)
 
 
+# Login route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    app.logger.debug("Login route accessed")
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard'))
+
     form = LoginForm()
-    print(form)
     if form.validate_on_submit():
-        username = form.username.data
-        password = form.password.data
-
-        user = User.query.filter_by(username=username).first()
-
-        if user and check_password_hash(user.password, password):
-            session['user'] = user.username
-            flash('Login successful!', 'success')
-            return redirect(url_for('dashboard'))
+        app.logger.debug(f"Form submitted with username: {form.username.data}")
+        user = User.query.filter_by(username=form.username.data).first()
+        if user and user.check_password(form.password.data):
+            login_user(user)
+            flash('Logged in successfully!', 'success')
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('dashboard'))
         else:
-            flash('Invalid username or password', 'error')
-
+            flash('Login Unsuccessful. Please check your username and password.', 'danger')
     return render_template('login.html', form=form)
 
+# Logout route
 @app.route('/logout')
+@login_required
 def logout():
-    session.pop('user', None)
-    flash('You have been logged out.', 'success')
+    logout_user()
+    flash('You have been logged out.', 'info')
     return redirect(url_for('login'))
 
+# Dashboard route
 @app.route('/dashboard', methods=['GET', 'POST'])
+@login_required
 def dashboard():
     form = PostForm()
-    if 'user' not in session:
-        flash('Please log in to access this page.', 'error')
-        return redirect(url_for('login'))
-
     # Fetch current game sections and About Us content
     game_section_1 = GameSection.query.filter_by(section_id=1).first()
     game_section_2 = GameSection.query.filter_by(section_id=2).first()
@@ -337,7 +378,7 @@ def dashboard():
         email_settings_form.mail_server.data = email_settings.mail_server
         email_settings_form.mail_port.data = email_settings.mail_port
         email_settings_form.mail_username.data = email_settings.mail_username
-        email_settings_form.mail_password.data = email_settings.mail_password  # Store password as plain text
+        email_settings_form.mail_password.data = email_settings.mail_password
         email_settings_form.mail_use_tls.data = str(email_settings.mail_use_tls)
         email_settings_form.mail_use_ssl.data = str(email_settings.mail_use_ssl)
         email_settings_form.default_sender_name.data = email_settings.default_sender_name
@@ -403,28 +444,57 @@ def dashboard():
 
 
 @app.route('/edit_post/<int:post_id>', methods=['POST'])
+@login_required
 def edit_post(post_id):
-    if 'user' not in session:
-        flash('Please log in to access this page.', 'error')
-        return redirect(url_for('login'))
-
     post = Post.query.get_or_404(post_id)
+    
     post.title = request.form['title']
     post.content = request.form['content']
+    
+    # Handle media files
+    media_files = request.files.getlist('media_files')
+    if media_files:
+        # Delete existing media associated with the post
+        Media.query.filter_by(post_id=post_id).delete()
+        
+        for media_file in media_files:
+            if media_file and media_file.filename:
+                filename = secure_filename(media_file.filename)
+                media_type = 'image' if 'image' in media_file.content_type else 'video'
+                media_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                
+                # Save the media file
+                media_file.save(media_path)
+                
+                # Create a new media entry in the database
+                media = Media(post_id=post.id, media_type=media_type, media_url=f"uploads/{filename}")
+                db.session.add(media)
+    
     db.session.commit()
     flash('Post updated successfully!', 'success')
     return redirect(url_for('dashboard'))
 
 @app.route('/delete_post/<int:post_id>', methods=['POST'])
+@login_required
 def delete_post(post_id):
-    if 'user' not in session:
-        flash('Please log in to access this page.', 'error')
-        return redirect(url_for('login'))
-
     post = Post.query.get_or_404(post_id)
+    
+    # Get all media associated with the post
+    media_items = Media.query.filter_by(post_id=post_id).all()
+    
+    # Delete media files from the filesystem
+    for media in media_items:
+        media_path = os.path.join(app.config['UPLOAD_FOLDER'], media.media_url.split('/')[-1])
+        if os.path.exists(media_path):
+            os.remove(media_path)
+    
+    # Delete media entries from the database
     Media.query.filter_by(post_id=post_id).delete()
+    
+    # Delete the post itself
     db.session.delete(post)
     db.session.commit()
+    
     flash('Post deleted successfully!', 'success')
     return redirect(url_for('dashboard'))
 
