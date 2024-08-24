@@ -94,4 +94,62 @@ document.addEventListener('DOMContentLoaded', () => {
             button.textContent = '🔇';
         }
     }
+
+    // Post navigation functionality
+    let currentPostIndex = 0;
+    const postsData = typeof posts !== 'undefined' ? posts : []; // Ensure posts are available
+
+    function navigatePost(direction) {
+        currentPostIndex += direction;
+
+        // Check bounds and update post index
+        if (currentPostIndex < 0) {
+            currentPostIndex = 0;
+        } else if (currentPostIndex >= postsData.length) {
+            currentPostIndex = postsData.length - 1;
+        }
+
+        // Update the post content
+        document.getElementById('post-title').textContent = postsData[currentPostIndex].title;
+        document.getElementById('post-content').textContent = postsData[currentPostIndex].content;
+
+        // Update media content
+        const mediaContainer = document.querySelector('.media-content');
+        mediaContainer.innerHTML = ''; // Clear existing media
+
+        postsData[currentPostIndex].media.forEach(media => {
+            if (media.media_type === 'image') {
+                const img = document.createElement('img');
+                img.src = `/uploads/${media.media_url.split('/').pop()}`;
+                img.className = 'post-image img-thumbnail';
+                img.alt = 'Post Image';
+                mediaContainer.appendChild(img);
+            } else if (media.media_type === 'video') {
+                const video = document.createElement('video');
+                video.controls = true;
+                const source = document.createElement('source');
+                source.src = `/uploads/${media.media_url.split('/').pop()}`;
+                source.type = 'video/mp4';
+                video.appendChild(source);
+                video.className = 'post-video';
+                mediaContainer.appendChild(video);
+            }
+        });
+
+        // Disable or enable buttons based on the current post index
+        document.getElementById('prev-post').disabled = currentPostIndex === 0;
+        document.getElementById('next-post').disabled = currentPostIndex === postsData.length - 1;
+    }
+
+    // Initialize post navigation buttons
+    document.getElementById('prev-post').addEventListener('click', () => {
+        navigatePost(-1);
+    });
+    document.getElementById('next-post').addEventListener('click', () => {
+        navigatePost(1);
+    });
+
+    // Initial button state setup
+    document.getElementById('prev-post').disabled = true;
+    document.getElementById('next-post').disabled = postsData.length <= 1;
 });

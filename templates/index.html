@@ -194,7 +194,18 @@
                     Fill out the form below and let’s make some noise together!
                 </p>
                 <!-- Flash messages container -->
-                <div id="flash-messages"></div> <!-- Ensure this is within the appropriate section -->
+                <div id="flash-messages">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            <div class="alert-container">
+                                {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+
                 <form id="contact-form" method="POST" action="{{ url_for('index') }}">
                     {{ form.hidden_tag() }}
                     <div class="form-group">
@@ -246,9 +257,9 @@
 
     <!-- Scripts -->
     <script>
-        /* eslint-disable */
         const posts = {{ posts | tojson }};
-        /* eslint-enable */
+        console.log(posts); // Verify the serialized data
+    </script>
     </script>   
     <script src="/static/js/index.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

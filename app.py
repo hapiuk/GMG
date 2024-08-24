@@ -183,6 +183,16 @@ def send_email(msg):
     except Exception as e:
         print(f"Error sending email: {e}")
         return jsonify({'success': False, 'message': 'Error sending message. Please try again later.'})
+    
+def serialize_post(post):
+    return {
+        'id': post.id,
+        'title': post.title,
+        'content': post.content,
+        'date_posted': post.date_posted.strftime('%Y-%m-%d %H:%M:%S'),
+        'author': post.author,
+        'media': [{'media_type': media.media_type, 'media_url': media.media_url} for media in post.media]
+    }
 
 @app.before_request
 def before_request():
@@ -195,39 +205,32 @@ def before_request():
 # Application Routes
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    # Fetch the 'About Us' content from the database
+
+    posts = Post.query.order_by(Post.date_posted.desc()).limit(5).all()
     about_us_content = AboutUs.query.first()
     if not about_us_content:
         about_us_content = {'text': '', 'image_url': ''}
 
-    # Fetch the movie section content
     movie_section = MovieSection.query.first()
 
-    # Initialize the contact form
     form = ContactForm()
 
-    # Handle the GET request by generating a new CAPTCHA
     if request.method == 'GET':
         form.captcha_question, form.captcha_answer.data = generate_captcha()
     
-    # Handle the POST request
     if request.method == 'POST':
         if not form.validate_on_submit():
-            # Return a JSON response with form validation errors
             return jsonify({'success': False, 'message': 'Form validation failed. Please check your inputs.'}), 400
 
-        # CAPTCHA validation
         if form.user_captcha_response.data != form.captcha_answer.data:
             return jsonify({'success': False, 'message': 'CAPTCHA validation failed. Please try again.'}), 400
 
-        # Extract form data
         band_name = form.band_name.data
         band_contact = form.band_contact.data
         email = form.email.data
         band_social = form.band_social.data
         message_body = form.message.data
 
-        # Prepare the email message
         msg = Message(
             'New Contact Form Submission',
             sender=app.config['MAIL_DEFAULT_SENDER'],
@@ -243,28 +246,16 @@ def index():
         {message_body}
         """
 
-        # Attempt to send the email
         try:
             mail.send(msg)
             return jsonify({'success': True, 'message': 'Message sent successfully!'}), 200, {'Content-Type': 'application/json'}
         except Exception as e:
-            # Log the exception for debugging
             app.logger.error(f"Error sending email: {e}")
             return jsonify({'success': False, 'message': 'Error sending message. Please try again later.'}), 500
 
-    # If it's not a form submission (GET request or invalid form), continue rendering the page
-    posts = Post.query.order_by(Post.date_posted.desc()).all()
-    posts_data = [
-        {
-            'title': post.title,
-            'content': post.content,
-            'date_posted': post.date_posted.strftime('%Y-%m-%d %H:%M:%S'),
-            'author': post.author,
-            'media': [{'media_type': media.media_type, 'media_url': media.media_url} for media in post.media]
-        } for post in posts
-    ]
+    # Serialize posts for JSON compatibility
+    posts_data = [serialize_post(post) for post in posts]
 
-    # Fetch game sections and their associated media
     game_section_1 = GameSection.query.filter_by(section_id=1).first()
     if game_section_1:
         game_section_1_media = GameMedia.query.filter_by(game_section_id=game_section_1.id, media_type='video').first()
@@ -289,6 +280,7 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    print(form)
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
@@ -312,6 +304,7 @@ def logout():
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
+    form = PostForm()
     if 'user' not in session:
         flash('Please log in to access this page.', 'error')
         return redirect(url_for('login'))
@@ -388,17 +381,17 @@ def dashboard():
     total_users = User.query.count()
 
     return render_template('dashboard.html', 
-                           post_form=post_form, 
-                           email_settings_form=email_settings_form,
-                           posts=posts, 
-                           total_posts=total_posts, 
-                           total_users=total_users, 
-                           about_us_content=about_us_content,
-                           game_section_1=game_section_1,
-                           game_section_2=game_section_2,
-                           game_section_3=game_section_3,
-                           game_section_4=game_section_4,
-                           movie_section=movie_section)
+                       form=form,
+                       email_settings_form=email_settings_form,
+                       posts=posts, 
+                       total_posts=total_posts, 
+                       total_users=total_users, 
+                       about_us_content=about_us_content,
+                       game_section_1=game_section_1,
+                       game_section_2=game_section_2,
+                       game_section_3=game_section_3,
+                       game_section_4=game_section_4,
+                       movie_section=movie_section)
 
 
 @app.route('/edit_post/<int:post_id>', methods=['POST'])
@@ -432,24 +425,44 @@ def edit_page_content():
     flash('Page content updated successfully!', 'success')
     return redirect(url_for('dashboard'))
 
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    form = ContactForm()
+    if form.validate_on_submit():
+        # Process the form data here
+        flash('Your message has been sent!', 'success')
+        return redirect(url_for('index'))
+    return render_template('index.html', form=form)
+
 @app.route('/create_post', methods=['POST'])
 def create_post():
-    title = request.form['title']
-    content = request.form['content']
-    author = session['user']
+    # Retrieve form data
+    title = request.form.get('title')
+    content = request.form.get('content')
+    author = session.get('user', 'Anonymous')  # Default to 'Anonymous' if user not in session
 
+    print(f"Received form data - Title: {title}, Content: {content}, Author: {author}")
+
+    if not title or not content:
+        flash('Title and content are required.', 'error')
+        return redirect(url_for('dashboard'))
+
+    # Create a new post
     post = Post(title=title, content=content, author=author)
     db.session.add(post)
     db.session.commit()
+    print(f"Post created with ID: {post.id}")
 
+    # Handle media files
     media_files = request.files.getlist('media_files')
+    print(f"Number of media files received: {len(media_files)}")
 
     if media_files and any(f.filename for f in media_files):
         if not os.path.exists(app.config['UPLOAD_FOLDER']):
             os.makedirs(app.config['UPLOAD_FOLDER'])
 
         for media_file in media_files:
-            if media_file and media_file.filename != '':
+            if media_file and media_file.filename:
                 filename = secure_filename(media_file.filename)
                 media_type = 'image' if 'image' in media_file.content_type else 'video'
                 media_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
@@ -457,10 +470,14 @@ def create_post():
 
                 media = Media(post_id=post.id, media_type=media_type, media_url=f"uploads/{filename}")
                 db.session.add(media)
+                print(f"Media file saved: {filename}")
 
-    db.session.commit()
+        db.session.commit()
+        print("Media files committed to the database.")
+
     flash('Post created successfully!', 'success')
     return redirect(url_for('dashboard'))
+
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
@@ -525,26 +542,33 @@ def edit_game_section(section_id):
     if not game_section:
         game_section = GameSection(section_id=section_id)
         db.session.add(game_section)
-        db.session.commit()  # Commit here to ensure the game_section has an ID
 
     header_image = request.files.get('section_header_image')
     summary_text = request.form.get('section_summary_text')
     gallery_files = request.files.getlist('section_gallery')
 
-    if header_image:
+    if summary_text:
+        game_section.summary_text = summary_text
+
+    # Ensure the upload folder exists
+    if not os.path.exists(app.config['UPLOAD_FOLDER']):
+        os.makedirs(app.config['UPLOAD_FOLDER'])
+
+    if header_image and header_image.filename != '':
         filename = secure_filename(header_image.filename)
         header_image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         game_section.header_image_url = url_for('uploaded_file', filename=filename)
 
-    if summary_text:
-        game_section.summary_text = summary_text
-
     if gallery_files:
+        # Clear existing gallery before adding new images
+        GameMedia.query.filter_by(game_section_id=game_section.id).delete()
+
         for media_file in gallery_files:
-            filename = secure_filename(media_file.filename)
-            media_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            new_media = GameMedia(media_url=url_for('uploaded_file', filename=filename), media_type='image', game_section_id=game_section.id)
-            db.session.add(new_media)
+            if media_file and media_file.filename != '':
+                filename = secure_filename(media_file.filename)
+                media_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                new_media = GameMedia(media_url=url_for('uploaded_file', filename=filename), media_type='image', game_section_id=game_section.id)
+                db.session.add(new_media)
 
     db.session.commit()
     flash(f'Game Section {section_id} updated successfully!', 'success')
