@@ -7,12 +7,15 @@ from wtforms import StringField, TextAreaField, SubmitField, HiddenField
 from wtforms.validators import DataRequired, Email
 from flask_mail import Mail, Message
 from flask_wtf.csrf import CSRFProtect
+import requests
 from datetime import datetime
 import os
 import random
 
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'your_default_secret_key')
+
+wishlist_clicks = 0
 
 # Configure database
 db_path = os.path.join(app.root_path, 'static', 'site.db')
@@ -108,6 +111,11 @@ class EmailSettings(db.Model):
     default_sender_name = db.Column(db.String(255), nullable=False)
     default_sender_email = db.Column(db.String(255), nullable=False)
 
+class WishlistClick(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    country = db.Column(db.String(100), nullable=True)
+    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
 # Forms
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -198,7 +206,7 @@ def serialize_post(post):
 def before_request():
     global tables_created
     if not tables_created:
-        db.create_all()
+        db.create_all()  # Create any missing tables based on the current models
         tables_created = True
     get_email_settings()
 
@@ -625,6 +633,54 @@ def settings():
                            game_section_3=GameSection.query.filter_by(section_id=3).first(),
                            game_section_4=GameSection.query.filter_by(section_id=4).first(),
                            about_us_content=AboutUs.query.first())
+
+# Exempt the /track-wishlist-click route from CSRF protection
+@app.route('/track-wishlist-click', methods=['POST'])
+@csrf.exempt
+def track_wishlist_click():
+    data = request.get_json()
+    ip_address = data.get('ip')
+
+    if not ip_address:
+        return jsonify({'error': 'IP address is missing'}), 400
+
+    country = 'Unknown'
+    try:
+        response = requests.get(f'http://ip-api.com/json/{ip_address}')
+        if response.status_code == 200:
+            data = response.json()
+            country = data.get('country', 'Unknown')
+    except Exception as e:
+        app.logger.error(f"Error retrieving geolocation data: {e}")
+        return jsonify({'error': 'Failed to retrieve geolocation data'}), 500
+
+    click = WishlistClick(country=country)
+    db.session.add(click)
+    db.session.commit()
+
+    return jsonify(success=True)
+
+@app.route('/get-wishlist-clicks', methods=['GET'])
+def get_wishlist_clicks():
+    clicks = WishlistClick.query.all()
+
+    # Calculate total clicks
+    total_clicks = len(clicks)
+
+    # Group clicks by country
+    clicks_by_country = {}
+    for click in clicks:
+        if click.country in clicks_by_country:
+            clicks_by_country[click.country] += 1
+        else:
+            clicks_by_country[click.country] = 1
+
+    return jsonify({
+        'total_clicks': total_clicks,
+        'clicks_by_country': clicks_by_country
+    })
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -245,3 +245,14 @@ nav {
     height: auto;
     border-radius: 8px;
 }
+
+#websiteStatsModal .modal-body {
+    max-height: 500px; /* Constrain the modal's height */
+    overflow-y: auto; /* Add scrolling if content exceeds the height */
+}
+
+#clicksByCountryChart {
+    max-width: 100%;
+    max-height: 300px; /* Adjust this to fit within your modal */
+    margin: 0 auto; /* Center the chart */
+}

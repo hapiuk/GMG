@@ -3,8 +3,65 @@ document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('.section');
     const navbar = document.getElementById('navbar');
     const welcomeSection = document.getElementById('welcome-section');
+    const consentModal = document.getElementById('consentModal');
 
-    // Scroll to a specific section
+    // Show consent modal on page load if not previously accepted
+    if (!localStorage.getItem('trackingAccepted')) {
+        consentModal.style.display = 'block';
+    }
+
+    // Handle tracking consent
+    document.getElementById('acceptTracking').addEventListener('click', function () {
+        localStorage.setItem('trackingAccepted', 'true');
+        consentModal.style.display = 'none';
+
+        // Attach tracking to wishlist buttons
+        trackWishlistClicks();
+    });
+
+    document.getElementById('declineTracking').addEventListener('click', function () {
+        consentModal.style.display = 'none';
+        localStorage.setItem('trackingAccepted', 'false');
+    });
+
+    function trackWishlistClicks() {
+        const wishlistButtons = document.querySelectorAll('.steam-wishlist-button');
+
+        wishlistButtons.forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetUrl = button.href;
+
+                // Fetch the user's IP address
+                $.getJSON('https://api.ipify.org?format=json', function(data) {
+                    const ipAddress = data.ip;
+
+                    // Send the IP address to the server as JSON
+                    $.ajax({
+                        url: '/track-wishlist-click',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({ ip: ipAddress }),
+                        success: function() {
+                            console.log('Wishlist click tracked successfully');
+                            window.open(targetUrl, '_blank');  // Open the Steam page in a new tab
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error:', xhr.responseText);  // Log server error message
+                            window.open(targetUrl, '_blank');  // Open the Steam page in a new tab even if tracking fails
+                        }
+                    });
+                });
+            });
+        });
+    }
+
+    // Attach tracking if consent was already given
+    if (localStorage.getItem('trackingAccepted') === 'true') {
+        trackWishlistClicks();
+    }
+
     const scrollToSection = (sectionIndex) => {
         const targetScroll = sections[sectionIndex].offsetTop;
         window.scrollTo({
@@ -13,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // Toggle navbar visibility based on scroll position
     const toggleNavbar = () => {
         const welcomeBottom = welcomeSection.getBoundingClientRect().bottom;
         if (welcomeBottom <= 0) {
@@ -23,7 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Handle wheel events for smooth scrolling between sections
     const handleWheelEvent = (event) => {
         event.preventDefault();
         const delta = event.deltaY;
@@ -38,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('wheel', handleWheelEvent, { passive: false });
     document.addEventListener('scroll', toggleNavbar);
 
-    // Touch event handlers for mobile devices
     let touchStartY = 0;
     let touchEndY = 0;
 
@@ -64,23 +118,18 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('touchmove', handleTouchMove, { passive: true });
     document.addEventListener('touchend', handleTouchEnd);
 
-    // Ensure the sound toggle button works
     const soundToggleButton = document.querySelector('.sound-toggle-btn');
-    
+
     if (soundToggleButton) {
         soundToggleButton.addEventListener('click', function () {
-            console.log('Sound toggle button clicked');
             toggleMute('trailer-video');
         });
-    } else {
-        console.warn('Sound toggle button not found!');
     }
 
     function toggleMute(videoId) {
         const video = document.getElementById(videoId);
 
         if (!video) {
-            console.error(`No video element found with ID: ${videoId}`);
             return;
         }
 
@@ -95,27 +144,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Post navigation functionality
     let currentPostIndex = 0;
-    const postsData = typeof posts !== 'undefined' ? posts : []; // Ensure posts are available
+    const postsData = typeof posts !== 'undefined' ? posts : [];
 
     function navigatePost(direction) {
         currentPostIndex += direction;
 
-        // Check bounds and update post index
         if (currentPostIndex < 0) {
             currentPostIndex = 0;
         } else if (currentPostIndex >= postsData.length) {
             currentPostIndex = postsData.length - 1;
         }
 
-        // Update the post content
         document.getElementById('post-title').textContent = postsData[currentPostIndex].title;
         document.getElementById('post-content').textContent = postsData[currentPostIndex].content;
 
-        // Update media content
         const mediaContainer = document.querySelector('.media-content');
-        mediaContainer.innerHTML = ''; // Clear existing media
+        mediaContainer.innerHTML = '';
 
         postsData[currentPostIndex].media.forEach(media => {
             if (media.media_type === 'image') {
@@ -136,12 +181,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Disable or enable buttons based on the current post index
         document.getElementById('prev-post').disabled = currentPostIndex === 0;
         document.getElementById('next-post').disabled = currentPostIndex === postsData.length - 1;
     }
 
-    // Initialize post navigation buttons
     document.getElementById('prev-post').addEventListener('click', () => {
         navigatePost(-1);
     });
@@ -149,7 +192,6 @@ document.addEventListener('DOMContentLoaded', () => {
         navigatePost(1);
     });
 
-    // Initial button state setup
     document.getElementById('prev-post').disabled = true;
     document.getElementById('next-post').disabled = postsData.length <= 1;
 });
