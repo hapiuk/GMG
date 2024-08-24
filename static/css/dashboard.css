@@ -221,3 +221,27 @@ nav {
 .media-content video:hover {
     transform: scale(1.05); /* Slightly enlarge on hover */
 }
+
+.movie-section-preview {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #1a1a1a;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.movie-preview-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+.trailer-video {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}

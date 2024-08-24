@@ -43,100 +43,111 @@
     <section class="section about-section" id="about-section">
         <div class="container">
             <div class="about-title">
+                <h2>About Us</h2>
             </div>
             <div class="about-content">
                 <div class="about-image">
-                    <img src="{{ url_for('static', filename='media/images/side_by_side_white_v2.png') }}" alt="About Image">
+                    <img src="{{ about_us_content.image_url }}" alt="About Image">
                 </div>
                 <div class="about-text">
-                    <p>
-                        Grave Mistake Games is an independent video game development studio founded in 2021. We are dedicated to crafting engaging and fun strategy and management experiences, with a particular emphasis on non-violent play. Our mission is to create immersive worlds that challenge players to think critically and creatively, fostering a gaming environment that is both stimulating and accessible to all.
-                    </p>
+                    <p>{{ about_us_content.text }}</p>
                 </div>
             </div>
         </div>  
     </section>
 
-    <!-- Game Section 1 -->
-    <section class="section gamesection1" id="gamesection1">
-        <video class="trailer-video" autoplay muted id="trailer-video">
-            <source src="{{ url_for('static', filename='media/videos/FestivalFeverTrailer.mp4') }}" type="video/mp4">
+<!-- Movie Section -->
+<section class="section movie-section" id="movie-section">
+    {% if movie_section and movie_section.video_url %}
+        <video class="trailer-video" autoplay muted loop id="trailer-video">
+            <source src="{{ movie_section.video_url }}" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <div class="overlay">
-            <!--<img src="{{ url_for('static', filename='media/images/festivalfeverwhite.png') }}" class="game-logo" alt="Festival Fever Logo">-->
-            <div class="game-summary">
-                <h2></h2>
-                <p></p>
-            </div>
-        </div>
         <button class="sound-toggle-btn" onclick="toggleMute('trailer-video')">🔇</button>
-    </section>
+    {% else %}
+        <p>No video currently available for this section.</p>
+    {% endif %}
+</section>
+
+
+<!-- Debugging output -->
+<p>Debug Video URL: {{ movie_section.video_url }}</p>
 
 <!-- Game Section 2 -->
-<section class="section gamesection2" id="gamesection2">
-    <div class="container">
-        <div class="game-content">
-            <div class="game-info-side">
-                <img src="{{ url_for('static', filename='media/images/desgn.png') }}" alt="Design and Build" class="game-header-image">
-                <div class="game-text">
-                    <p>
-                        Festival Fever is a game about putting on the best and biggest music festival. Design and build your festival from the ground up. Create stages, food stalls, and entertainment areas to cater to your punters' needs.
-                    </p>
+<section class="section game-section" id="game-section-2">
+    {% if game_section_2 %}
+        <div class="container">
+            <div class="game-content">
+                <div class="game-info-side">
+                    <img src="{{ game_section_2.header_image_url }}" alt="Design and Build" class="game-header-image">
+                    <div class="game-text">
+                        <p>{{ game_section_2.summary_text }}</p>
+                    </div>
                 </div>
-            </div>
-            <div class="game-gallery-side">
-                <div class="gallery">
-                    <img src="{{ url_for('static', filename='media/images/Stage.jpeg') }}" alt="Stage Image">
-                    <img src="{{ url_for('static', filename='media/images/tents2.gif') }}" alt="Tents Image">
-                    <img src="{{ url_for('static', filename='media/images/frontday.jpeg') }}" alt="Front Day Image">
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Game Section 3 -->
-<section class="section gamesection3" id="gamesection3">
-    <div class="container">
-        <div class="game-content">
-            <div class="game-info-side">
-                <img src="{{ url_for('static', filename='media/images/CREATE.png') }}" alt="Create the Lineup" class="game-header-image">
-                <div class="game-text">
-                    <p>
-                        Curate an epic lineup by hiring bands from various genres. Balance the egos of rock legends with the demands of up-and-coming artists. Match the right acts to your audience’s preferences to keep the crowd energized and engaged throughout the festival.
-                    </p>
-                </div>
-            </div>
-            <div class="game-gallery-side">
-                <div class="gallery">
-                    <img src="{{ url_for('static', filename='media/images/screenshot4.jpg') }}" alt="Screenshot 4">
-                    <img src="{{ url_for('static', filename='media/images/screenshot3.jpg') }}" alt="Screenshot 3">
-                    <img src="{{ url_for('static', filename='media/images/screenshot2.jpg') }}" alt="Screenshot 2">
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Game Section 4 -->
-<section class="section gamesection4" id="gamesection4">
-    <div class="container">
-        <div class="game-content">
-            <div class="game-info-side">
-                <img src="{{ url_for('static', filename='media/images/golive.png') }}" alt="Go Live" class="game-header-image">
-                <div class="speech-container">
-                    <img src="{{ url_for('static', filename='media/images/thejgraves_Roadie_fullrender_NOBG.png') }}" alt="Jgraves" class="speech-image">
-                    <div class="speech-bubble">
-                        <p>
-                            Once you think you’re ready, start letting the punters in and get that first band on stage! But make sure you pay attention to your festival goers' feedback and needs. Keep them satisfied with a variety of food options, clean facilities, and plenty of entertainment. Happy punters mean more ticket sales and a growing reputation.
-                        </p>
+                <div class="game-gallery-side">
+                    <div class="gallery">
+                        {% for media in game_section_2.gallery %}
+                            <img src="{{ media.media_url }}" alt="Gallery Image">
+                        {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% else %}
+        <p>Game Section 2 is not yet available.</p>
+    {% endif %}
 </section>
+
+<!-- Game Section 3 -->
+<section class="section game-section" id="game-section-3">
+    {% if game_section_3 %}
+        <div class="container">
+            <div class="game-content">
+                <div class="game-info-side">
+                    <img src="{{ game_section_3.header_image_url }}" alt="Create the Lineup" class="game-header-image">
+                    <div class="game-text">
+                        <p>{{ game_section_3.summary_text }}</p>
+                    </div>
+                </div>
+                <div class="game-gallery-side">
+                    <div class="gallery">
+                        {% for media in game_section_3.gallery %}
+                            <img src="{{ media.media_url }}" alt="Gallery Image">
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p>Game Section 3 is not yet available.</p>
+    {% endif %}
+</section>
+
+<!-- Game Section 4 -->
+<section class="section game-section" id="game-section-4">
+    {% if game_section_4 %}
+        <div class="container">
+            <div class="game-content">
+                <div class="game-info-side">
+                    <img src="{{ game_section_4.header_image_url }}" alt="Go Live" class="game-header-image">
+                    <div class="game-text">
+                        <p>{{ game_section_4.summary_text }}</p>
+                    </div>
+                </div>
+                <div class="game-gallery-side">
+                    <div class="gallery">
+                        {% for media in game_section_4.gallery %}
+                            <img src="{{ media.media_url }}" alt="Gallery Image">
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p>Game Section 4 is not yet available.</p>
+    {% endif %}
+</section>
+
 
     <!-- News Section -->
     <section class="section news-section" id="news-section">
@@ -172,47 +183,44 @@
         </div>        
     </section>
 
-<!-- Contact Section -->
-<section class="section contact-section" id="contact-section">
-    <div class="container">
-        <!-- Styled Contact Form Container -->
-        <div class="contact-form-container">
-            <h2>Bands! We Need You!</h2>
-            <p class="contact-description">
-                Are you ready to rock? We’re looking to feature awesome bands like yours in our upcoming game, Festival Fever! 
-                Fill out the form below and let’s make some noise together!
-            </p>
-            <!-- Flash messages container -->
-            <div id="flash-messages"></div>
-            <form id="contact-form" method="POST" action="{{ url_for('index') }}">
-                {{ form.hidden_tag() }}
-                <div class="form-group">
-                    {{ form.band_name(class="form-control", placeholder="Band Name") }}
-                </div>
-                <div class="form-group">
-                    {{ form.band_contact(class="form-control", placeholder="Band Contact") }}
-                </div>
-                <div class="form-group">
-                    {{ form.email(class="form-control", placeholder="Email Address") }}
-                </div>
-                <div class="form-group">
-                    {{ form.band_social(class="form-control", placeholder="Band Social(s)") }}
-                </div>
-                <div class="form-group">
-                    {{ form.message(class="form-control", placeholder="Message") }}
-                </div>
-                <div class="form-group">
-                    {{ form.user_captcha_response(class="form-control", placeholder=form.captcha_question) }}
-                    {{ form.captcha_answer(class="form-control", type="hidden") }}  <!-- Hidden field for CAPTCHA answer -->
-                </div>                
-                <button type="submit" class="btn btn-primary btn-block">Send Message</button>
-            </form>
+    <!-- Contact Section -->
+    <section class="section contact-section" id="contact-section">
+        <div class="container">
+            <!-- Styled Contact Form Container -->
+            <div class="contact-form-container">
+                <h2>Bands! We Need You!</h2>
+                <p class="contact-description">
+                    Are you ready to rock? We’re looking to feature awesome bands like yours in our upcoming game, Festival Fever! 
+                    Fill out the form below and let’s make some noise together!
+                </p>
+                <!-- Flash messages container -->
+                <div id="flash-messages"></div> <!-- Ensure this is within the appropriate section -->
+                <form id="contact-form" method="POST" action="{{ url_for('index') }}">
+                    {{ form.hidden_tag() }}
+                    <div class="form-group">
+                        {{ form.band_name(class="form-control", placeholder="Band Name") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.band_contact(class="form-control", placeholder="Band Contact") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.email(class="form-control", placeholder="Email Address") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.band_social(class="form-control", placeholder="Band Social(s)") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.message(class="form-control", placeholder="Message") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.user_captcha_response(class="form-control", placeholder=form.captcha_question) }}
+                        {{ form.captcha_answer(class="form-control", type="hidden") }}  <!-- Hidden field for CAPTCHA answer -->
+                    </div>                
+                    <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+                </form>
+            </div>
         </div>
-    </div>
-</section>
-
-
-
+    </section>
 
     <!-- Social Bar -->
     <div class="social-bar">
@@ -224,7 +232,7 @@
     <!-- Floating Widget -->
     <div class="floating-widget">
         <img src="/static/media/images/festivalfeverwhite.png" alt="Game Logo">
-        <a href="https://store.steampowered.com/app/1849940/Festival_Fever/" class="steam-wishlist-button" target="_blank">
+        <a href="/dashboard" class="steam-wishlist-button" target="_blank">
             <i class="fab fa-steam"></i> Wishlist Festival Fever!
         </a>
     </div>
@@ -242,7 +250,7 @@
         const posts = {{ posts | tojson }};
         /* eslint-enable */
     </script>   
-    <script src="/static/js/scripts.js"></script> 
+    <script src="/static/js/index.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
