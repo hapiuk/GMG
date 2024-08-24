@@ -181,4 +181,29 @@ document.addEventListener('DOMContentLoaded', () => {
             displayFlashMessage('An error occurred. Please try again.', 'danger');
         });
     });
+
+    // Display flash messages
+    function displayFlashMessage(message, category) {
+        const alertBox = document.createElement('div');
+        alertBox.className = `alert alert-${category} alert-dismissible fade show`;
+        alertBox.role = 'alert';
+        alertBox.innerHTML = `
+            ${message}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        `;
+        document.getElementById('flash-message-container').appendChild(alertBox);
+
+        setTimeout(() => {
+            $(alertBox).alert('close');
+        }, 5000); // Auto close after 5 seconds
+    }
+
+    // Check if there's a flash message in the session
+    const flashMessage = "{{ get_flashed_messages(with_categories=true) }}";
+    if (flashMessage) {
+        const [category, message] = flashMessage.split('|');
+        displayFlashMessage(message, category);
+    }
 });

@@ -116,22 +116,28 @@ def generate_captcha():
 @app.route('/', methods=['GET', 'POST'])
 def index():
     form = ContactForm()
-    debug_mode = False  # Set this to False in production
 
     if request.method == 'GET':
+        # Generate a CAPTCHA question and store it in the form object
         form.captcha_question, form.captcha_answer.data = generate_captcha()
 
     if form.validate_on_submit():
+        # Validate CAPTCHA
         if form.user_captcha_response.data != form.captcha_answer.data:
-            return jsonify(success=False, message='CAPTCHA validation failed.')
+            flash('CAPTCHA validation failed. Please try again.', 'danger')
+            return redirect(url_for('index', _anchor='contact-section'))
 
+        # Proceed with form processing
         band_name = form.band_name.data
         band_contact = form.band_contact.data
         email = form.email.data
         band_social = form.band_social.data
         message_body = form.message.data
 
-        msg_content = f"""
+        msg = Message('New Contact Form Submission',
+                      sender=app.config['MAIL_DEFAULT_SENDER'],
+                      recipients=[app.config['MAIL_USERNAME']])
+        msg.body = f"""
         Band Name: {band_name}
         Band Contact: {band_contact}
         Email Address: {email}
@@ -140,26 +146,15 @@ def index():
         Message:
         {message_body}
         """
+        try:
+            mail.send(msg)
+            flash('Message sent successfully!', 'success')
+        except Exception as e:
+            print(e)
+            flash('Error sending message. Please try again later.', 'danger')
+        
+        return redirect(url_for('index', _anchor='contact-section'))
 
-        if debug_mode:
-            # In debug mode, print the email content instead of sending it
-            print("Debug Mode: Email content:")
-            print(msg_content)
-            return jsonify(success=True, message='Debug mode active: Email not sent, but content was logged.')
-        else:
-            # Only attempt to send the email if not in debug mode
-            msg = Message('New Contact Form Submission',
-                          sender=app.config['MAIL_DEFAULT_SENDER'],
-                          recipients=[app.config['MAIL_USERNAME']])
-            msg.body = msg_content
-            try:
-                mail.send(msg)
-                return jsonify(success=True, message='Message sent successfully!')
-            except Exception as e:
-                print(f"Email send failed: {e}")
-                return jsonify(success=False, message='Error sending message.')
-
-    # In case of GET request or invalid form submission, return the index page
     posts = Post.query.order_by(Post.date_posted.desc()).all()
     posts_data = [
         {
