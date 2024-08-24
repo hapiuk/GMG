@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
+
     <!-- Navbar -->
     <div class="navbar" id="navbar">
         <nav>
@@ -174,22 +175,36 @@
     <!-- Contact Section -->
     <section class="section contact-section" id="contact-section">
         <div class="container">
-            <h2>Contact Us</h2>
-            <form id="contact-form" method="POST" action="">
+            <h2>Bands! We Need You!</h2>
+            <form id="contact-form" method="POST" action="{{ url_for('index') }}">
+                {{ form.hidden_tag() }}
                 <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
+                    <label for="band_name">Band Name</label>
+                    {{ form.band_name(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    <label for="band_contact">Band Contact</label>
+                    {{ form.band_contact(class="form-control") }}
                 </div>
                 <div class="form-group">
                     <label for="email">Email address</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" required>
+                    {{ form.email(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    <label for="band_social">Band Social(s)</label>
+                    {{ form.band_social(class="form-control") }}
                 </div>
                 <div class="form-group">
                     <label for="message">Message</label>
-                    <textarea class="form-control" id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+                    {{ form.message(class="form-control") }}
                 </div>
+                <div class="form-group">
+                    <label for="captcha_question">{{ form.captcha_question }}</label>
+                    <div>{{ form.user_captcha_response(class="form-control") }}</div>
+                    {{ form.captcha_answer(class="form-control", type="hidden") }}  <!-- Hidden field for CAPTCHA answer -->
+                </div>                
                 <button type="submit" class="btn btn-primary">Send Message</button>
-            </form>
+            </form>                                    
         </div>
     </section>
 
@@ -216,64 +231,9 @@
     </footer>
 
     <!-- Scripts -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            let currentPostIndex = 0;
-            const posts = JSON.parse('{{ posts | tojson | safe }}'); // Ensure posts data is correctly passed as JSON
-
-            function navigatePost(direction) {
-                currentPostIndex += direction;
-
-                if (currentPostIndex < 0 || currentPostIndex >= posts.length) {
-                    return; // Do nothing if out of bounds
-                }
-
-                // Update the post content
-                document.getElementById('post-title').textContent = posts[currentPostIndex].title;
-                document.getElementById('post-content').textContent = posts[currentPostIndex].content;
-
-                // Update media content
-                const mediaContainer = document.querySelector('.media-content');
-                mediaContainer.innerHTML = ''; // Clear existing media
-
-                posts[currentPostIndex].media.forEach(media => {
-                    if (media.media_type === 'image') {
-                        const img = document.createElement('img');
-                        img.src = `/uploads/${media.media_url.split('/').pop()}`;
-                        img.className = 'post-image img-thumbnail';
-                        img.alt = 'Post Image';
-                        mediaContainer.appendChild(img);
-                    } else if (media.media_type === 'video') {
-                        const video = document.createElement('video');
-                        video.controls = true;
-                        const source = document.createElement('source');
-                        source.src = `/uploads/${media.media_url.split('/').pop()}`;
-                        source.type = 'video/mp4';
-                        video.appendChild(source);
-                        video.className = 'post-video';
-                        mediaContainer.appendChild(video);
-                    }
-                });
-
-                // Disable or enable buttons based on the current post index
-                document.getElementById('prev-post').disabled = currentPostIndex === 0;
-                document.getElementById('next-post').disabled = currentPostIndex === posts.length - 1;
-            }
-
-            // Initialize post navigation buttons
-            document.getElementById('prev-post').addEventListener('click', () => navigatePost(-1));
-            document.getElementById('next-post').addEventListener('click', () => navigatePost(1));
-
-            // Initial button state
-            document.getElementById('prev-post').disabled = true;
-            if (posts.length <= 1) {
-                document.getElementById('next-post').disabled = true;
-            }
-        });
-    </script>       
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <script src="/static/js/scripts.js"></script>
 </body>
 </html>

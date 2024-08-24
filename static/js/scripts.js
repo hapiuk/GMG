@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     document.addEventListener('wheel', handleWheelEvent, { passive: false });
-
     document.addEventListener('scroll', toggleNavbar);
 
     // Touch event handlers for mobile devices
@@ -86,33 +85,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Ensure the sound toggle button works
-    document.querySelector('.sound-toggle-btn').addEventListener('click', function() {
+    document.querySelector('.sound-toggle-btn').addEventListener('click', function () {
         toggleMute('trailer-video');
-    });
-
-    // Video playback ended event listener
-    const videoElement = document.getElementById('trailer-video');
-    videoElement.addEventListener('ended', function() {
-        console.log('Video playback ended.');
-        document.getElementById('speech-container').style.display = 'flex'; // Show the speech bubble
     });
 
     // Post navigation functionality
     let currentPostIndex = 0;
-    const posts = JSON.parse('{{ posts|tojson }}'); // Pass the posts data to JavaScript
+    const postsData = typeof posts !== 'undefined' ? posts : []; // Check if posts is defined
 
     function navigatePost(direction) {
         currentPostIndex += direction;
 
+        if (currentPostIndex < 0 || currentPostIndex >= postsData.length) {
+            return; // Do nothing if out of bounds
+        }
+
         // Update the post content
-        document.getElementById('post-title').textContent = posts[currentPostIndex].title;
-        document.getElementById('post-content').textContent = posts[currentPostIndex].content;
+        document.getElementById('post-title').textContent = postsData[currentPostIndex].title;
+        document.getElementById('post-content').textContent = postsData[currentPostIndex].content;
 
         // Update media content
         const mediaContainer = document.querySelector('.media-content');
         mediaContainer.innerHTML = ''; // Clear existing media
 
-        posts[currentPostIndex].media.forEach(media => {
+        postsData[currentPostIndex].media.forEach(media => {
             if (media.media_type === 'image') {
                 const img = document.createElement('img');
                 img.src = `/uploads/${media.media_url.split('/').pop()}`;
@@ -133,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Disable or enable buttons based on the current post index
         document.getElementById('prev-post').disabled = currentPostIndex === 0;
-        document.getElementById('next-post').disabled = currentPostIndex === posts.length - 1;
+        document.getElementById('next-post').disabled = currentPostIndex === postsData.length - 1;
     }
 
     // Initialize post navigation buttons
@@ -142,7 +138,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial button state
     document.getElementById('prev-post').disabled = true;
-    if (posts.length <= 1) {
+    if (postsData.length <= 1) {
         document.getElementById('next-post').disabled = true;
     }
+
+    // Form submission handling with AJAX
+    const contactForm = document.getElementById('contact-form');
+    contactForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(contactForm);
+        const csrfToken = document.querySelector('input[name="csrf_token"]').value;
+
+        console.log("Form submitted with the following data:");
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
+
+        fetch(contactForm.action, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrfToken
+            },
+            body: formData
+        })
+        .then(response => {
+            console.log("Received response:");
+            console.log(response);
+            return response.json();
+        })
+        .then(data => {
+            console.log("Parsed JSON data:");
+            console.log(data);
+            if (data.success) {
+                displayFlashMessage(data.message, 'success');
+            } else {
+                displayFlashMessage(data.message, 'danger');
+            }
+        })
+        .catch(error => {
+            console.error('Error during form submission:', error);
+            displayFlashMessage('An error occurred. Please try again.', 'danger');
+        });
+    });
 });

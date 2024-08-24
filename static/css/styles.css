@@ -438,111 +438,134 @@ nav {
 
 /* News Section */
 .news-section {
-    background-image: url('/static/media/images/background.jpeg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-    z-index: 1;
-}
-
-.news-section::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Dark overlay */
-    z-index: -1;
-}
-
-.post-navigation {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.nav-btn {
-    background-color: #1a1a1a;
-    color: #f0f0f0;
-    border: 1px solid #444;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
-    transition: background-color 0.3s;
-}
-
-.nav-btn:hover {
-    background-color: #333;
-}
-
-.nav-btn:disabled {
-    background-color: #444;
-    cursor: not-allowed;
-}
-
-.news-section h2 {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 2em;
-    color: #ffffff;
-}
-
-#news-container {
+    min-height: 100vh; /* Ensure the news section is at least the height of the viewport */
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.8); /* More opaque background to match the theme */
 }
 
 .news-post {
-    background-color: #2a2a2a;
-    padding: 20px;
+    max-width: 85%; /* Increase width to fill out the space */
+    width: 100%;
+    background-color: rgba(26, 26, 26, 0.8); /* Darker background with 80% opacity */
+    padding: 30px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5); /* Slightly darker shadow */
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.news-post h3 {
-    margin-top: 0;
-    font-size: 1.5em;
-    color: #ffffff;
+    color: #f0f0f0; /* Ensure text color matches the theme */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto; /* Adjust height to fit content */
+    box-sizing: border-box;
+    margin: auto; /* Center the post horizontally */
+    text-align: center; /* Center the text within the post */
+    backdrop-filter: blur(10px); /* Apply a blur to the background */
+    position: relative; /* Ensure proper positioning of elements inside */
 }
 
 .news-post p {
-    font-size: 1.1em;
-    color: #cccccc;
+    font-size: 1.2em; /* Increase font size for better readability */
 }
 
-.news-post img {
+.media-content {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.post-image {
+    max-width: 30%; /* Control the image size */
+    height: auto;
+    cursor: pointer; /* Indicate that images can be clicked to enlarge */
+    border-radius: 5px; /* Maintain consistent border radius */
+}
+
+.post-video {
     max-width: 100%;
     height: auto;
     margin-top: 10px;
-    transition: transform 0.3s ease;
 }
 
-.news-post img:hover {
-    transform: scale(1.1);
+/* News Section */
+.news-section {
+    min-height: 100vh; /* Ensure the news section is at least the height of the viewport */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    padding: 40px; /* Increase padding for more space */
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.7); /* Slightly opaque background */
 }
 
-.news-post video {
+.news-post {
+    max-width: 80vw; /* Take up 80% of the viewport width */
+    width: 100%;
+    background-color: rgba(26, 26, 26, 0.6); /* Dark background with slight opacity */
+    padding: 30px; /* Increase padding for more content space */
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    margin-bottom: 20px; /* Add some space at the bottom */
+    color: #f0f0f0; /* Light text color for contrast */
+    min-height: 50vh; /* Ensure a minimum height of 50% of the viewport */
+    max-height: 70vh; /* Limit the maximum height to 70% of the viewport */
+    overflow-y: auto; /* Allow scrolling if content exceeds the max height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Ensure content is spaced out evenly */
+}
+
+.media-content {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.post-image {
+    max-width: 33%; /* Control the image size */
+    height: auto;
+    cursor: pointer; /* Indicate that images can be clicked to enlarge */
+}
+
+.post-video {
     max-width: 100%;
     height: auto;
     margin-top: 10px;
 }
 
-.news-post a {
-    display: inline-block;
-    margin-top: 10px;
-    color: #00adee;
-    text-decoration: none;
-    font-weight: bold;
+/* Navigation Buttons */
+.post-navigation {
+    display: flex;
+    justify-content: space-between; /* Ensure buttons are evenly spaced on each side */
+    width: 100%;
+    max-width: 80vw; /* Match the max width of the news post */
+    margin: 20px auto 0 auto; /* Center the navigation below the news post */
 }
 
-.news-post a:hover {
-    text-decoration: underline;
+.nav-btn {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 15px 25px; /* Increase padding to match the size of the content box */
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1.2em; /* Increase font size for better readability */
+    transition: background-color 0.3s;
 }
+
+.nav-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
 
 /* Post Image Gallery Styling */
 .media-content {
@@ -572,7 +595,6 @@ nav {
 }
 
 /* Contact Section */
-/* Contact Section Background */
 .contact-section {
     background-image: url('/static/media/images/background.jpeg');
     background-size: cover;
@@ -580,6 +602,11 @@ nav {
     background-repeat: no-repeat;
     position: relative;
     z-index: 1;
+    padding: 60px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Full height for consistency with other sections */
 }
 
 .contact-section::before {
@@ -589,24 +616,43 @@ nav {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Slightly lighter overlay */
+    background-color: rgba(0, 0, 0, 0.7);
     z-index: -1;
 }
 
-.contact-section h2 {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 2em;
-    color: #ffffff;
+.contact-box {
+    max-width: 800px;
+    width: 100%;
+    background-color: rgba(26, 26, 26, 0.6); /* Slightly transparent background */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    color: #f0f0f0;
+    margin: 0 auto;
 }
 
-#contact-form {
-    max-width: 600px;
-    margin: 0 auto;
+.contact-box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.contact-description {
+    text-align: center;
+    font-size: 1.2em;
+    margin-bottom: 30px;
 }
 
 .form-group {
     margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
 }
 
 .form-control {
@@ -638,25 +684,23 @@ nav {
     background-color: #0078a0;
 }
 
-/* Flash Messages */
-.flash-messages {
-    width: 80%;
-    margin: 20px auto;
-}
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .contact-box h2 {
+        font-size: 2em;
+    }
 
-.alert {
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    color: #ffffff;
-}
+    .contact-description {
+        font-size: 1em;
+    }
 
-.alert-success {
-    background-color: #4CAF50;
-}
+    .contact-box {
+        padding: 20px;
+    }
 
-.alert-error {
-    background-color: #f44336;
+    .btn-primary {
+        padding: 12px 20px;
+    }
 }
 
 .media-content {
@@ -718,4 +762,18 @@ nav {
     padding: 50px;
     background-color: rgba(0, 0, 0, 0.6); /* Optional: Add a semi-transparent background to the content for better readability */
     border-radius: 10px; /* Optional: Round the corners of the content background */
+}
+
+/* Toasts */
+#toast-container .toast {
+    opacity: 0.95; /* Slight transparency */
+    margin-bottom: 1rem; /* Spacing between toasts */
+}
+
+.toast-body {
+    font-size: 1rem; /* Adjust the font size */
+}
+
+.btn-close-white {
+    filter: invert(1); /* Ensure the close button is visible on dark backgrounds */
 }
