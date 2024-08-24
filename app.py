@@ -67,7 +67,7 @@ class User(db.Model, UserMixin):
     location = db.Column(db.String(100))
 
     def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
+        self.password_hash = generate_password_hash(password, method='pbkdf2:sha256')
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
@@ -203,21 +203,6 @@ def create_default_user():
         db.session.commit()
         print("Default user created.")
 
-def get_email_settings():
-    settings = EmailSettings.query.first()
-    if settings:
-        app.config['MAIL_SERVER'] = settings.mail_server
-        app.config['MAIL_PORT'] = settings.mail_port
-        app.config['MAIL_USERNAME'] = settings.mail_username
-        app.config['MAIL_PASSWORD'] = settings.mail_password
-        app.config['MAIL_USE_TLS'] = settings.mail_use_tls
-        app.config['MAIL_USE_SSL'] = settings.mail_use_ssl
-        app.config['MAIL_DEFAULT_SENDER'] = (settings.default_sender_name, settings.default_sender_email)
-        
-        # Reinitialize the mail object after loading settings
-        global mail
-        mail = Mail(app)
-
 def send_email(msg):
     try:
         with mail.connect() as conn:  # Manually connect to the mail server
@@ -236,6 +221,27 @@ def serialize_post(post):
         'media': [{'media_type': media.media_type, 'media_url': media.media_url} for media in post.media]
     }
 
+def get_email_settings():
+    settings = EmailSettings.query.first()
+    if settings:
+        app.config['MAIL_SERVER'] = settings.mail_server
+        app.config['MAIL_PORT'] = settings.mail_port
+        app.config['MAIL_USERNAME'] = settings.mail_username
+        app.config['MAIL_PASSWORD'] = settings.mail_password
+        app.config['MAIL_USE_TLS'] = settings.mail_use_tls
+        app.config['MAIL_USE_SSL'] = settings.mail_use_ssl
+        app.config['MAIL_DEFAULT_SENDER'] = (settings.default_sender_name, settings.default_sender_email)
+        
+        # Log the settings
+        app.logger.debug(f"Email settings applied: {settings.mail_server}, {settings.mail_port}, {settings.mail_username}")
+        
+        # Reinitialize the mail object after loading settings
+        global mail
+        mail = Mail(app)
+    else:
+        app.logger.error("No email settings found in the database.")
+
+
 # Before request to ensure default user is created
 @app.before_request
 def before_request():
@@ -249,6 +255,15 @@ def before_request():
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+@app.route('/inspect-settings')
+def inspect_settings():
+    settings = EmailSettings.query.first()
+    if settings:
+        return f"Server: {settings.mail_server}, Port: {settings.mail_port}, User: {settings.mail_username}"
+    else:
+        return "No settings found"
+
 
 # Application Routes
 @app.route('/', methods=['GET', 'POST'])
@@ -503,14 +518,45 @@ def edit_page_content():
     flash('Page content updated successfully!', 'success')
     return redirect(url_for('dashboard'))
 
-@app.route('/contact', methods=['GET', 'POST'])
+@app.route('/contact', methods=['POST'])
 def contact():
     form = ContactForm()
     if form.validate_on_submit():
-        # Process the form data here
-        flash('Your message has been sent!', 'success')
-        return redirect(url_for('index'))
-    return render_template('index.html', form=form)
+        if form.user_captcha_response.data != form.captcha_answer.data:
+            # CAPTCHA validation failed
+            return jsonify({'success': False, 'message': 'CAPTCHA validation failed. Please try again.'}), 400
+        
+        # If CAPTCHA is correct, proceed with email sending
+        band_name = form.band_name.data
+        band_contact = form.band_contact.data
+        email = form.email.data
+        band_social = form.band_social.data
+        message_body = form.message.data
+
+        msg = Message(
+            'New Contact Form Submission',
+            sender=app.config['MAIL_DEFAULT_SENDER'],
+            recipients=[app.config['MAIL_USERNAME']]
+        )
+        msg.body = f"""
+        Band Name: {band_name}
+        Band Contact: {band_contact}
+        Email Address: {email}
+        Band Social(s): {band_social}
+
+        Message:
+        {message_body}
+        """
+
+        try:
+            mail.send(msg)
+            return jsonify({'success': True, 'message': 'Your message has been sent!'}), 200
+        except Exception as e:
+            app.logger.error(f"Error sending email: {e}")
+            return jsonify({'success': False, 'message': 'Error sending message. Please try again later.'}), 500
+    else:
+        # Form validation failed (e.g., missing required fields)
+        return jsonify({'success': False, 'message': 'Form validation failed. Please check your inputs.'}), 400
 
 @app.route('/create_post', methods=['POST'])
 def create_post():

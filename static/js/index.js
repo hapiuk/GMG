@@ -194,4 +194,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('prev-post').disabled = true;
     document.getElementById('next-post').disabled = postsData.length <= 1;
+
+    // AJAX form submission for the contact form
+    $('#contact-form').on('submit', function (event) {
+        event.preventDefault();
+        
+        $.ajax({
+            url: '/contact',
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function (response) {
+                console.log(response); // Log the response to see what is returned
+                if (response.success) {
+                    $('#flash-messages').html('<div class="alert alert-success">' + response.message + '</div>');
+                    $('#contact-form')[0].reset();
+                } else {
+                    $('#flash-messages').html('<div class="alert alert-danger">An error occurred: ' + response.message + '</div>');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error); // Log the error
+                console.error('Response:', xhr.responseText); // Log the response text
+                $('#flash-messages').html('<div class="alert alert-danger">There was an error processing your request. Refresh the page and please try again.</div>');
+            }
+        });
+    });
 });
