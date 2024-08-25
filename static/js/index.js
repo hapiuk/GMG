@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.getElementById('navbar');
     const welcomeSection = document.getElementById('welcome-section');
     const consentModal = document.getElementById('consentModal');
+    const trailerVideo = document.getElementById('trailer-video');
 
     // Show consent modal on page load if not previously accepted
     if (!localStorage.getItem('trackingAccepted')) {
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         consentModal.style.display = 'none';
         localStorage.setItem('trackingAccepted', 'false');
     });
+    
 
     function trackWishlistClicks() {
         const wishlistButtons = document.querySelectorAll('.steam-wishlist-button');
@@ -104,22 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
         touchEndY = event.touches[0].clientY;
     };
 
-    const handleTouchEnd = (event) => {
-        const target = event.target;
-
-        if (
-            target.classList.contains('sound-toggle-btn') || 
-            target.closest('.nav-right') || 
-            target.closest('.form-group') || 
-            target.closest('.steam-wishlist-button') ||
-            target.classList.contains('nav-btn') || // Added for news section buttons
-            target.closest('#contact-form button[type="submit"]') // Added for the send message button
-        ) {
-            // Prevent scrolling when interacting with certain elements
-            event.stopPropagation();
-            return;
-        }
-
+    const handleTouchEnd = () => {
         if (touchStartY - touchEndY > 50 && currentSection < sections.length - 1) {
             currentSection++;
             scrollToSection(currentSection);
@@ -136,8 +123,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const soundToggleButton = document.querySelector('.sound-toggle-btn');
 
     if (soundToggleButton) {
-        soundToggleButton.addEventListener('click', function () {
+        soundToggleButton.addEventListener('touchstart', (event) => {
+            event.stopPropagation();
+            soundToggleButton.classList.add('no-scroll');
+        });
+
+        soundToggleButton.addEventListener('touchend', (event) => {
+            event.stopPropagation();
+            event.preventDefault(); // Prevent scrolling
             toggleMute('trailer-video');
+            setTimeout(() => {
+                soundToggleButton.classList.remove('no-scroll');
+            }, 100);
         });
     }
 
@@ -158,6 +155,23 @@ document.addEventListener('DOMContentLoaded', () => {
             button.textContent = '🔇';
         }
     }
+
+    // Handle the form buttons as before
+    const formButtons = document.querySelectorAll('#contact-form button, .post-navigation .nav-btn');
+
+    formButtons.forEach(button => {
+        button.addEventListener('touchstart', (event) => {
+            event.stopPropagation();
+            button.classList.add('no-scroll');
+        });
+
+        button.addEventListener('touchend', (event) => {
+            event.stopPropagation();
+            setTimeout(() => {
+                button.classList.remove('no-scroll');
+            }, 100);
+        });
+    });
 
     let currentPostIndex = 0;
     const postsData = typeof posts !== 'undefined' ? posts : [];
@@ -210,6 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('prev-post').disabled = true;
     document.getElementById('next-post').disabled = postsData.length <= 1;
 
+    // AJAX form submission for the contact form
     $('#contact-form').on('submit', function (event) {
         event.preventDefault();
         
@@ -218,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
             type: 'POST',
             data: $(this).serialize(),
             success: function (response) {
-                console.log(response);
+                console.log(response); // Log the response to see what is returned
                 if (response.success) {
                     $('#flash-messages').html('<div class="alert alert-success">' + response.message + '</div>');
                     $('#contact-form')[0].reset();
@@ -227,8 +242,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             },
             error: function (xhr, status, error) {
-                console.error('Error:', error);
-                console.error('Response:', xhr.responseText);
+                console.error('Error:', error); // Log the error
+                console.error('Response:', xhr.responseText); // Log the response text
                 $('#flash-messages').html('<div class="alert alert-danger">There was an error processing your request. Refresh the page and please try again.</div>');
             }
         });
@@ -244,4 +259,5 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+    
 });
