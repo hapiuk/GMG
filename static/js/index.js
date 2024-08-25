@@ -104,7 +104,22 @@ document.addEventListener('DOMContentLoaded', () => {
         touchEndY = event.touches[0].clientY;
     };
 
-    const handleTouchEnd = () => {
+    const handleTouchEnd = (event) => {
+        const target = event.target;
+
+        if (
+            target.classList.contains('sound-toggle-btn') || 
+            target.closest('.nav-right') || 
+            target.closest('.form-group') || 
+            target.closest('.steam-wishlist-button') ||
+            target.classList.contains('nav-btn') || // Added for news section buttons
+            target.closest('#contact-form button[type="submit"]') // Added for the send message button
+        ) {
+            // Prevent scrolling when interacting with certain elements
+            event.stopPropagation();
+            return;
+        }
+
         if (touchStartY - touchEndY > 50 && currentSection < sections.length - 1) {
             currentSection++;
             scrollToSection(currentSection);
@@ -195,7 +210,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('prev-post').disabled = true;
     document.getElementById('next-post').disabled = postsData.length <= 1;
 
-    // AJAX form submission for the contact form
     $('#contact-form').on('submit', function (event) {
         event.preventDefault();
         
@@ -204,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
             type: 'POST',
             data: $(this).serialize(),
             success: function (response) {
-                console.log(response); // Log the response to see what is returned
+                console.log(response);
                 if (response.success) {
                     $('#flash-messages').html('<div class="alert alert-success">' + response.message + '</div>');
                     $('#contact-form')[0].reset();
@@ -213,10 +227,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             },
             error: function (xhr, status, error) {
-                console.error('Error:', error); // Log the error
-                console.error('Response:', xhr.responseText); // Log the response text
+                console.error('Error:', error);
+                console.error('Response:', xhr.responseText);
                 $('#flash-messages').html('<div class="alert alert-danger">There was an error processing your request. Refresh the page and please try again.</div>');
             }
         });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const hamburger = document.querySelector('.hamburger-menu');
+        const navRight = document.querySelector('.nav-right');
+    
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                navRight.classList.toggle('show');
+            });
+        }
     });
 });

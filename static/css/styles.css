@@ -9,8 +9,19 @@ body {
     padding-top: 70px; /* Ensure content isn't hidden behind the navbar */
 }
 
+
 p {
     font-size: 1em;
+}
+
+@media (max-width: 768px) {
+    body {
+        font-size: 0.9em; /* Smaller text for mobile */
+    }
+
+    p {
+        font-size: 0.75em;
+    }
 }
 
 /* Gallery Styles for Game Sections */
@@ -32,56 +43,13 @@ p {
     transform: scale(1.05);
 }
 
-/* More specific styles... */
-
+/* Specific styles */
 .game-gallery-side p {
     height: 200px;
     width: 500px;
     margin: 100px auto;
     position: relative;
     font-size: 1em;
-}
-
-html {
-    scroll-snap-type: y mandatory;
-    overflow-y: scroll;
-    height: 100%;
-}
-
-.section {
-    scroll-snap-align: start;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-
-.game-gallery-side p {
-    height: 200px;
-    width: 500px;
-    margin: 100px auto;
-    position: relative;
-    font-size: 1em;
-}
-
-p img {
-    height: 180px;
-    margin: 25px;
-    position: absolute;
-    left: 0;
-    offset-path: path('m 0 50 q 50-30 100-30 t 100 30 100 0 100-30 100 30');
-    box-shadow: 1px 1px 3px #0008;
-    transition: transform .4s ease-out, offset-path .4s cubic-bezier(.77,-1.17,.75,.84), box-shadow .3s, z-index .3s;
-    z-index: 0;
-}
-
-p img:hover {
-    transform: scale(3);
-    offset-path: path('m 5 65 q 45-0 90-0 t 90 0 90 0 90-0 90 0');
-    box-shadow: 3px 4px 10px #0006;
-    z-index: 999;
 }
 
 html {
@@ -120,6 +88,7 @@ nav {
     margin: 0 auto;
 }
 
+/* Navbar Styles */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -145,12 +114,79 @@ nav {
     color: white;
 }
 
+/* Navbar Logo Image */
+.navbar img#welcome-banner {
+    max-width: 150px; /* Default size for the logo image on larger screens */
+    height: auto;
+}
+
+/* Mobile Navigation Styles */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 5px 10px; /* Reduce padding */
+    }
+
+    .navbar a {
+        font-size: 0.9em; /* Smaller font size for links */
+        margin: 0 5px; /* Reduce margin between links */
+    }
+
+    .navbar img#welcome-banner {
+        max-width: 70px; /* Smaller logo size for mobile devices */
+        height: auto;
+    }
+
+    .hamburger-menu {
+        font-size: 1.5em;
+        cursor: pointer;
+    }
+}
+
+/* Hamburger Menu */
+.hamburger-menu {
+    display: none; /* Hidden by default */
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .nav-right {
+        display: none; /* Hide the links by default */
+    }
+
+    .hamburger-menu {
+        display: block; /* Show the hamburger menu on mobile */
+    }
+}
+
+.nav-right.show {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #1a1a1a;
+    width: 100%;
+    padding: 10px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.nav-right.show a {
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
 .welcome-section {
     font-family: "Press Start 2P", system-ui;
     background: #1a1a1a;
     position: relative;
     width: 100%;
     height: 100vh;
+    font-size: 1.2em; /* Adjusted for mobile */
+    padding: 10px; /* Adjusted for mobile */
 }
 
 #welcome-banner {
@@ -158,6 +194,7 @@ nav {
     height: auto;
     opacity: 0;
     animation: fadeIn 3s forwards;
+    max-width: 100%; /* Adjusted for mobile */
 }
 
 .scroll-text {
@@ -168,6 +205,7 @@ nav {
     cursor: pointer;
     animation: fadeInOut 2s infinite;
     color: #f0f0f0;
+    font-size: 0.8em; /* Adjusted for mobile */
 }
 
 @keyframes fadeIn {
@@ -181,66 +219,14 @@ nav {
 }
 
 /* Game Section 1 */
-
 .game-content {
     font-size: 1.25em;
     margin: 5% auto;
+    font-size: 1em; /* Adjusted for mobile */
+    margin: 2% auto; /* Adjusted for mobile */
 }
 
-.movie-section {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-}
 
-.movie-video-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-
-.trailer-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 1;
-}
-
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.5);
-    color: #f0f0f0;
-}
-
-.sound-toggle-btn {
-    position: absolute;
-    top: 12.5%;
-    right: 2.5%;
-    background: rgba(0, 0, 0, 0.7);
-    color: #fff;
-    border: none;
-    padding: 35px;
-    font-size: 24px;
-    cursor: pointer;
-    border-radius: 50%;
-    z-index: 1000;
-}
-
-.sound-toggle-btn:hover {
-    background: rgba(0, 0, 0, 0.9);
-}
 .game-logo {
     width: 50%;
     max-width: 400px;
@@ -254,10 +240,12 @@ nav {
 .game-summary h2 {
     font-size: 2em;
     margin-bottom: 10px;
+    font-size: 1.5em; /* Adjusted for mobile */
 }
 
 .game-summary p {
     font-size: 1.2em;
+    font-size: 1em; /* Adjusted for mobile */
 }
 
 .gamesection4 .game-content {
@@ -314,6 +302,88 @@ nav {
     }
 }
 
+/* Movie Section */
+.movie-section {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Full viewport height */
+    overflow: hidden;
+}
+
+.movie-video-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.trailer-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    color: #f0f0f0;
+    z-index: 2;
+}
+
+.sound-toggle-btn {
+    position: absolute;
+    top: 12.5%;
+    right: 2.5%;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    border: none;
+    padding: 35px;
+    font-size: 24px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 1000;
+}
+
+.sound-toggle-btn:hover {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+/* Specific adjustments for mobile devices */
+@media (max-width: 768px) {
+    .movie-section {
+        height: 100vh; /* Ensure the section takes up the full viewport height */
+    }
+
+    .trailer-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Cover the entire container without distortion */
+        z-index: 1;
+    }
+
+    .sound-toggle-btn {
+        top: 15%; /* Bring the button further down on mobile */
+        right: 15px; /* Adjust the position slightly */
+        padding: 20px; /* Adjust padding for mobile */
+        font-size: 20px; /* Adjust font size for mobile */
+        z-index: 3;
+    }
+}
+
 /* About Section */
 .about-section {
     display: flex;
@@ -342,6 +412,7 @@ nav {
     flex: 1;
     max-width: 35%;
     padding: 20px;
+    text-align: left; /* Keep the logo on the left */
 }
 
 .about-image img {
@@ -359,6 +430,15 @@ nav {
     line-height: 1.6;
 }
 
+.game-header-image,
+.about-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Ensure the image covers the container without overflow */
+    max-width: 100%;
+    border-radius: 10px;
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
     .about-content {
@@ -368,11 +448,15 @@ nav {
     .about-image,
     .about-text {
         max-width: 100%;
-        text-align: center;
+        text-align: center; /* Center the logo in mobile view */
     }
 
     .about-text {
         padding-top: 20px;
+    }
+
+    .floating-widget {
+        display: none; /* Hide floating widget on mobile */
     }
 }
 
@@ -384,6 +468,7 @@ nav {
     padding: 10px;
     transition: background-color 0.3s ease, opacity 0.3s ease;
     text-align: center;
+    z-index: 1000;
 }
 
 .social-bar a {
@@ -395,6 +480,22 @@ nav {
 
 .social-bar a:hover {
     color: white;
+}
+
+@media (max-width: 768px) {
+    .social-bar {
+        bottom: 10px;
+        right: 10px;
+        padding: 5px;
+        display: flex;
+        flex-direction: column; /* Change to vertical layout */
+        align-items: center; /* Center align icons */
+    }
+
+    .social-bar a {
+        margin: 5px 0; /* Adjust margin for vertical spacing */
+        font-size: 20px; /* Slightly reduce icon size for mobile */
+    }
 }
 
 /* Floating Widget */
@@ -410,12 +511,15 @@ nav {
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1000;
+    bottom: 10px; /* Adjusted for mobile */
+    left: 10px; /* Adjusted for mobile */
 }
 
 .floating-widget img {
     height: 50px;
     margin-right: 10px;
     border-radius: 5px;
+    height: 40px; /* Adjusted for mobile */
 }
 
 .steam-wishlist-button {
@@ -430,6 +534,8 @@ nav {
     font-family: Arial, sans-serif;
     transition: background-color 0.3s;
     z-index: 1111;
+    padding: 8px 12px; /* Adjusted for mobile */
+    font-size: 0.9em; /* Adjusted for mobile */
 }
 
 .steam-wishlist-button:hover {
@@ -455,10 +561,10 @@ nav {
 }
 
 .news-post {
-    max-width: 85%; /* Increase width to fill out the space */
+    max-width: 95%; /* Increased width to fill 95% of the viewport */
     width: 100%;
     background-color: rgba(26, 26, 26, 0.8); /* Darker background with 80% opacity */
-    padding: 30px;
+    padding: 20px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5); /* Slightly darker shadow */
     border-radius: 8px;
     color: #f0f0f0; /* Ensure text color matches the theme */
@@ -466,7 +572,6 @@ nav {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: auto; /* Adjust height to fit content */
     box-sizing: border-box;
     margin: auto; /* Center the post horizontally */
     text-align: center; /* Center the text within the post */
@@ -474,10 +579,37 @@ nav {
     position: relative; /* Ensure proper positioning of elements inside */
 }
 
-.news-post p {
-    font-size: 1.2em; /* Increase font size for better readability */
+.news-post h3 {
+    font-size: 1.5em; /* Reduced font size for titles */
+    margin-bottom: 15px;
 }
 
+/* Responsive Design */
+@media (max-width: 768px) {
+    .news-post {
+        max-width: 95%; /* Ensure the post width is 95% of the viewport on mobile */
+        padding: 15px;
+    }
+
+    .news-post h3 {
+        font-size: 1.2em; /* Further reduce title size on mobile */
+    }
+
+    .news-post p {
+        font-size: 0.9em; /* Slightly smaller paragraph text on mobile */
+    }
+
+    .media-content {
+        flex-direction: column; /* Stack media items vertically on mobile */
+    }
+
+    .post-image {
+        max-width: 90%; /* Ensure images don’t overflow the container */
+        margin-bottom: 15px; /* Add space between stacked images */
+    }
+}
+
+/* Media content adjustments for mobile */
 .media-content {
     display: flex;
     justify-content: center;
@@ -487,58 +619,26 @@ nav {
 }
 
 .post-image {
-    max-width: 30%; /* Control the image size */
+    max-width: 40%; /* Increase image size slightly */
     height: auto;
-    cursor: pointer; /* Indicate that images can be clicked to enlarge */
-    border-radius: 5px; /* Maintain consistent border radius */
+    cursor: pointer;
+    border-radius: 5px;
 }
 
-.post-video {
-    max-width: 100%;
-    height: auto;
-    margin-top: 10px;
-}
+/* Adjustments for mobile */
+@media (max-width: 768px) {
+    .news-post {
+        max-width: 90vw; /* Increase width for mobile view */
+        padding: 20px; /* Adjust padding to prevent squishing */
+    }
 
-/* News Section */
-.news-section {
-    min-height: 100vh; /* Ensure the news section is at least the height of the viewport */
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Center content vertically */
-    align-items: center; /* Center content horizontally */
-    padding: 40px; /* Increase padding for more space */
-    box-sizing: border-box;
-    background-color: rgba(0, 0, 0, 0.7); /* Slightly opaque background */
-}
+    .news-post p {
+        font-size: 0.9em; /* Slightly smaller text for mobile */
+    }
 
-.news-post {
-    max-width: 80vw; /* Take up 80% of the viewport width */
-    width: 100%;
-    background-color: rgba(26, 26, 26, 0.6); /* Dark background with slight opacity */
-    padding: 30px; /* Increase padding for more content space */
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    margin-bottom: 20px; /* Add some space at the bottom */
-    color: #f0f0f0; /* Light text color for contrast */
-    min-height: 50vh; /* Ensure a minimum height of 50% of the viewport */
-    max-height: 70vh; /* Limit the maximum height to 70% of the viewport */
-    overflow-y: auto; /* Allow scrolling if content exceeds the max height */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Ensure content is spaced out evenly */
-}
-
-.media-content {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.post-image {
-    max-width: 33%; /* Control the image size */
-    height: auto;
-    cursor: pointer; /* Indicate that images can be clicked to enlarge */
+    .post-image {
+        max-width: 80%; /* Make images larger in the mobile view */
+    }
 }
 
 .post-video {
@@ -565,6 +665,8 @@ nav {
     border-radius: 4px;
     font-size: 1.2em; /* Increase font size for better readability */
     transition: background-color 0.3s;
+    padding: 12px 20px; /* Adjusted for mobile */
+    font-size: 1em; /* Adjusted for mobile */
 }
 
 .nav-btn:disabled {
@@ -572,13 +674,13 @@ nav {
     cursor: not-allowed;
 }
 
-
 /* Post Image Gallery Styling */
 .media-content {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     margin-top: 20px;
+    gap: 10px; /* Adjusted for mobile */
 }
 
 .post-image {
@@ -587,6 +689,9 @@ nav {
     box-shadow: 1px 1px 3px #0008;
     transition: transform .4s ease-out, box-shadow .3s, z-index .3s;
     z-index: 0;
+    height: auto; /* Adjusted for mobile */
+    max-width: 48%; /* Adjusted for mobile */
+    margin: 1%; /* Adjusted for mobile */
 }
 
 .post-image:hover {
@@ -629,7 +734,7 @@ nav {
 .contact-form-container {
     width: 100%;
     background-color: rgba(26, 26, 26, 0.6); /* Slightly transparent background */
-    padding: 40px;
+    padding: 20px; /* Reduced padding */
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     color: #f0f0f0;
@@ -639,36 +744,37 @@ nav {
 
 .contact-form-container h2 {
     font-size: 2.5em;
-    margin-bottom: 20px;
+    margin-bottom: 15px; /* Reduced margin below the heading */
     text-transform: uppercase;
     letter-spacing: 2px;
 }
 
 .contact-description {
     font-size: 1.2em;
-    margin-bottom: 30px;
+    margin-bottom: 15px; /* Reduced margin below the description */
     color: #f0f0f0;
 }
 
 /* Form Styling */
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 10px; /* Reduced space between form groups */
     position: relative;
 }
 
 .form-control {
     width: 100%;
-    padding: 15px;
-    font-size: 1em;
+    padding: 10px; /* Reduced padding for form fields */
+    font-size: 0.9em; /* Slightly reduced font size */
     border-radius: 5px;
     border: 1px solid #333;
     background-color: #2a2a2a;
     color: #ffffff;
+    margin-bottom: 5px; /* Remove any default margin between fields */
 }
 
 .form-control::placeholder {
     color: #bfbfbf;
-    font-size: 0.9em;
+    font-size: 0.85em;
 }
 
 .form-control:focus {
@@ -680,12 +786,13 @@ nav {
 .btn-primary {
     background-color: #00adee;
     border: none;
-    padding: 15px;
-    font-size: 1.2em;
+    padding: 10px; /* Reduced padding for buttons */
+    font-size: 1em; /* Slightly reduced font size for buttons */
     border-radius: 5px;
     cursor: pointer;
     color: #ffffff;
     width: 100%; /* Full width button */
+    margin-top: 10px; /* Small margin above the button */
 }
 
 .btn-primary:hover {
@@ -695,22 +802,29 @@ nav {
 /* Responsive Design */
 @media (max-width: 768px) {
     .contact-form-container {
-        padding: 20px;
+        padding: 15px; /* Further reduced padding */
     }
 
     .contact-form-container h2 {
-        font-size: 2em;
-    }
-
-    .contact-description {
         font-size: 1em;
     }
 
+    .contact-description {
+        font-size: 0.75em;
+    }
+
+    .form-control {
+        padding: 8px; /* Further reduced padding for form fields */
+        font-size: 0.85em; /* Further reduced font size */
+    }
+
     .btn-primary {
-        padding: 12px 20px;
+        padding: 8px; /* Further reduced padding for buttons */
+        font-size: 0.9em; /* Further reduced font size for buttons */
     }
 }
 
+/* Media content */
 .media-content {
     display: flex;
     justify-content: center;
@@ -734,8 +848,6 @@ nav {
     transform: scale(1.05); 
 }
 
-
-/* Background for Game Section 2 */
 /* Game Section Backgrounds */
 .gamesection2 {
     background-image: url('/static/media/images/Stage.jpeg');
@@ -846,4 +958,85 @@ nav {
 
 .consent-button.decline:hover {
     background-color: #444;
+}
+/* Button Styling */
+.btn-primary {
+    background-color: #00adee;
+    border: none;
+    padding: 15px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #ffffff;
+    width: 100%; /* Full width button */
+    padding: 12px 20px; /* Adjusted for mobile */
+    font-size: 1em; /* Adjusted for mobile */
+}
+
+.btn-primary:hover {
+    background-color: #0078a0;
+}
+
+/* Floating Widget */
+.floating-widget {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #1b2838;
+    opacity: 0.9;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.floating-widget img {
+    height: 40px; /* Reduced size for better fit on mobile */
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.steam-wishlist-button {
+    display: inline-block;
+    padding: 8px 15px; /* Reduced padding for mobile */
+    font-size: 14px; /* Reduced font size */
+    color: #fff;
+    background-color: #4c6b0f;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    transition: background-color 0.3s;
+    z-index: 1111;
+}
+
+.steam-wishlist-button:hover {
+    background-color: #00adee;
+    color: white;
+    text-decoration: none;
+}
+
+.steam-wishlist-button i {
+    margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+    .floating-widget {
+        bottom: 10px; /* Adjust position for mobile */
+        left: 10px; /* Adjust position for mobile */
+        padding: 8px; /* Reduced padding for mobile */
+        opacity: 0.95; /* Slightly increase opacity for better visibility */
+    }
+
+    .floating-widget img {
+        height: 30px; /* Further reduced size for mobile */
+    }
+
+    .steam-wishlist-button {
+        padding: 5px 10px; /* Further reduced padding for mobile */
+        font-size: 12px; /* Further reduced font size */
+    }
 }
