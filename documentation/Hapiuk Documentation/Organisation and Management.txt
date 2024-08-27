@@ -1,0 +1,135 @@
+Organisation and Management
+Company Structure:
+
+Hapiuk will be structured as a small business entity, with a focus on streamlined operations to minimise overhead and maximise efficiency. Given the nature of the business, the initial structure will be relatively flat, with the founder (you) handling most of the operations, including development, client interaction, and business administration. As the business grows, additional roles may be added to support specific functions, such as project management, customer support, and sales.
+
+Founder/CEO/Lead Developer:
+
+Responsibilities:
+Overall management of the company.
+Lead the development and design of websites and web applications.
+Client acquisition and relationship management.
+Financial management, including budgeting and invoicing.
+Strategic planning and business development.
+Skills:
+Advanced technical skills in web development and design.
+Strong business acumen and understanding of the market.
+Effective communication and client management skills.
+Ability to manage multiple projects simultaneously.
+
+Freelance Developers/Designers (as needed):
+
+Responsibilities:
+Assist in website and web application development.
+Provide design support and creative input.
+Help manage client projects during high-demand periods.
+Skills:
+Proficient in relevant web development languages and tools.
+Strong design and UX/UI skills.
+Ability to work independently and meet deadlines.
+
+Administrative Support:
+
+Responsibilities:
+Handle administrative tasks such as scheduling, client communication, and document management.
+Assist with invoicing and financial record-keeping.
+Support marketing and social media efforts.
+Skills:
+Organisational skills and attention to detail.
+Familiarity with office software and communication tools.
+Basic understanding of accounting and financial management.
+Customer Support Specialist (future role):
+
+Responsibilities:
+Provide technical support to clients, helping them manage and update their websites.
+Troubleshoot issues and escalate complex problems to the development team.
+Manage client onboarding and training for the CMS platform.
+Skills:
+Excellent communication skills, both written and verbal.
+Technical understanding of web platforms and CMS.
+Problem-solving skills and the ability to work under pressure.
+Management Approach:
+
+Hapiuk will adopt an agile management approach, which is well-suited for the fast-paced and ever-changing nature of web development projects. Agile allows for flexibility in responding to client needs and market changes, ensuring that projects are completed efficiently and to a high standard.
+
+Project Management:
+
+Projects will be broken down into manageable phases, with regular client check-ins and reviews.
+A focus on iterative development ensures that the client can see progress and provide feedback early and often.
+Tools such as Trello or Asana will be used to track project tasks and timelines.
+Client Communication:
+
+Clear, consistent communication will be prioritised to ensure that clients are kept informed at every stage of the project.
+Regular updates will be provided, and clients will have the opportunity to review and approve work at key milestones.
+A client portal may be developed in the future to streamline communication and project management.
+Growth and Scalability:
+
+As the business grows, the plan is to bring on additional staff or freelancers to handle increased workloads.
+A focus on automation, particularly in the deployment of websites, will help manage growth without a significant increase in overhead.
+The company will explore partnerships and collaborations to expand service offerings and reach a broader market.
+Legal Structure:
+
+Hapiuk will initially operate as a sole proprietorship, which allows for simplicity in management and tax filing. However, as the business grows, it may be beneficial to consider forming a limited company (Ltd) to limit personal liability and provide a more formal structure. This decision will depend on the growth trajectory and financial performance of the business.
+
+Advisors and Mentors:
+
+While Hapiuk may not have a formal board of advisors initially, seeking mentorship from experienced professionals in the web development and business sectors will be crucial. These advisors can provide guidance on strategic decisions, financial management, and market expansion.
+
+---
+
+
+Pricing Structure
+Hapiuk provides transparent and competitive pricing based on the complexity and scope of the project. Below is a typical breakdown of pricing components for a website development project:
+
+1. Initial Development Costs
+Base Website Development: £1,000 - £2,000 (includes basic design, up to 5 sections, and a simple CMS)
+Additional sections: £100 - £300 per page (depending on content and functionality)
+E-commerce Module: £800 - £1,500 (includes product management, shopping cart, and payment integration)
+Custom Web Application: £2,000 - £5,000 (depending on complexity)
+SEO Services: £300 - £1,000 (initial setup, keyword optimisation, and basic on-page SEO)
+Bespoke Scripting and API Integrations: £500 - £2,000 (depending on complexity)
+2. Ongoing Maintenance and Support
+Basic Hosting and Maintenance: £30 - £100 per month (includes hosting, security updates, and basic technical support)
+Content Updates: £50 - £200 per month (depending on frequency and volume of updates)
+Advanced Support: £100 - £300 per month (includes priority support, performance optimisation, and additional services)
+Example Project Breakdown
+For a typical project like the one we've discussed, the pricing might look like this:
+
+Initial Development Costs:
+
+Base Website Development: £1,500
+5 Additional sections: £1,000
+E-commerce Module: £1,200
+SEO Services: £500
+Bespoke Scripting for Custom Features: £1,000
+Total Initial Cost: £5,200
+Ongoing Maintenance and Support:
+
+Basic Hosting and Maintenance: £50 per month
+Content Updates: £100 per month
+Total Monthly Cost: £150
+This structure provides transparency and flexibility, allowing clients to understand exactly what they are paying for and to adjust their requirements based on their budget.
+
+Quote Calculation Prototype
+To make it easier to generate quotes for clients, you can develop a simple calculator (using a spreadsheet or web-based tool) that allows you to input the following:
+
+Number of sections
+Modules Required (e.g., E-commerce, Blog, Portfolio)
+Custom Features or Integrations
+SEO and Marketing Services
+Ongoing Support and Maintenance Requirements
+The tool can then generate a detailed quote based on these inputs, giving you and your clients a clear understanding of costs. Here's an example of how this might look in a spreadsheet:
+
+Service/Feature			Cost Per Unit	Quantity	Total Cost
+Base Website Development	£1,500		1		£1,500
+Additional sections		£200		5		£1,000
+E-commerce Module		£1,200		1		£1,200
+SEO Services			£500		1		£500
+Bespoke Scripting		£1,000		1		£1,000
+
+Total Initial Cost		£5,200
+
+Ongoing Monthly Maintenance	£150		12		£1,800
+
+This example can be expanded on.
+

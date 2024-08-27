@@ -1,0 +1,32 @@
+Products and Services
+Hapiuk provides a wide range of digital solutions tailored specifically to the needs of startups and small businesses. Our core offerings include:
+
+1. Bespoke Website Development
+Customisable Websites: Fully customisable websites that allow businesses to tailor the design, layout, and functionality to meet their unique needs.
+Responsive Design: All websites are developed with responsive design principles, ensuring a seamless user experience across all devices, including desktops, tablets, and mobile phones.
+Content Management Systems (CMS): Integrated CMS that allows clients to easily update their website content without needing technical expertise. The CMS includes modules for adding/editing pages, managing blog posts, and uploading media.
+Portfolio and Gallery: Features for showcasing products, services, or past work, complete with customisable gallery options.
+2. Bespoke Web Applications
+Custom Web Apps: Development of bespoke web applications that solve specific problems for businesses, such as CRM systems, booking platforms, or inventory management systems.
+Modular Approach: The ability for clients to pick and choose modules based on their specific needs, ensuring they only pay for the functionality they require.
+3. E-commerce Solutions
+Online Stores: Development of fully functional online stores, including product catalogues, shopping carts, and secure payment gateways.
+Inventory Management: Tools to help businesses manage their stock levels, process orders, and track sales.
+Customer Accounts: Features that allow customers to create accounts, track their orders, and manage their preferences.
+4. Search Engine Optimisation (SEO)
+SEO Audits: Comprehensive audits to identify areas for improvement in a client's website to enhance search engine visibility.
+On-page SEO: Implementation of best practices in on-page SEO, including keyword optimisation, meta tags, and alt text.
+Content Strategy: Guidance on content creation and strategies that drive organic traffic to the client's website.
+5. Ongoing Maintenance and Support
+Technical Support: Continuous support for any technical issues that arise post-launch, including bug fixes and performance optimisation.
+Content Updates: Assistance with updating website content, ensuring that the website remains current and relevant.
+Hosting and Security: Secure hosting services, including regular backups, SSL certificates, and security monitoring to protect client websites from threats.
+6. Bespoke Scripting and Automation
+Custom Scripts: Development of custom scripts to automate repetitive tasks or integrate third-party services into the client's website or web application.
+API Integrations: Seamless integration with various APIs, allowing clients to connect their website with other tools and platforms they use in their business operations.
+7. Modular Website Deployment System (Future Offering)
+User-driven Deployment: A system that allows users to select and deploy modular sections of a website based on their needs, with the ability to add new sections as their business grows.
+Custom CMS/Portal: A user-friendly portal where clients can manage their website, update content, and monitor performance.
+Pricing Structure
+Initial Development Costs: Custom pricing based on the scope and complexity of the project, with clear upfront pricing for each module or service.
+Ongoing Maintenance and Support: Monthly or annual plans that cover hosting, updates, and support, ensuring that the client's website remains secure and up-to-date.
