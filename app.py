@@ -8,7 +8,6 @@ from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user, UserMixin
 from wtforms import StringField, TextAreaField, SubmitField, HiddenField, PasswordField
 from wtforms.validators import DataRequired, Email
-import requests
 from datetime import datetime
 import os
 import random
