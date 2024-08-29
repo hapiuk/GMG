@@ -57,37 +57,9 @@
                 </button>
             </div>
 
-            <!-- Edit About Us Button -->
-            <div class="col-md-4 mb-4">
-                <button type="button" class="btn btn-info btn-block dashboard-button" data-toggle="modal" data-target="#editAboutUsModal" data-toggle="tooltip" title="Edit About Us section content">
-                    <i class="fas fa-info-circle"></i><br>
-                </button>
-            </div>
-
-            <!-- Edit Movie Section Button -->
-            <div class="col-md-4 mb-4">
-                <button type="button" class="btn btn-info btn-block dashboard-button" data-toggle="modal" data-target="#editMovieSectionModal" data-toggle="tooltip" title="Edit movie section video">
-                    <i class="fas fa-video"></i><br>
-                </button>
-            </div>
-
             <!-- Edit Game Section 2 Button -->
             <div class="col-md-4 mb-4">
-                <button type="button" class="btn btn-info btn-block dashboard-button" data-toggle="modal" data-target="#editGameSection2Modal" data-toggle="tooltip" title="Edit game section 2 content">
-                    <i class="fas fa-images"></i><br>
-                </button>
-            </div>
-
-            <!-- Edit Game Section 3 Button -->
-            <div class="col-md-4 mb-4">
-                <button type="button" class="btn btn-info btn-block dashboard-button" data-toggle="modal" data-target="#editGameSection3Modal" data-toggle="tooltip" title="Edit game section 3 content">
-                    <i class="fas fa-images"></i><br>
-                </button>
-            </div>
-
-            <!-- Edit Game Section 4 Button -->
-            <div class="col-md-4 mb-4">
-                <button type="button" class="btn btn-info btn-block dashboard-button" data-toggle="modal" data-target="#editGameSection4Modal" data-toggle="tooltip" title="Edit game section 4 content">
+                <button type="button" class="btn btn-info btn-block dashboard-button" data-toggle="modal" data-target="#sectionsModal" data-toggle="tooltip" title="Edit game section 2 content">
                     <i class="fas fa-images"></i><br>
                 </button>
             </div>
@@ -117,6 +89,61 @@
                     <div class="mb-3">
                         <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#emailSettingsModal" data-dismiss="modal">
                             Email Settings
+                        </button>
+                    </div>
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#emailSettingsModal" data-dismiss="modal">
+                            Dashboard Users
+                        </button>
+                    </div>
+                    <!-- Add more settings options here as needed -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Sections Modal -->
+    <div class="modal fade" id="sectionsModal" tabindex="-1" role="dialog" aria-labelledby="sectionsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="settingsModalLabel">Edit/Add Website Sections</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#editMovieSectionModal" data-dismiss="modal">
+                        Edit Movie
+                        </button>
+                    </div>
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#editAboutUsModal" data-dismiss="modal">
+                        Edit About Us
+                        </button>
+                    </div>
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#editGameSection2Modal" data-dismiss="modal">
+                        Edit Section 1
+                        </button>
+                    </div>
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#editGameSection3Modal" data-dismiss="modal">
+                        Edit Section 2
+                        </button>
+                    </div>
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#editGameSection4Modal" data-dismiss="modal">
+                        Edit Section 3
+                        </button>
+                    </div>
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#" data-dismiss="modal">
+                        Add a Section
                         </button>
                     </div>
                     <!-- Add more settings options here as needed -->
