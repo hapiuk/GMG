@@ -12,6 +12,7 @@ from datetime import datetime
 import os
 import random
 import string
+import requests
 
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'your_default_secret_key')
@@ -745,27 +746,34 @@ def settings():
                            game_section_4=GameSection.query.filter_by(section_id=4).first(),
                            about_us_content=AboutUs.query.first())
 
-# Exempt the /track-wishlist-click route from CSRF protection
 @app.route('/track-wishlist-click', methods=['POST'])
 @csrf.exempt
 def track_wishlist_click():
     data = request.get_json()
     ip_address = data.get('ip')
+    consent = data.get('consent', True)  # Check if the user consents to tracking
 
-    if not ip_address:
+    if consent is False:
+        # If the user declined to share location
+        click = WishlistClick(country="No Location")
+    elif not ip_address:
+        # If IP address is missing
         return jsonify({'error': 'IP address is missing'}), 400
+    else:
+        # Proceed to get geolocation data
+        country = 'Unknown'
+        try:
+            response = requests.get(f'http://ip-api.com/json/{ip_address}')
+            if response.status_code == 200:
+                data = response.json()
+                country = data.get('country', 'Unknown')
+        except Exception as e:
+            app.logger.error(f"Error retrieving geolocation data: {e}")
+            return jsonify({'error': 'Failed to retrieve geolocation data'}), 500
 
-    country = 'Unknown'
-    try:
-        response = requests.get(f'http://ip-api.com/json/{ip_address}')
-        if response.status_code == 200:
-            data = response.json()
-            country = data.get('country', 'Unknown')
-    except Exception as e:
-        app.logger.error(f"Error retrieving geolocation data: {e}")
-        return jsonify({'error': 'Failed to retrieve geolocation data'}), 500
-
-    click = WishlistClick(country=country)
+        click = WishlistClick(country=country)
+    
+    # Save the click to the database
     db.session.add(click)
     db.session.commit()
 

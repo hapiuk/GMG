@@ -17,16 +17,18 @@ document.addEventListener('DOMContentLoaded', () => {
         consentModal.style.display = 'none';
 
         // Attach tracking to wishlist buttons
-        trackWishlistClicks();
+        trackWishlistClicks(true);  // Consent given
     });
 
     document.getElementById('declineTracking').addEventListener('click', function () {
         consentModal.style.display = 'none';
         localStorage.setItem('trackingAccepted', 'false');
-    });
-    
 
-    function trackWishlistClicks() {
+        // Attach tracking to wishlist buttons without location
+        trackWishlistClicks(false);  // Consent not given
+    });
+
+    function trackWishlistClicks(consent) {
         const wishlistButtons = document.querySelectorAll('.steam-wishlist-button');
 
         wishlistButtons.forEach(button => {
@@ -35,18 +37,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const targetUrl = button.href;
 
-                // Fetch the user's IP address
-                $.getJSON('https://api.ipify.org?format=json', function(data) {
-                    const ipAddress = data.ip;
+                if (consent) {
+                    // Fetch the user's IP address if consent is given
+                    $.getJSON('https://api.ipify.org?format=json', function(data) {
+                        const ipAddress = data.ip;
 
-                    // Send the IP address to the server as JSON
+                        // Send the IP address to the server as JSON
+                        $.ajax({
+                            url: '/track-wishlist-click',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({ ip: ipAddress, consent: true }),
+                            success: function() {
+                                console.log('Wishlist click tracked successfully with location');
+                                window.open(targetUrl, '_blank');  // Open the Steam page in a new tab
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error:', xhr.responseText);  // Log server error message
+                                window.open(targetUrl, '_blank');  // Open the Steam page in a new tab even if tracking fails
+                            }
+                        });
+                    });
+                } else {
+                    // Send click tracking without IP if consent is not given
                     $.ajax({
                         url: '/track-wishlist-click',
                         type: 'POST',
                         contentType: 'application/json',
-                        data: JSON.stringify({ ip: ipAddress }),
+                        data: JSON.stringify({ consent: false }),  // No IP address
                         success: function() {
-                            console.log('Wishlist click tracked successfully');
+                            console.log('Wishlist click tracked successfully without location');
                             window.open(targetUrl, '_blank');  // Open the Steam page in a new tab
                         },
                         error: function(xhr, status, error) {
@@ -54,14 +74,16 @@ document.addEventListener('DOMContentLoaded', () => {
                             window.open(targetUrl, '_blank');  // Open the Steam page in a new tab even if tracking fails
                         }
                     });
-                });
+                }
             });
         });
     }
 
     // Attach tracking if consent was already given
     if (localStorage.getItem('trackingAccepted') === 'true') {
-        trackWishlistClicks();
+        trackWishlistClicks(true);  // Consent given
+    } else if (localStorage.getItem('trackingAccepted') === 'false') {
+        trackWishlistClicks(false);  // Consent not given
     }
 
     const scrollToSection = (sectionIndex) => {
@@ -249,15 +271,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const hamburger = document.querySelector('.hamburger-menu');
-        const navRight = document.querySelector('.nav-right');
-    
-        if (hamburger) {
-            hamburger.addEventListener('click', () => {
-                navRight.classList.toggle('show');
-            });
-        }
-    });
-    
+    const hamburger = document.querySelector('.hamburger-menu');
+    const navRight = document.querySelector('.nav-right');
+
+    if (hamburger) {
+        hamburger.addEventListener('click', () => {
+            navRight.classList.toggle('show');
+        });
+    }
 });
