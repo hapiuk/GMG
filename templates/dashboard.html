@@ -14,7 +14,7 @@
         <nav>
             <img src="{{ url_for('static', filename='media/images/banner_logo.jpg') }}" id="welcome-banner" alt="Grave Mistake Games">
             <div class="nav-right">
-                <a href="#">Dashboard</a> |
+                <a href="#">My Account</a> |
                 <a href="{{ url_for('logout') }}">Logout</a>
             </div>
         </nav>
@@ -59,7 +59,7 @@
 
             <!-- Edit Game Section 2 Button -->
             <div class="col-md-4 mb-4">
-                <button type="button" class="btn btn-info btn-block dashboard-button" data-toggle="modal" data-target="#sectionsModal" data-toggle="tooltip" title="Edit game section 2 content">
+                <button type="button" class="btn btn-info btn-block dashboard-button" data-toggle="modal" data-target="#sectionsModal" data-toggle="tooltip" title="Edit/Add Website Content">
                     <i class="fas fa-images"></i><br>
                 </button>
             </div>
@@ -74,6 +74,57 @@
     </div>
 
     <!-- Modals -->
+
+<!-- User Settings Modal -->
+<div class="modal fade" id="userSettingsModal" tabindex="-1" role="dialog" aria-labelledby="userSettingsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userSettingsModalLabel">Dashboard Users</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- User Search -->
+                <input type="text" class="form-control mb-3" id="user-search" placeholder="Search users...">
+                
+                <!-- User List -->
+                <h6>Existing Users</h6>
+                <ul class="list-group mb-4" id="user-list">
+                    <!-- Dynamic content will be inserted here -->
+                </ul>
+
+                <!-- Create New User Form (Hidden by default) -->
+                <div id="create-user-form-container" class="mt-4" style="display: none;">
+                    <h6>Create New User</h6>
+                    <form id="create-user-form">
+                        <!-- Include CSRF Token -->
+                        <input name="csrf_token" type="hidden" value="{{ csrf_token() }}">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="username" name="username" required placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="email" name="email" required placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="contact_number" name="contact_number" required placeholder="Contact Number">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="position" name="position" required placeholder="Position">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Create User</button>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary ml-2" id="add-user-btn">Add User</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
     <!-- Settings Modal -->
     <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel" aria-hidden="true">
@@ -92,7 +143,7 @@
                         </button>
                     </div>
                     <div class="mb-3">
-                        <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#emailSettingsModal" data-dismiss="modal">
+                        <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#userSettingsModal" data-dismiss="modal">
                             Dashboard Users
                         </button>
                     </div>
@@ -139,11 +190,6 @@
                     <div class="mb-3">
                         <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#editGameSection4Modal" data-dismiss="modal">
                         Edit Section 3
-                        </button>
-                    </div>
-                    <div class="mb-3">
-                        <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#" data-dismiss="modal">
-                        Add a Section
                         </button>
                     </div>
                     <!-- Add more settings options here as needed -->

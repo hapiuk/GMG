@@ -114,7 +114,6 @@ $(document).ready(function () {
         updateWebsiteStats();
     });
     
-
     // Function to update stats in the modal
     function updateWebsiteStats() {
         $.get('/get-wishlist-clicks', function(response) {
@@ -202,5 +201,73 @@ $(document).ready(function () {
                 }
             });
         }
+    });
+
+    // Show "Add New User" form when the button is clicked
+    $('#add-user-btn').on('click', function () {
+        $('#create-user-form-container').toggle(); // Toggle visibility
+    });
+
+    // Function to load users into the modal
+    function loadUsers() {
+        $.get('/get_users', function (users) {
+            const $userList = $('#user-list');
+            $userList.empty(); // Clear any existing content
+            users.forEach(user => {
+                $userList.append(`
+                    <li class="list-group-item bg-dark">
+                        <strong>${user.username}</strong><br>
+                        Email: ${user.email}<br>
+                        Contact: ${user.contact_number}<br>
+                        Position: ${user.position}
+                        <button class="btn btn-danger btn-sm float-right delete-user-btn" data-user-id="${user.id}">Delete</button>
+                    </li>
+                `);
+            });
+        });
+    }
+
+    // Reload users when the modal is shown
+    $('#userSettingsModal').on('shown.bs.modal', function () {
+        loadUsers();
+    });
+
+    // Handle user creation
+    $('#create-user-form').on('submit', function (event) {
+        event.preventDefault();
+        const formData = $(this).serialize();
+
+        $.post('/create_user', formData, function (response) {
+            if (response.success) {
+                loadUsers(); // Reload users to reflect the new addition
+                $('#create-user-form')[0].reset(); // Clear the form
+                $('#create-user-form-container').hide(); // Hide the form after submission
+            } else {
+                alert(response.message); // Show an error message
+            }
+        });
+    });
+
+    // Handle user deletion
+    $('#user-list').on('click', '.delete-user-btn', function () {
+        const userId = $(this).data('user-id');
+        const confirmation = confirm("Are you sure you want to delete this user?");
+        if (confirmation) {
+            $.post(`/delete_user/${userId}`, { csrf_token: $('input[name="csrf_token"]').val() }, function (response) {
+                if (response.success) {
+                    loadUsers(); // Reload users to reflect the deletion
+                } else {
+                    alert("Failed to delete user: " + response.message);
+                }
+            });
+        }
+    });
+
+    // Search users dynamically
+    $('#user-search').on('input', function () {
+        const searchQuery = $(this).val().toLowerCase();
+        $('#user-list li').filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(searchQuery) > -1);
+        });
     });
 });

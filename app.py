@@ -11,6 +11,7 @@ from wtforms.validators import DataRequired, Email
 from datetime import datetime
 import os
 import random
+import string
 
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'your_default_secret_key')
@@ -49,11 +50,6 @@ login_manager.login_message_category = "warning"
 
 # Flag to ensure tables are created only once
 tables_created = False
-
-# Initialize Flask-Login
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
 
 # Models
 class User(db.Model, UserMixin):
@@ -795,7 +791,87 @@ def get_wishlist_clicks():
         'clicks_by_country': clicks_by_country
     })
 
+@app.route('/create_user', methods=['POST'])
+@login_required
+def create_user():
+    # Ensure the current user is authenticated
+    if not current_user.is_authenticated:
+        return jsonify({'success': False, 'message': 'Unauthorized. Please log in.'}), 401
 
+    # Retrieve form data
+    username = request.form.get('username')
+    email = request.form.get('email')
+    contact_number = request.form.get('contact_number')
+    position = request.form.get('position')
+
+    # Basic validation
+    if not username or not email:
+        return jsonify({'success': False, 'message': 'Username and Email are required'})
+
+    # Check if the username or email already exists
+    existing_user = User.query.filter((User.username == username) | (User.email == email)).first()
+    if existing_user:
+        return jsonify({'success': False, 'message': 'Username or Email already exists'})
+
+    # Generate a secure password
+    generated_password = generate_secure_password()
+
+    # Hash the generated password
+    hashed_password = generate_password_hash(generated_password, method='pbkdf2:sha256')
+
+    # Create new user and save to the database
+    new_user = User(
+        username=username,
+        password_hash=hashed_password,
+        email=email,
+        contact_number=contact_number,
+        position=position
+    )
+    db.session.add(new_user)
+    db.session.commit()
+
+    # Prepare the email content
+    msg = Message(
+        subject='Your New Account Password',
+        sender=app.config['MAIL_DEFAULT_SENDER'],
+        recipients=[email]
+    )
+    msg.body = f"Hello {username},\n\nYour new account has been created. Here is your login password: {generated_password}\n\nPlease change it after logging in for security purposes.\n\nThank you!"
+    
+    # Send the generated password to the user's email
+    send_email(msg)
+    
+    return jsonify({'success': True, 'message': 'User created successfully, and password sent to email.'})
+
+
+@app.route('/get_users')
+@login_required
+def get_users():
+    # Fetch all users from the database
+    users = User.query.all()
+    users_data = [{
+        'id': user.id,
+        'username': user.username,
+        'email': user.email,
+        'contact_number': user.contact_number,
+        'position': user.position
+    } for user in users]
+    return jsonify(users_data)
+
+@app.route('/delete_user/<int:user_id>', methods=['POST'])
+def delete_user(user_id):
+    user = User.query.get(user_id)
+    if user:
+        db.session.delete(user)
+        db.session.commit()
+        return jsonify({'success': True, 'message': 'User deleted successfully'})
+    return jsonify({'success': False, 'message': 'User not found'})
+
+def generate_secure_password(length=12):
+    """Generate a secure random password."""
+    characters = string.ascii_letters + string.digits + string.punctuation
+    secure_password = ''.join(random.choice(characters) for i in range(length))
+    return secure_password
 
 if __name__ == '__main__':
     app.run(debug=True)

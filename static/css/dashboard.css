@@ -256,3 +256,15 @@ nav {
     max-height: 300px; /* Adjust this to fit within your modal */
     margin: 0 auto; /* Center the chart */
 }
+
+/* Make the modal scrollable */
+#userSettingsModal .modal-body {
+    max-height: 400px; /* Adjust the height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+
+/* Ensure user list and form do not overlap */
+#user-list {
+    margin-bottom: 20px; /* Add space below user list */
+}
