@@ -260,23 +260,26 @@ def inspect_settings():
     else:
         return "No settings found"
 
-
 # Application Routes
 @app.route('/', methods=['GET', 'POST'])
 def index():
-
+    # Fetch posts and About Us content
     posts = Post.query.order_by(Post.date_posted.desc()).limit(5).all()
     about_us_content = AboutUs.query.first()
     if not about_us_content:
         about_us_content = {'text': '', 'image_url': ''}
 
+    # Fetch movie section content
     movie_section = MovieSection.query.first()
 
+    # Initialize the contact form
     form = ContactForm()
 
+    # Handle GET request: setup CAPTCHA
     if request.method == 'GET':
         form.captcha_question, form.captcha_answer.data = generate_captcha()
     
+    # Handle POST request: process contact form submission
     if request.method == 'POST':
         if not form.validate_on_submit():
             return jsonify({'success': False, 'message': 'Form validation failed. Please check your inputs.'}), 400
@@ -284,12 +287,14 @@ def index():
         if form.user_captcha_response.data != form.captcha_answer.data:
             return jsonify({'success': False, 'message': 'CAPTCHA validation failed. Please try again.'}), 400
 
+        # Extract form data
         band_name = form.band_name.data
         band_contact = form.band_contact.data
         email = form.email.data
         band_social = form.band_social.data
         message_body = form.message.data
 
+        # Prepare email message
         msg = Message(
             'New Contact Form Submission',
             sender=app.config['MAIL_DEFAULT_SENDER'],
@@ -305,6 +310,7 @@ def index():
         {message_body}
         """
 
+        # Try sending the email and handle potential errors
         try:
             mail.send(msg)
             return jsonify({'success': True, 'message': 'Message sent successfully!'}), 200, {'Content-Type': 'application/json'}
@@ -315,6 +321,7 @@ def index():
     # Serialize posts for JSON compatibility
     posts_data = [serialize_post(post) for post in posts]
 
+    # Fetch game sections and associated media
     game_section_1 = GameSection.query.filter_by(section_id=1).first()
     if game_section_1:
         game_section_1_media = GameMedia.query.filter_by(game_section_id=game_section_1.id, media_type='video').first()
@@ -335,6 +342,18 @@ def index():
                            game_section_3=game_section_3,
                            game_section_4=game_section_4)
 
+#get media route
+@app.route('/get_media/<int:section_id>', methods=['GET'])
+def get_media(section_id):
+    # Fetch media from the game_media table based on game_section_id
+    media = GameMedia.query.filter_by(game_section_id=section_id).all()
+
+    # Ensure media URLs are prefixed with the static path
+    media_urls = [url_for('static', filename=f'uploads/{media_item.media_url.split("/")[-1]}') for media_item in media]
+    print(f"Generated media URLs for section {section_id}: {media_urls}")  # Debugging line
+
+    # Return the generated URLs as JSON
+    return jsonify(media_urls)
 
 # Login route
 @app.route('/login', methods=['GET', 'POST'])

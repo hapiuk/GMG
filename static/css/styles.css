@@ -41,6 +41,7 @@ p {
 
 .gallery img:hover {
     transform: scale(1.05);
+    cursor: pointer;
 }
 
 /* Specific styles */
@@ -341,6 +342,66 @@ nav {
         z-index: 1000;
     }
 }
+
+/* Full-Size Image Display */
+.full-image-container {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 50px; /* Adjust this value to match your navbar height */
+    left: 0;
+    width: 100%;
+    height: calc(100% - 50px); /* Adjust to ensure the container height doesn't overlap with the navbar */
+    background-color: rgba(0, 0, 0, 0.8); /* Dark background */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding-top: 20px; /* Adds space for close button */
+}
+
+.full-image-container img {
+    max-width: 90%;
+    max-height: 80vh; /* Adjust to ensure the image fits well within the container */
+}
+
+.close-button {
+    position: absolute;
+    top: 10px; /* Position below the navbar */
+    right: 20px;
+    background: transparent;
+    border: none;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    color: #ccc;
+}
+
+.nav-arrow {
+    position: absolute;
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+}
+
+.nav-arrow:hover {
+    color: #ccc;
+    cursor: pointer;
+}
+
+.nav-arrow.left-arrow {
+    left: 20px;
+}
+
+.nav-arrow.right-arrow {
+    right: 20px;
+}
+
 
 /* Sound Toggle Button */
 .sound-toggle-btn {

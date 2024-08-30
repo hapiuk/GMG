@@ -57,22 +57,19 @@
         </div>  
     </section>
 
-<!-- Movie Section -->
-<section class="section movie-section" id="movie-section">
-    {% if movie_section and movie_section.video_url %}
-        <video class="trailer-video" autoplay muted loop id="trailer-video">
-            <source src="{{ movie_section.video_url }}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <button class="sound-toggle-btn" onclick="toggleMute('trailer-video')">🔇</button>
-    {% else %}
-        <p>No video currently available for this section.</p>
-    {% endif %}
-</section>
+    <!-- Movie Section -->
+    <section class="section movie-section" id="movie-section">
+        {% if movie_section and movie_section.video_url %}
+            <video class="trailer-video" autoplay muted loop id="trailer-video">
+                <source src="{{ movie_section.video_url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <button class="sound-toggle-btn" onclick="toggleMute('trailer-video')">🔇</button>
+        {% else %}
+            <p>No video currently available for this section.</p>
+        {% endif %}
+    </section>
 
-
-<!-- Debugging output -->
-<p>Debug Video URL: {{ movie_section.video_url }}</p>
 
 <!-- Game Section 2 -->
 <section class="section game-section" id="game-section-2">
@@ -85,13 +82,21 @@
                         <p>{{ game_section_2.summary_text }}</p>
                     </div>
                 </div>
-                <div class="game-gallery-side">
+                <div class="game-gallery-side" id="game-gallery-side-2">
                     <div class="gallery">
                         {% for media in game_section_2.gallery %}
-                            <img src="{{ media.media_url }}" alt="Gallery Image">
+                            <img src="{{ media.media_url }}" alt="Gallery Image" class="gallery-image" 
+                                onclick="showFullImage('{{ media.media_url }}', 'full-image-container-2', '{{ game_section_2.section_id }}')">
                         {% endfor %}
                     </div>
-                </div>
+                    <!-- Full-Size Image Container -->
+                    <div id="full-image-container-2" class="full-image-container">
+                        <button class="nav-arrow left-arrow" onclick="navigateImage(-1, 'full-image-container-2', '{{ game_section_2.section_id }}')">&#10094;</button>
+                        <img id="full-image-2" src="" alt="Full Size Gallery Image">
+                        <button class="nav-arrow right-arrow" onclick="navigateImage(1, 'full-image-container-2', '{{ game_section_2.section_id }}')">&#10095;</button>
+                        <button class="close-button" onclick="closeFullImage('full-image-container-2')">&#10006;</button>
+                    </div>
+                </div>              
             </div>
         </div>
     {% else %}
@@ -110,11 +115,19 @@
                         <p>{{ game_section_3.summary_text }}</p>
                     </div>
                 </div>
-                <div class="game-gallery-side">
+                <div class="game-gallery-side" id="game-gallery-side-3">
                     <div class="gallery">
                         {% for media in game_section_3.gallery %}
-                            <img src="{{ media.media_url }}" alt="Gallery Image">
+                            <img src="{{ media.media_url }}" alt="Gallery Image" class="gallery-image" 
+                                onclick="showFullImage('{{ media.media_url }}', 'full-image-container-3', '{{ game_section_3.section_id }}')">
                         {% endfor %}
+                    </div>
+                    <!-- Full-Size Image Container -->
+                    <div id="full-image-container-3" class="full-image-container">
+                        <button class="nav-arrow left-arrow" onclick="navigateImage(-1, 'full-image-container-3', '{{ game_section_3.section_id }}')">&#10094;</button>
+                        <img id="full-image-3" src="" alt="Full Size Gallery Image">
+                        <button class="nav-arrow right-arrow" onclick="navigateImage(1, 'full-image-container-3', '{{ game_section_3.section_id }}')">&#10095;</button>
+                        <button class="close-button" onclick="closeFullImage('full-image-container-3')">&#10006;</button>
                     </div>
                 </div>
             </div>
@@ -135,11 +148,19 @@
                         <p>{{ game_section_4.summary_text }}</p>
                     </div>
                 </div>
-                <div class="game-gallery-side">
+                <div class="game-gallery-side" id="game-gallery-side-4">
                     <div class="gallery">
                         {% for media in game_section_4.gallery %}
-                            <img src="{{ media.media_url }}" alt="Gallery Image">
+                            <img src="{{ media.media_url }}" alt="Gallery Image" class="gallery-image" 
+                                onclick="showFullImage('{{ media.media_url }}', 'full-image-container-4', '{{ game_section_4.section_id }}')">
                         {% endfor %}
+                    </div>
+                    <!-- Full-Size Image Container -->
+                    <div id="full-image-container-4" class="full-image-container">
+                        <button class="nav-arrow left-arrow" onclick="navigateImage(-1, 'full-image-container-4', '{{ game_section_4.section_id }}')">&#10094;</button>
+                        <img id="full-image-4" src="" alt="Full Size Gallery Image">
+                        <button class="nav-arrow right-arrow" onclick="navigateImage(1, 'full-image-container-4', '{{ game_section_4.section_id }}')">&#10095;</button>
+                        <button class="close-button" onclick="closeFullImage('full-image-container-4')">&#10006;</button>
                     </div>
                 </div>
             </div>

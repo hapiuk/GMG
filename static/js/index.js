@@ -1,10 +1,153 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize galleries by collecting images from the page
+    const galleries = {};
+
+    function initializeGalleries() {
+        const gallerySections = document.querySelectorAll('.game-gallery-side');
+        gallerySections.forEach((section, index) => {
+            const sectionId = index + 2;  // Assuming sections start from ID 2
+            const images = Array.from(section.querySelectorAll('.gallery-image')).map(img => img.src);
+            galleries[`section-${sectionId}`] = { images: images, currentImageIndex: 0 };
+        });
+        console.log('Initialized galleries:', galleries);
+    }
+
+    // Function to display the full-size image
+    function showFullImage(imageUrl, containerId, sectionId) {
+        const galleryKey = `section-${sectionId}`;
+        const gallery = galleries[galleryKey];
+
+        if (!gallery) {
+            console.error(`No gallery data available for section ${sectionId}.`);
+            return;
+        }
+
+        const imageIndex = gallery.images.indexOf(imageUrl);
+        if (imageIndex === -1) {
+            console.error(`Image URL ${imageUrl} not found in gallery for section ${sectionId}. Available images:`, gallery.images);
+            return;
+        }
+
+        gallery.currentImageIndex = imageIndex;
+
+        const fullImage = document.getElementById(containerId).querySelector('img');
+        fullImage.src = imageUrl;
+        document.getElementById(containerId).style.display = 'flex';
+
+        // Disable body scroll when gallery is open
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Function to navigate between images
+    function navigateImage(direction, containerId, sectionId) {
+        const galleryKey = `section-${sectionId}`;
+        const gallery = galleries[galleryKey];
+
+        if (!gallery || gallery.images.length === 0) {
+            console.error(`No gallery data available for navigation in section ${sectionId}.`);
+            return;
+        }
+
+        gallery.currentImageIndex += direction;
+
+        if (gallery.currentImageIndex < 0) {
+            gallery.currentImageIndex = gallery.images.length - 1;
+        } else if (gallery.currentImageIndex >= gallery.images.length) {
+            gallery.currentImageIndex = 0;
+        }
+
+        const fullImage = document.getElementById(containerId).querySelector('img');
+        fullImage.src = gallery.images[gallery.currentImageIndex];
+    }
+
+    // Function to close the full-size image display
+    function closeFullImage(containerId) {
+        const galleryContainer = document.getElementById(containerId);
+        galleryContainer.style.display = 'none';
+
+        // Re-enable body scroll when gallery is closed
+        document.body.style.overflow = '';
+    }
+
+    // Mute/Unmute toggle function
+    function toggleMute(videoId) {
+        const video = document.getElementById(videoId);
+
+        if (!video) {
+            return;
+        }
+
+        const button = document.querySelector('.sound-toggle-btn');
+
+        if (video.muted) {
+            video.muted = false;
+            button.textContent = '🔊'; // Sound on icon
+        } else {
+            video.muted = true;
+            button.textContent = '🔇'; // Sound off icon
+        }
+    }
+
+    // Attach event listeners for the mute button
+    const soundToggleButton = document.querySelector('.sound-toggle-btn');
+
+    if (soundToggleButton) {
+        soundToggleButton.addEventListener('clicked', (event) => {
+            event.stopPropagation();
+            event.preventDefault(); // Prevent scrolling
+            toggleMute('trailer-video');
+        });
+
+        soundToggleButton.addEventListener('touchend', (event) => {
+            event.stopPropagation();
+            event.preventDefault(); // Prevent scrolling
+            toggleMute('trailer-video');
+        });
+    }
+
+    // Prevent default scroll on touch for gallery navigation and close buttons
+    function preventScrollOnTouch(element) {
+        element.addEventListener('touchstart', (event) => {
+            event.stopPropagation();
+            element.classList.add('no-scroll');
+        });
+
+        element.addEventListener('touchend', (event) => {
+            event.stopPropagation();
+            event.preventDefault(); // Prevent scrolling
+            setTimeout(() => {
+                element.classList.remove('no-scroll');
+            }, 100);
+        });
+    }
+
+    // Apply no-scroll behavior to gallery navigation and close buttons
+    document.querySelectorAll('.nav-arrow, .close-button').forEach(preventScrollOnTouch);
+
+    // Initialize galleries on page load
+    initializeGalleries();
+
+    // Attach click event to each gallery image
+    document.querySelectorAll('.gallery-image').forEach((img) => {
+        img.addEventListener('click', (event) => {
+            event.stopPropagation();
+            event.preventDefault(); // Prevent scrolling
+            const sectionId = img.closest('.game-gallery-side').getAttribute('id').split('-').pop();
+            showFullImage(img.src, `full-image-container-${sectionId}`, sectionId);
+        });
+    });
+
+    // Expose functions to global scope for use in HTML attributes
+    window.showFullImage = showFullImage;
+    window.navigateImage = navigateImage;
+    window.closeFullImage = closeFullImage;
+    window.toggleMute = toggleMute;
+
     let currentSection = 0;
     const sections = document.querySelectorAll('.section');
     const navbar = document.getElementById('navbar');
     const welcomeSection = document.getElementById('welcome-section');
     const consentModal = document.getElementById('consentModal');
-    const trailerVideo = document.getElementById('trailer-video');
 
     // Show consent modal on page load if not previously accepted
     if (!localStorage.getItem('trackingAccepted')) {
@@ -15,16 +158,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('acceptTracking').addEventListener('click', function () {
         localStorage.setItem('trackingAccepted', 'true');
         consentModal.style.display = 'none';
-
-        // Attach tracking to wishlist buttons
         trackWishlistClicks(true);  // Consent given
     });
 
     document.getElementById('declineTracking').addEventListener('click', function () {
         consentModal.style.display = 'none';
         localStorage.setItem('trackingAccepted', 'false');
-
-        // Attach tracking to wishlist buttons without location
         trackWishlistClicks(false);  // Consent not given
     });
 
@@ -38,7 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const targetUrl = button.href;
 
                 if (consent) {
-                    // Fetch the user's IP address if consent is given
                     $.getJSON('https://api.ipify.org?format=json', function(data) {
                         const ipAddress = data.ip;
 
@@ -142,42 +280,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('touchmove', handleTouchMove, { passive: true });
     document.addEventListener('touchend', handleTouchEnd);
 
-    const soundToggleButton = document.querySelector('.sound-toggle-btn');
-
-    if (soundToggleButton) {
-        soundToggleButton.addEventListener('touchstart', (event) => {
-            event.stopPropagation();
-            soundToggleButton.classList.add('no-scroll');
-        });
-
-        soundToggleButton.addEventListener('touchend', (event) => {
-            event.stopPropagation();
-            event.preventDefault(); // Prevent scrolling
-            toggleMute('trailer-video');
-            setTimeout(() => {
-                soundToggleButton.classList.remove('no-scroll');
-            }, 100);
-        });
-    }
-
-    function toggleMute(videoId) {
-        const video = document.getElementById(videoId);
-
-        if (!video) {
-            return;
-        }
-
-        const button = document.querySelector('.sound-toggle-btn');
-
-        if (video.muted) {
-            video.muted = false;
-            button.textContent = '🔊';
-        } else {
-            video.muted = true;
-            button.textContent = '🔇';
-        }
-    }
-
     // Handle the form buttons as before
     const formButtons = document.querySelectorAll('#contact-form button, .post-navigation .nav-btn');
 
@@ -264,8 +366,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             },
             error: function (xhr, status, error) {
-                console.error('Error:', error); // Log the error
-                console.error('Response:', xhr.responseText); // Log the response text
+                console.error('Error:', error);  // Log the error
+                console.error('Response:', xhr.responseText);  // Log the response text
                 $('#flash-messages').html('<div class="alert alert-danger">There was an error processing your request. Refresh the page and please try again.</div>');
             }
         });
