@@ -235,11 +235,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleNavbar = () => {
         const welcomeBottom = welcomeSection.getBoundingClientRect().bottom;
         if (welcomeBottom <= 0) {
-            navbar.classList.add('show-navbar');
+            if (!navbar.classList.contains('show-navbar')) {
+                navbar.classList.add('show-navbar');
+                navbar.style.animation = 'slideIn 0.5s forwards'; // Slide in animation
+            }
         } else {
-            navbar.classList.remove('show-navbar');
+            if (navbar.classList.contains('show-navbar')) {
+                navbar.classList.remove('show-navbar');
+                navbar.style.animation = 'slideOut 0.5s forwards'; // Slide out animation
+            }
         }
     };
+    
+    document.addEventListener('scroll', toggleNavbar);
 
     const handleWheelEvent = (event) => {
         event.preventDefault();

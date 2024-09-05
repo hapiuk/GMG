@@ -70,7 +70,37 @@ html {
 
 #navbar {
     display: none; /* Initially hide the navbar */
+    position: fixed;
+    top: -70px; /* Start off-screen */
+    width: 100%;
+    transition: top 0.5s ease-in-out; /* Smooth slide effect */
+    z-index: 10000;
 }
+
+#navbar.show-navbar {
+    display: flex !important; /* Ensure the navbar is displayed */
+    top: 0; /* Slide into view */
+}
+
+/* Keyframe animation for sliding */
+@keyframes slideIn {
+    from {
+        top: -70px;
+    }
+    to {
+        top: 0;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        top: 0;
+    }
+    to {
+        top: -70px;
+    }
+}
+
 
 #navbar.show-navbar {
     display: flex !important; /* Ensure the navbar is displayed */
